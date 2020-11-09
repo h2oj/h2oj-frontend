@@ -2,10 +2,10 @@
 table.datagrid
     thead
         tr
-            th(v-for="item in headers") {{item}}
+            slot(name="head")
     tbody#datagrid
         tr(v-for="item in data")
-            td(v-for="(element, i) in item") {{render(i, element)}}
+            slot(name="body", :item="item")
 div.page-selector
     li.page-top: i.fa.fa-angle-double-left
     li.page-last: i.fa.fa-angle-left
@@ -19,15 +19,12 @@ div.page-selector
 export default {
     name: 'DataGrid',
     props: {
-        length: Number,
-        headers: Array,
-        data: Object,
-        render: Function
+        data: Object
     },
 };
 </script>
 
-<style scoped>
+<style>
 .datagrid {
     border-spacing: 0px;
     width: 100%;
