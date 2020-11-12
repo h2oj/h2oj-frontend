@@ -7,19 +7,19 @@ table.datagrid
         tr(v-for="item in data")
             slot(name="body", :item="item")
 div.page-selector
-    li.page-top: i.fa.fa-angle-double-left
-    li.page-last: i.fa.fa-angle-left
-    - for (let i = 1; i < 10; ++i)
-        li(onclick=`loadPage(${i}, 10)`).page: = i
-    li.page-next: i.fa.fa-angle-right
-    li.page-end: i.fa.fa-angle-double-right
+    li.page-top: font-awesome-icon(icon="angle-double-left")
+    li.page-last: font-awesome-icon(icon="angle-left")
+    li(v-for="i in 10" @click="load(i)").page {{ i }}
+    li.page-next: font-awesome-icon(icon="angle-right")
+    li.page-end: font-awesome-icon(icon="angle-double-right")
 </template>
 
 <script>
 export default {
     name: 'DataGrid',
     props: {
-        data: Object
+        data: Object,
+        load: Function
     },
 };
 </script>

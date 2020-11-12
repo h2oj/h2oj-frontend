@@ -2,7 +2,7 @@
 Card
     p(style='font-size: 20px; margin: 0px') Hydrogen OJ Problem Set
 Card
-    DataGrid(:data="data")
+    DataGrid(:data="data", :load="getPageData")
         template(v-slot:head)
             th 状态
             th 题号
@@ -11,18 +11,19 @@ Card
             th 难度
             th 通过率
         template(v-slot:body="{ item }")
-            td {{ item[0] }}
-            td {{ item[1] }}
-            td {{ item[2] }}
-            td: Tag(:text="item[3]")
-            td: Tag(:text="item[4]")
-            td {{ item[5] }}
+            td -
+            td {{ item.pid }}
+            td {{ item.title }}
+            td: Tag(:text="item.tag")
+            td: Tag(:text="item.difficulty")
+            td {{ item.ac_count / item.submit_count }}
 </template>
 
 <script>
 import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
+import config from '../config';
 
 export default {
     name: 'ProblemList',
@@ -33,36 +34,27 @@ export default {
     },
     data: function () {
         return {
-            headers: ['状态', '题号', '题目名称', '标签', '难度', '通过率'],
-            data: [
-                ['-', '1000', 'Hello, world', '1', 0, 0],
-                ['-', '1000', 'Hello, world', '2', 0, 0],
-                ['-', '1000', 'Hello, world', '3', 0, 0],
-                ['-', '1000', 'Hello, world', '4', 0, 0],
-                ['-', '1000', 'Hello, world', '5', 0, 0],
-                ['-', '1000', 'Hello, world', '6', 0, 0],
-                ['-', '1000', 'Hello, world', '7', 0, 0],
-                ['-', '1000', 'Hello, world', '8', 0, 0],
-                ['-', '1000', 'Hello, world', '9', 0, 0],
-                ['-', '1000', 'Hello, world', '10', 0, 0],
-                ['-', '1000', 'Hello, world', '11', 0, 0]
-            ],
-            render: function (i, item) {
-                console.log(i, item);
-                switch (i) {
-                    case 4: {
-                        const difficultyName = [
-                            '尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-',
-                            '省选/NOI-', 'NOI/NOI+/CTSC'
-                        ];
-                        return difficultyName[item];
-                    }
-                    default: {
-                        return item;
-                    }
-                }
-            }
+            itemCount: 15,
+            pageCount: 5,
+            data: []
         };
+    },
+    methods: {
+        getPageData: function (page) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('get', `${config.apiServer}/problem/list?page=${page}`, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const res = JSON.parse(xhr.responseText);
+                    this.data = res.data;
+                    console.log(res);
+                }
+            };
+            xhr.send();
+        }
+    },
+    mounted: function() {
+        this.getPageData(1);
     }
 };
 </script>
