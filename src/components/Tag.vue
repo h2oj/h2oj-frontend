@@ -6,7 +6,10 @@
 export default {
     name: 'Tag',
     props: {
-        text: String
+        text: {
+            type: String,
+            default: ''
+        }
     }
 }
 </script>

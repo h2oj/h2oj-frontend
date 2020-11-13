@@ -39,6 +39,9 @@ export default {
             data: []
         };
     },
+    mounted: function() {
+        this.getPageData(1);
+    },
     methods: {
         getPageData: function (page) {
             let xhr = new XMLHttpRequest();
@@ -52,9 +55,6 @@ export default {
             };
             xhr.send();
         }
-    },
-    mounted: function() {
-        this.getPageData(1);
     }
 };
 </script>
