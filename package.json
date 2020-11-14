@@ -17,7 +17,8 @@
     "core-js": "^3.6.5",
     "pug": "^3.0.0",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-rc.2"
+    "vue-router": "^4.0.0-rc.2",
+    "vue3-progress": "^0.0.1-beta1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

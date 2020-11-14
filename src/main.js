@@ -6,6 +6,7 @@ import {
     faAngleRight, faAngleDoubleRight
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import Vue3Progress from 'vue3-progress';
 
 import App from './App.vue';
 import Index from './views/Index.vue';
@@ -30,5 +31,10 @@ library.add(
 const app = createApp(App);
 app.config.globalProperties.config = config;
 app.use(router);
+app.use(Vue3Progress, {
+    position: 'fixed',
+    height: '3px',
+    color: '#66ccff'
+});
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.mount('#app');

@@ -3,11 +3,14 @@
     .topbar-left: p.topbar-title H<sub>2</sub> OJ
     .topbar-left
         ul.topbar-menubar
-            li(onclick='window.location=\'/\'') 首页
-            li(onclick='window.location=\'/problem\'') 题库
-            li(onclick='window.location=\'/contest\'') 比赛
-            li(onclick='window.location=\'/submission\'') 记录
-
+            router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === 1}")
+                li(role="link", @click="select(1, navigate)") 首页
+            router-link(custom, v-slot="{ navigate }", to="/problem", :class="{'selected': selected === 2}")
+                li(role="link", @click="select(2, navigate)") 题库
+            router-link(custom, v-slot="{ navigate }", to="/contest", :class="{'selected': selected === 3}")
+                li(role="link", @click="select(3, navigate)") 比赛
+            router-link(custom, v-slot="{ navigate }", to="/submission", :class="{'selected': selected === 4}")
+                li(role="link", @click="select(4, navigate)") 记录
     .topbar-right
         ul.topbar-menubar
             if nowUser
@@ -22,11 +25,24 @@
 <script>
 export default {
     name: 'Header',
+    data: function () {
+        return {
+            selected: 0
+        };
+    },
+    methods: {
+        select: function (id, navigate) {
+            this.selected = id;
+            navigate();
+        }
+    }
 };
 </script>
 
 <style scoped>
 .topbar {
+    position: sticky;
+    top: 0px;
     height: 50px;
     line-height: 50px;
     background-color: #293333;
@@ -76,5 +92,10 @@ export default {
 .topbar-menubar > li:hover {
     border-top: #7c8cfc solid 3px;
     background-color: #111414;
+}
+
+.selected {
+    border-top: #7c8cfc solid 3px !important;
+    background-color: #111414 !important;
 }
 </style>

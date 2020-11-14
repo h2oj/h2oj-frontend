@@ -1,4 +1,5 @@
 <template lang="pug">
+vue3-progress
 Header
 .container-main
     router-view
@@ -14,6 +15,21 @@ export default {
     components: {
         Header,
         Footer
+    },
+    mounted: function () {
+        this.$progress.finish();
+    },
+    created: function () {
+        this.$progress.start();
+        // eslint-disable-next-line no-unused-vars
+        this.$router.beforeEach((to, from, next) => {
+            this.$progress.start();
+            next();
+        });
+        // eslint-disable-next-line no-unused-vars
+        this.$router.afterEach((to, from) => {
+            this.$progress.finish();
+        });
     }
 };
 </script>

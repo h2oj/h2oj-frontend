@@ -7,11 +7,11 @@ table.datagrid
         tr(v-for="item in data")
             slot(name="body", :item="item")
 div.page-selector
-    li.page-top: FontAwesomeIcon(icon="angle-double-left")
-    li.page-last: FontAwesomeIcon(icon="angle-left")
-    li(v-for="i in 10" @click="load(i)").page {{ i }}
-    li.page-next: FontAwesomeIcon(icon="angle-right")
-    li.page-end: FontAwesomeIcon(icon="angle-double-right")
+    li.page-top(@click="load(1)"): FontAwesomeIcon(icon="angle-double-left")
+    li.page-last(@click="load(curPage - 1)"): FontAwesomeIcon(icon="angle-left")
+    li(v-for="i in cntPage" @click="load(begPage + i - 1)", :class="{'selected': i + begPage - 1 === curPage}").page {{ i + begPage - 1 }}
+    li.page-next(@click="load(curPage + 1)"): FontAwesomeIcon(icon="angle-right")
+    li.page-end(@click="load(cntPage)"): FontAwesomeIcon(icon="angle-double-right")
 </template>
 
 <script>
@@ -25,8 +25,33 @@ export default {
         load: {
             type: Function,
             default: () => {}
+        },
+        pageCount: {
+            type: Number,
+            default: 1
+        },
+        curPage: {
+            type: Number,
+            default: 1
         }
     },
+    computed: {
+        begPage: function () {
+            if (this.curPage + 4 > this.pageCount) {
+                return Math.max(this.pageCount - 8, 1);
+            }
+            return Math.max(this.curPage - 4, 1);
+        },
+        cntPage: function () {
+            if (this.curPage <= 5) {
+                return Math.min(this.pageCount, 9);
+            }
+            if (this.curPage + 4 > this.pageCount) {
+                return Math.min(this.pageCount, 9);
+            }
+            return Math.min(this.pageCount - this.begPage + 1, 9);
+        }
+    }
 };
 </script>
 
@@ -36,28 +61,24 @@ export default {
     width: 100%;
 }
 
-.datagrid th {
+.datagrid > thead > tr > th {
     font-size: 15px;
     font-weight: 500;
-}
-
-.datagrid td {
-    font-size: 17px;
-    line-height: 35px;
-}
-
-.datagrid > thead > tr > th {
     border-bottom: 2px solid #e8e8e8;
 }
 
 .datagrid > tbody > tr > td {
+    font-size: 17px;
+    line-height: 35px;
     border-bottom: 1px solid #e8e8e8;
 }
 
 .datagrid > tbody > tr:last-of-type > td {
     border-bottom: 2px solid #e8e8e8;
 }
+</style>
 
+<style scoped>
 .page-selector {
     margin-top: 0.5em;
     text-align: right;
@@ -74,5 +95,9 @@ export default {
     text-align: center;
     line-height: 1em;
     margin: 0.3em;
+}
+
+.selected {
+    background-color: #c4c4c4;
 }
 </style>
