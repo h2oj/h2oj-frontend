@@ -1,6 +1,8 @@
 <template lang="pug">
 Card
-    p(style='font-size: 20px; margin: 0px') Hydrogen OJ Problem Set
+    p(style="font-size: 20px; margin: 0px") Hydrogen OJ Problem Set
+    TextField(placeholder="ID / 题目").search-input#search-input
+    Button(value="查找", @click="search()").search-button
 Card
     DataGrid(:data="data", :load="getPageData", :curPage="curPage", :pageCount="pageCount")
         template(v-slot:head)
@@ -24,6 +26,8 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import Meter from '../components/Meter.vue';
+import TextField from '../components/TextField.vue';
+import Button from '../components/Button.vue';
 import config from '../config';
 
 export default {
@@ -32,7 +36,9 @@ export default {
         Card,
         DataGrid,
         Tag,
-        Meter
+        Meter,
+        TextField,
+        Button
     },
     data: function () {
         return {
@@ -54,6 +60,20 @@ export default {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const res = JSON.parse(xhr.responseText);
                     this.curPage = page;
+                    this.data = res.data.problems;
+                    this.pageCount = res.data.page_count;
+                }
+            };
+            xhr.send();
+        },
+        search: function () {
+            let search = document.getElementById('search-input').value;
+            let xhr = new XMLHttpRequest();
+            xhr.open('get', `${config.apiServer}/problem/list?page=${1}&search=${search}`, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const res = JSON.parse(xhr.responseText);
+                    this.curPage = 1;
                     this.data = res.data.problems;
                     this.pageCount = res.data.page_count;
                 }
@@ -94,6 +114,14 @@ export default {
     width: 150px;
 }
 
+.search-input {
+    font-size: 1em;
+    width: 80%;
+}
+
+.search-button {
+    margin-left: 10px;
+}
 
 .tag-difficulty-0 {
     background-color: #bfbfbf !important;
