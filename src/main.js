@@ -11,11 +11,13 @@ import Vue3Progress from 'vue3-progress';
 import App from './App.vue';
 import Index from './views/Index.vue';
 import ProblemList from './views/ProblemList.vue';
+import Problem from './views/Problem.vue';
 import config from './config';
 
 const routes = [
     { path: '/', component: Index },
-    { path: '/problem', component: ProblemList }
+    { path: '/problem', component: ProblemList },
+    { path: '/problem/:pid', component: Problem }
 ];
 
 const router = createRouter({
