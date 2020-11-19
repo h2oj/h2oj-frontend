@@ -42,6 +42,7 @@ export default {
 <style scoped>
 .topbar {
     position: sticky;
+    z-index: 1;
     top: 0px;
     height: 50px;
     line-height: 50px;

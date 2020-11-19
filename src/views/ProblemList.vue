@@ -15,7 +15,7 @@ Card
         template(v-slot:body="{ item }")
             td.table-status -
             td.table-pid {{ item.pid }}
-            td.table-title {{ item.title }}
+            td.table-title: router-link(:to="`/problem/${item.pid}`") {{ item.title }}
             td.table-tag: Tag(v-if="item.tag", :text="item.tag")
             td.table-difficulty: Tag(:text="difficulty[item.difficulty]", :class="`tag-difficulty-${item.difficulty}`")
             td.table-pass: Meter(:max="item.submit_count", :val="item.ac_count")
@@ -49,13 +49,13 @@ export default {
             difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC']
         };
     },
-    mounted: function() {
+    beforeMount: function() {
         this.getPageData(1);
     },
     methods: {
         getPageData: function (page) {
             let xhr = new XMLHttpRequest();
-            xhr.open('get', `${config.apiServer}/problem/list?page=${page}`, true);
+            xhr.open('get', `${config.apiServer}/problem/list?page=${page}`, false);
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const res = JSON.parse(xhr.responseText);
@@ -121,6 +121,15 @@ export default {
 
 .search-button {
     margin-left: 10px;
+}
+
+.table-title > a {
+    text-decoration: none;
+    color: #2f8bc9;
+}
+
+.table-title > a:hover {
+    color: #1b4f72;
 }
 
 .tag-difficulty-0 {

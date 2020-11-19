@@ -94,6 +94,7 @@ export default {
 .editor {
     text-align: initial;
     height: 500px;
+    border: solid 1px #efefef;
 }
 
 .tag-difficulty-0 {
