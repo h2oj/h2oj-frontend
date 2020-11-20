@@ -20,11 +20,12 @@ export default {
     border-radius: 0;
     padding: 5px 8px;
     border: none;
-    background-color: #cccccc;
+    color: #f0f0f0;
+    background-color: #7c8cfc;
 }
 
 .button:hover {
     transition-duration: 0.3s;
-    background-color: #aaaaaa;
+    background-color: #616cbe;
 }
 </style>

@@ -16,6 +16,7 @@ export default {
 
 <style scoped>
 .textfield {
+    display: block;
     height: 2em;
     outline: none;
     border-radius: 0;

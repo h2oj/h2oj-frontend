@@ -17,7 +17,8 @@
                 li(onclick='window.location=\'/user\'')= nowUser.username
                 li(onclick='window.location=\'/api/v1/logout\'') 退出
             else
-                li(onclick='window.location=\'/login\'') 登录
+                router-link(custom, v-slot="{ navigate }", to="/login", :class="{'selected': selected === -1}")
+                    li(role="link", @click="select(-1, navigate)") 登录
     .topbar-user
         .topbar-avatar
 </template>

@@ -12,10 +12,12 @@ import App from './App.vue';
 import Index from './views/Index.vue';
 import ProblemList from './views/ProblemList.vue';
 import Problem from './views/Problem.vue';
+import Login from './views/Login.vue';
 import config from './config';
 
 const routes = [
     { path: '/', component: Index },
+    { path: '/login', component: Login },
     { path: '/problem', component: ProblemList },
     { path: '/problem/:pid', component: Problem }
 ];
