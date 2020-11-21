@@ -13,10 +13,12 @@
                 li(role="link", @click="select(4, navigate)") 记录
     .topbar-right
         ul.topbar-menubar
-            if nowUser
-                li(onclick='window.location=\'/user\'')= nowUser.username
-                li(onclick='window.location=\'/api/v1/logout\'') 退出
-            else
+            template(v-if="isLogin()")
+                router-link(custom, v-slot="{ navigate }", to="/user", :class="{'selected': selected === -1}")
+                    li(role="link", @click="select(-1, navigate)") 111
+                router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === -2}")
+                    li(role="link", @click="logout(); select(1, navigate)") 登出
+            template(v-else)
                 router-link(custom, v-slot="{ navigate }", to="/login", :class="{'selected': selected === -1}")
                     li(role="link", @click="select(-1, navigate)") 登录
     .topbar-user
@@ -35,6 +37,12 @@ export default {
         select: function (id, navigate) {
             this.selected = id;
             navigate();
+        },
+        isLogin: function () {
+            return this.$cookie.getCookie('hoj_token');
+        },
+        logout: function () {
+            this.$cookie.removeCookie('hoj_token');
         }
     }
 };

@@ -1,14 +1,15 @@
 <template lang="pug">
 Card
-    TextField(placeholder="用户名 / 邮箱")
-    TextField(placeholder="密码")
-    Button(text="登录")
+    TextField(placeholder="用户名 / 邮箱", ref="username")
+    TextField(placeholder="密码", ref="password")
+    Button(@click="login()", text="登录")
 </template>
 
 <script>
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import TextField from '../components/TextField';
+import config from '../config';
 
 export default {
     name: 'Login',
@@ -18,16 +19,24 @@ export default {
         Button
     },
     methods: {
-        hitokoto: function () {
-            let xhr = new XMLHttpRequest();
-            xhr.open('get', 'https://v1.hitokoto.cn/?c=k&c=d&encode=json', true);
+        login: function () {
+            const username = this.$refs['username'].value;
+            const password = this.$refs['password'].value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('post', `${config.apiServer}/auth/signin`, false);
+            xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const res = JSON.parse(xhr.responseText);
-                    document.getElementById('hitokoto').innerHTML = `「${res.hitokoto}」 －${res.from}`;
+                    this.$cookie.setCookie('hoj_token', res.data.token);
+                    window.location.reload();
                 }
             };
-            xhr.send();
+            xhr.send(JSON.stringify({
+                username: username,
+                password: password
+            }));
         }
     }
 };

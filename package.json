@@ -21,8 +21,10 @@
     "monaco-editor": "^0.21.2",
     "pug": "^3.0.0",
     "vue": "^3.0.0",
+    "vue-cookie-next": "^1.0.3",
     "vue-router": "^4.0.0-rc.2",
-    "vue3-progress": "^0.0.1-beta1"
+    "vue3-progress": "^0.0.1-beta1",
+    "vuex": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

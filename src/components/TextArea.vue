@@ -1,20 +1,23 @@
 <template lang="pug">
-input(type="text", :placeholder="placeholder" v-model="value").textfield
+textarea(:value="modelValue", @input="input($event.target.value)").textarea
 </template>
 
 <script>
 export default {
-    name: 'TextField',
+    name: 'TextArea',
     props: {
-        placeholder: {
+        modelValue: {
             type: String,
             default: ''
         }
     },
-    data: function () {
-        return {
-            value: ''
-        };
+    methods: {
+        input: function (value) {
+            this.$emit('update:modelValue', value);
+        },
+        value: function () {
+            return this.modelValue;
+        }
     }
 };
 </script>

@@ -1,52 +1,45 @@
 <template lang="pug">
 Card.title
     p.problem-title {{ $route.params.pid + '. ' + title }}
-    router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}/edit`")
-        FontAwesomeIcon(icon="wrench", @click="navigate").edit
+    .edit
+        FontAwesomeIcon(icon="check", @click="update()")
+        router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}`")
+            FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
 Card.detail
-    template(v-if="content.description")
-        p.section-title 题目描述
-        MarkdownView(:content="content.description")
-    template(v-if="content.input")
-        p.section-title 输入格式
-        MarkdownView(:content="content.input")
-    template(v-if="content.output")
-        p.section-title 输出格式
-        MarkdownView(:content="content.output")
-    template(v-if="content.constraint")
-        p.section-title 数据范围与提示
-        MarkdownView(:content="content.constraint")
-Card
-    p IDE Area
-    MonacoEditor.editor
+    p.section-title 题目描述
+    MarkdownEditor(v-model:content="content.description", ref="description")
+    p.section-title 输入格式
+    MarkdownEditor(v-model:content="content.input", ref="input")
+    p.section-title 输出格式
+    MarkdownEditor(v-model:content="content.output", ref="output")
+    p.section-title 数据范围与提示
+    MarkdownEditor(v-model:content="content.constraint", ref="constraint")
 </template>
 
 <script>
 import Card from '../components/Card.vue';
 import Tag from '../components/Tag.vue';
 import Button from '../components/Button.vue';
-import MarkdownView from '../components/MarkdownView.vue';
-import MonacoEditor from '../components/MonacoEditor.vue';
+import MarkdownEditor from '../components/MarkdownEditor.vue';
 import config from '../config';
 
 export default {
-    name: 'Problem',
+    name: 'ProblemEditor',
     components: {
         Card,
         Tag,
         Button,
-        MarkdownView,
-        MonacoEditor
+        MarkdownEditor
     },
     data: function () {
         return {
             title: '',
-            content: '',
+            content: {},
             data: [],
             difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC']
         };
     },
-    created: function() {
+    created: function () {
         let xhr = new XMLHttpRequest();
         xhr.open('get', `${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`, false);
         xhr.onreadystatechange = () => {
@@ -57,6 +50,29 @@ export default {
             }
         };
         xhr.send();
+    },
+    methods: {
+        update: function () {
+            const xhr = new XMLHttpRequest();
+            xhr.open('post', `${config.apiServer}/problem/update`, false);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Authorization', this.$cookie.getCookie('hoj_token'));
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    //const res = JSON.parse(xhr.responseText);
+                }
+            };
+            console.log(this.content);
+            xhr.send(JSON.stringify({
+                pid: this.$route.params.pid,
+                difficulty: 0,
+                content: this.content
+            }));
+        },
+        back: function (navigate) {
+            this.update();
+            navigate();
+        }
     }
 };
 </script>
@@ -91,10 +107,14 @@ export default {
     position: absolute;
     right: 0.7em;
     top: 0.7em;
+}
+
+.edit > * {
+    padding-left: 0.5em;
     transition-delay: 0.3s;
 }
 
-.edit:hover {
+.edit > *:hover {
     color: #686868;
 }
 

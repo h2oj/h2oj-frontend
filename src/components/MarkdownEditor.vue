@@ -1,0 +1,69 @@
+<template lang="pug">
+.markdown-editor
+    TextArea(v-model="content").markdown-editor-textarea.scrollbar
+    MarkdownView(:content="content").markdown-editor-view.scrollbar
+</template>
+
+<script>
+import TextArea from './TextArea.vue';
+import MarkdownView from './MarkdownView.vue';
+import '../static/scrollbar.css';
+
+export default {
+    name: 'MarkdownEditor',
+    components: {
+        TextArea,
+        MarkdownView
+    },
+    props: {
+        content: {
+            type: String,
+            default: ''
+        }
+    },
+    methods: {
+        value: function () {
+            return this.content;
+        }
+    },
+    watch: {
+        content: function () {
+            console.log(this.content);
+            this.$emit('update:content', this.content);
+        }
+    }
+};
+</script>
+
+<style scoped>
+.markdown-editor {
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+}
+
+.markdown-editor-textarea {
+    height: 100%;
+    padding: 0.5em;
+    font-size: 16px;
+    flex: 1;
+    outline: none;
+    resize: none;
+    border: 1px solid #aaaaaa;
+    box-sizing: border-box;
+}
+
+.markdown-editor-textarea:focus {
+    transition-duration: 0.3s;
+    border: 1px solid #000000;
+}
+
+.markdown-editor-view {
+    height: 100%;
+    padding: 0.5em;
+    flex: 1;
+    border: 1px solid #aaaaaa;
+    border-left: none;
+    box-sizing: border-box;
+}
+</style>

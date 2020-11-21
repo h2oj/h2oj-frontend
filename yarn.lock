@@ -8567,6 +8567,11 @@ void-elements@^3.1.0:
   resolved "https://r.cnpmjs.org/void-elements/download/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha1-YU9/v42AHwu18GYfWy9XhXUOTwk=
 
+vue-cookie-next@^1.0.3:
+  version "1.0.3"
+  resolved "https://r.cnpmjs.org/vue-cookie-next/download/vue-cookie-next-1.0.3.tgz#28dd89f2901b7301db2eb3c7a2acff8f861e7fbd"
+  integrity sha1-KN2J8pAbcwHbLrPHoqz/j4Yef70=
+
 vue-eslint-parser@^7.1.1:
   version "7.1.1"
   resolved "https://r.cnpmjs.org/vue-eslint-parser/download/vue-eslint-parser-7.1.1.tgz#c43c1c715ff50778b9a7e9a4e16921185f3425d3"
@@ -8637,6 +8642,11 @@ vue@^3.0.0, vue@^3.0.2:
     "@vue/compiler-dom" "3.0.2"
     "@vue/runtime-dom" "3.0.2"
     "@vue/shared" "3.0.2"
+
+vuex@^4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://r.cnpmjs.org/vuex/download/vuex-4.0.0-rc.1.tgz#160cd5957972a61c7c01ab585995b78e092a298d"
+  integrity sha1-FgzVlXlyphx8AatYWZW3jgkqKY0=
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
