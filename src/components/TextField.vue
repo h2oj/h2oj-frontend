@@ -1,5 +1,5 @@
 <template lang="pug">
-input(type="text", :placeholder="placeholder" v-model="value").textfield
+input(type="text", :placeholder="placeholder", v-model="value").textfield
 </template>
 
 <script>
@@ -9,12 +9,16 @@ export default {
         placeholder: {
             type: String,
             default: ''
+        },
+        value: {
+            type: String,
+            default: ''
         }
     },
-    data: function () {
-        return {
-            value: ''
-        };
+    watch: {
+        value: function () {
+            this.$emit('update:value', this.value);
+        }
     }
 };
 </script>
@@ -27,11 +31,12 @@ export default {
     border-radius: 0;
     border: none;
     border-bottom: 1px solid #aaaaaa;
+    transition-duration: 0.3s;
     box-sizing: border-box;
+    font-size: 1em;
 }
 
 .textfield:focus {
-    transition-duration: 0.3s;
     border-bottom: 1px solid #000000;
 }
 </style>

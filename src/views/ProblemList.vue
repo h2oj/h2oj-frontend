@@ -116,7 +116,6 @@ export default {
 
 .search-input {
     display: inline-block;
-    font-size: 1em;
     width: 80%;
 }
 

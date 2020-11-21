@@ -23,18 +23,20 @@ export default {
 </script>
 
 <style scoped>
-.textfield {
+.textarea {
     display: block;
-    height: 2em;
+    padding: 0.5em;
+    font-size: 16px;
+    height: fit-content;
+    flex: 1;
     outline: none;
-    border-radius: 0;
-    border: none;
-    border-bottom: 1px solid #aaaaaa;
+    resize: none;
+    border: 1px solid #aaaaaa;
     box-sizing: border-box;
+    transition-duration: 0.3s;
 }
 
-.textfield:focus {
-    transition-duration: 0.3s;
-    border-bottom: 1px solid #000000;
+.textarea:focus {
+    border: 1px solid #000000;
 }
 </style>

@@ -21,15 +21,15 @@ export default {
             default: ''
         }
     },
-    methods: {
-        value: function () {
-            return this.content;
-        }
-    },
     watch: {
         content: function () {
             console.log(this.content);
             this.$emit('update:content', this.content);
+        }
+    },
+    methods: {
+        value: function () {
+            return this.content;
         }
     }
 };
@@ -44,18 +44,6 @@ export default {
 
 .markdown-editor-textarea {
     height: 100%;
-    padding: 0.5em;
-    font-size: 16px;
-    flex: 1;
-    outline: none;
-    resize: none;
-    border: 1px solid #aaaaaa;
-    box-sizing: border-box;
-}
-
-.markdown-editor-textarea:focus {
-    transition-duration: 0.3s;
-    border: 1px solid #000000;
 }
 
 .markdown-editor-view {

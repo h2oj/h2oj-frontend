@@ -6,6 +6,10 @@ Card.title
         router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}`")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
 Card.detail
+    p.section-title.inline 题目名称
+    TextField(v-model:value="title", ref="title").textfield.inline
+    p.section-title 难度标签
+    Selector()
     p.section-title 题目描述
     MarkdownEditor(v-model:content="content.description", ref="description")
     p.section-title 输入格式
@@ -21,6 +25,8 @@ import Card from '../components/Card.vue';
 import Tag from '../components/Tag.vue';
 import Button from '../components/Button.vue';
 import MarkdownEditor from '../components/MarkdownEditor.vue';
+import TextField from '../components/TextField.vue';
+import Selector from '../components/Selector.vue';
 import config from '../config';
 
 export default {
@@ -29,7 +35,9 @@ export default {
         Card,
         Tag,
         Button,
-        MarkdownEditor
+        MarkdownEditor,
+        TextField,
+        Selector
     },
     data: function () {
         return {
@@ -80,6 +88,18 @@ export default {
 <style scoped>
 .title {
     position: relative;
+}
+
+.inline {
+    display: inline-block !important;
+    margin-right: 1em;
+    margin-bottom: 0;
+}
+
+.textfield {
+    position: relative;
+    margin-bottom: -1em;
+    top: -0.2em;
 }
 
 .problem-title {

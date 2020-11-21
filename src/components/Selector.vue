@@ -1,14 +1,15 @@
 <template lang="pug">
-.dialog
+.selector
 </template>
 
 <script>
 export default {
-    name: 'Dialog',
-    props
+    name: 'Selector'
 };
 </script>
 
 <style scoped>
-
+.selector {
+    
+}
 </style>
