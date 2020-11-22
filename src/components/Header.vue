@@ -1,6 +1,6 @@
 <template lang="pug">
 .topbar
-    .topbar-left: p.topbar-title H<sub>2</sub> OJ
+    .topbar-left: p(@click="backToIndex()").topbar-title H<sub>2</sub> OJ
     .topbar-left
         ul.topbar-menubar
             router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === 1}")
@@ -37,6 +37,9 @@ export default {
         select: function (id, navigate) {
             this.selected = id;
             navigate();
+        },
+        backToIndex: function(){
+            window.location.href="/";
         },
         isLogin: function () {
             return this.$cookie.getCookie('hoj_token');

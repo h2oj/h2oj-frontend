@@ -71,7 +71,7 @@ export default {
 
 .index-title {
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 200;
     margin-top: 5px !important;
     margin-bottom: 5px !important;
 }

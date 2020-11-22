@@ -87,12 +87,12 @@ export default {
 <style scoped>
 .table-status {
     text-align: center;
-    width: 40px;
+    width: 80px;
 }
 
 .table-pid {
     text-align: left;
-    width: 70px;
+    width: 80px;
 }
 
 .table-title {
