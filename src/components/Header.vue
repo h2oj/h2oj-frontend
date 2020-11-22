@@ -34,7 +34,10 @@ export default {
         };
     },
     mounted: function () {
-        document.getElementById("topbarUsername").value=this.$cookie.getCookie('hoj_username');
+        if(this.$cookie.getCookie('hoj_username')!=undefined){
+            document.getElementById("topbarUsername").innerHTML=this.$cookie.getCookie('hoj_username');
+        }
+
     },
     methods: {
         select: function (id, navigate) {

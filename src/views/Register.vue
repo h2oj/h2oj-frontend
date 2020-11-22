@@ -54,6 +54,10 @@ export default {
                         window.location="/login";
                     }
                 }
+                if(xhr.status === 422){
+                    window.swal("错误" ,  "不合法的邮箱或用户名或用户已存在" ,  "error");
+                    return;
+                }
             };
             xhr.send('{"username":"'+username+'","password":"'+password+'","email":"'+email+'"}');
         }
