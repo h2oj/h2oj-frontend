@@ -126,6 +126,7 @@ export default {
 .table-title > a {
     text-decoration: none;
     color: #2f8bc9;
+    transition: color 0.25s;
 }
 
 .table-title > a:hover {

@@ -8077,6 +8077,11 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
+sweetalert2@10.x:
+  version "10.10.1"
+  resolved "https://registry.npm.taobao.org/sweetalert2/download/sweetalert2-10.10.1.tgz#47c46929eff4837c8296836aa169073bae418031"
+  integrity sha1-R8RpKe/0g3yCloNqoWkHO65BgDE=
+
 table@^5.2.3:
   version "5.4.6"
   resolved "https://r.cnpmjs.org/table/download/table-5.4.6.tgz#1292d19500ce3f86053b05f0e8e7e4a3bb21079e"
@@ -8589,6 +8594,11 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://r.cnpmjs.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha1-UylVzB6yCKPZkLOp+acFdGV+CPI=
 
+vue-layer@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/vue-layer/download/vue-layer-1.2.1.tgz#0f642baf3a8431e920dba2184475f57dd8363343"
+  integrity sha1-D2QrrzqEMekg26IYRHX1fdg2M0M=
+
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.7":
   version "16.0.0-rc.1"
   resolved "https://r.cnpmjs.org/vue-loader/download/vue-loader-16.0.0-rc.1.tgz#9c1f1684e2d01c8a72216f9d4db119e15c622645"
@@ -8621,6 +8631,13 @@ vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   dependencies:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
+
+vue-sweetalert2@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/vue-sweetalert2/download/vue-sweetalert2-4.1.1.tgz#77963821d798bbf95fd4567ccd55e8cc51c78463"
+  integrity sha1-d5Y4IdeYu/lf1FZ8zVXozFHHhGM=
+  dependencies:
+    sweetalert2 "10.x"
 
 vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
