@@ -1,8 +1,6 @@
 <template lang="pug">
 Card
-    p(style='font-size: 20px; margin: 0px') Hydrogen OJ Problem Set
-Card
-    DataGrid(:data="data", :load="getPageData", :pageCount="pageCount")
+    DataGrid(:data="[data]", :pageSelector="false")
         template(v-slot:head)
             th 序号
             th 用户名
@@ -15,14 +13,26 @@ Card
             th 上传时间
         template(v-slot:body="{ item }")
             td {{ item.sid }}
-            td {{ item.uid }}
-            td {{ item.pid }}
+            td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
+            td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
             td {{ item.status }}
             td {{ item.status }}
-            td {{ item.total_time }}
-            td {{ item.total_space }}
+            td {{ item.total_time + ' ms' }}
+            td {{ item.total_space + ' KiB' }}
             td {{ item.language }}
-            td {{ item.submit_time }}
+            td {{ moment(item.submit_time).format('MM/DD HH:mm:ss') }}
+Card
+    DataGrid(:data="test_case", :pageSelector="false")
+        template(v-slot:head)
+            th 测试点
+            th 状态
+            th 时间
+            th 内存
+        template(v-slot:body="{ item, index }")
+            td {{ '#' + index }}
+            td {{ item.status }}
+            td {{ item.time + ' ms' }}
+            td {{ item.space + ' KiB' }}
 </template>
 
 <script>
@@ -30,6 +40,7 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
+import moment from 'moment';
 
 export default {
     name: 'SubmissionList',
@@ -40,27 +51,22 @@ export default {
     },
     data: function () {
         return {
-            itemCount: 15,
-            pageCount: 5,
-            data: []
+            data: {},
+            test_case: [],
+            moment: moment
         };
     },
     mounted: function() {
-        this.getPageData(1);
-    },
-    methods: {
-        getPageData: function (page) {
-            let xhr = new XMLHttpRequest();
-            xhr.open('get', `${config.apiServer}/submission/list?page=${page}`, true);
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const res = JSON.parse(xhr.responseText);
-                    this.data = res.data.submissions;
-                    this.pageCount = res.data.page_count;
-                }
-            };
-            xhr.send();
-        }
+        let xhr = new XMLHttpRequest();
+        xhr.open('get', `${config.apiServer}/submission/detail?sid=${this.$route.params.sid}`, true);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const res = JSON.parse(xhr.responseText);
+                this.data = res.data;
+                this.test_case = res.data.detail.test_case;
+            }
+        };
+        xhr.send();
     }
 };
 </script>

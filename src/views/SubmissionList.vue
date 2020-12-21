@@ -14,7 +14,7 @@ Card
             th 语言
             th 上传时间
         template(v-slot:body="{ item }")
-            td {{ item.sid }}
+            td.table-link: router-link(:to="`/submission/${item.sid}`") {{ item.sid }}
             td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
             td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
             td {{ item.status }}
