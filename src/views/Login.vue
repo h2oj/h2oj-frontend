@@ -1,8 +1,10 @@
 <template lang="pug">
 Card
-    TextField(placeholder="用户名 / 邮箱", ref="username")
-    TextField(placeholder="密码", ref="password")
-    Button(@click="login()", text="登录")
+    p.index-title 登录
+    TextField#username.center(placeholder="用户名 / 邮箱", ref="username")
+    TextField#password.center(placeholder="密码", ref="password", type="password")
+    Button.login-button(@click="login()", text="登录")
+    p 没有帐号？#[a(href="/register") 注册]
 </template>
 
 <script>
@@ -10,6 +12,7 @@ import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import TextField from '../components/TextField';
 import config from '../config';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'Login',
@@ -20,17 +23,21 @@ export default {
     },
     methods: {
         login: function () {
-            const username = this.$refs['username'].value;
-            const password = this.$refs['password'].value;
-
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
             const xhr = new XMLHttpRequest();
             xhr.open('post', `${config.apiServer}/auth/signin`, false);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const res = JSON.parse(xhr.responseText);
+                    if(res.status === 1003 || res.status === 422){
+                        Swal.fire("错误" ,  "用户名或密码错误" ,  "error");
+                        return;
+                    }
                     this.$cookie.setCookie('hoj_token', res.data.token);
-                    window.location.reload();
+                    this.$cookie.setCookie('hoj_username', username);
+                    window.location="/";
                 }
             };
             xhr.send(JSON.stringify({
@@ -71,7 +78,7 @@ export default {
 
 .index-title {
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 200;
     margin-top: 5px !important;
     margin-bottom: 5px !important;
 }
@@ -79,5 +86,29 @@ export default {
 .index-info { 
     font-size: 15px;
     margin-bottom: 5px !important;
+}
+
+.login-button{
+    margin-top:10px;
+}
+
+.center {
+    text-align:center;
+    margin:auto;
+}
+
+a {
+    text-decoration: none;
+    color: #2f8bc9;
+    transition: color 0.25s;
+}
+a:hover {
+    color: #1b4f72;
+}
+a:active {
+    text-decoration: none;
+}
+a:visited{
+    text-decoration: none;
 }
 </style>

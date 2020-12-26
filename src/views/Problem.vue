@@ -17,7 +17,7 @@ Card.detail
         p.section-title 数据范围与提示
         MarkdownView(:content="content.constraint")
 Card
-    p IDE Area
+    p 提交答案
     MonacoEditor.editor
 </template>
 
@@ -67,9 +67,16 @@ export default {
 }
 
 .problem-title {
-    font-weight: bold;
+    font-weight: 400;
     margin: 0;
     font-size: 150%;
+}
+
+.problem-id {
+    font-size:25%;
+    font-weight: 100;
+    color:gray;
+    margin: 0;
 }
 
 .detail {
@@ -77,8 +84,8 @@ export default {
 }
 
 .section-title {
-    font-weight: bold;
-    font-size: 120%;
+    font-weight: 550;
+    font-size: 125%;
 }
 
 .editor {

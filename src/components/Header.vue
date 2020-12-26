@@ -15,7 +15,7 @@
         ul.topbar-menubar
             template(v-if="isLogin()")
                 router-link(custom, v-slot="{ navigate }", to="/user", :class="{'selected': selected === -1}")
-                    li(role="link", @click="select(-1, navigate)") 111
+                    li#topbarUsername.topbar-username(role="link", @click="select(-1, navigate)") 
                 router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === -2}")
                     li(role="link", @click="logout(); select(1, navigate)") 登出
             template(v-else)
@@ -33,16 +33,26 @@ export default {
             selected: 0
         };
     },
+    mounted: function () {
+        if(this.$cookie.getCookie('hoj_username')!=undefined){
+            document.getElementById("topbarUsername").innerHTML=this.$cookie.getCookie('hoj_username');
+        }
+
+    },
     methods: {
         select: function (id, navigate) {
             this.selected = id;
             navigate();
+        },
+        backToIndex: function(){
+            window.location.href="/";
         },
         isLogin: function () {
             return this.$cookie.getCookie('hoj_token');
         },
         logout: function () {
             this.$cookie.removeCookie('hoj_token');
+            this.$cookie.removeCookie('hoj_username');
         }
     }
 };

@@ -4,9 +4,9 @@ table.datagrid
         tr
             slot(name="head")
     tbody#datagrid
-        tr(v-for="(item, index) in data")
-            slot(name="body", :item="item", :index="index")
-div.page-selector(v-if="pageSelector")
+        tr(v-for="item in data")
+            slot(name="body", :item="item")
+div.page-selector
     li.page-top(@click="load(1)"): FontAwesomeIcon(icon="angle-double-left")
     li.page-last(@click="load(curPage - 1)"): FontAwesomeIcon(icon="angle-left")
     li(v-for="i in cntPage" @click="load(begPage + i - 1)", :class="{'selected': i + begPage - 1 === curPage}").page {{ i + begPage - 1 }}
@@ -33,10 +33,6 @@ export default {
         curPage: {
             type: Number,
             default: 1
-        },
-        pageSelector: {
-            type: Boolean,
-            default: true
         }
     },
     computed: {

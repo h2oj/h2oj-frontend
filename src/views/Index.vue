@@ -2,7 +2,7 @@
 .index-main
     .index-card
         .index-head.card.index-left 
-            p.index-title Welcome to Hydrongen OJ
+            p.index-title Welcome to #[strong Hydrogen] OJ.
     .index-card 
         .index-head.card.index-right.index-hitokoto
             p.index-title 一言
@@ -18,7 +18,7 @@ export default {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 const res = JSON.parse(xhr.responseText);
-                document.getElementById('hitokoto').innerHTML = `「${res.hitokoto}」 －${res.from}`;
+                document.getElementById('hitokoto').innerHTML = `「${res.hitokoto}」 <br/>———${res.from}`;
             }
         };
         xhr.send();
@@ -51,11 +51,12 @@ export default {
 .index-hitokoto {
     min-width: 30% !important;
     max-width: 50% !important;
+    text-align:right;
 }
 
 .index-title {
     font-size: 25px;
-    font-weight: bold;
+    font-weight: 200;
     margin-top: 5px !important;
     margin-bottom: 5px !important;
 }
@@ -63,5 +64,10 @@ export default {
 .index-info { 
     font-size: 15px;
     margin-bottom: 5px !important;
+}
+
+.center {
+    text-align:center;
+    margin:auto;
 }
 </style>
