@@ -17,8 +17,8 @@ Card.detail
         p.section-title 数据范围与提示
         MarkdownView(:content="content.constraint")
 Card
-    p IDE Area
-    MonacoEditor.editor
+    MonacoEditor.editor(ref="monaco")
+    Button(text="提交", @click="sumbitCode()")
 </template>
 
 <script>
@@ -57,6 +57,25 @@ export default {
             }
         };
         xhr.send();
+    },
+    methods: {
+        sumbitCode() {
+            //console.log(this.$refs['monaco']);
+            let xhr = new XMLHttpRequest();
+            xhr.open('post', `${config.apiServer}/submission/submit`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const res = JSON.parse(xhr.responseText);
+                    console.log(res);
+                }
+            };
+            xhr.send(JSON.stringify({
+                pid: this.$route.params.pid,
+                language: 'cpp98',
+                code: this.$refs['monaco'].getInstance().getValue()
+            }));
+        }
     }
 };
 </script>

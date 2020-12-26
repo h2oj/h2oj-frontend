@@ -18,9 +18,9 @@ Card
             td {{ item.status }}
             td {{ item.status }}
             td {{ item.total_time + ' ms' }}
-            td {{ item.total_space + ' KiB' }}
+            td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
-            td {{ moment(item.submit_time).format('MM/DD HH:mm:ss') }}
+            td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
 Card
     DataGrid(:data="test_case", :pageSelector="false")
         template(v-slot:head)
@@ -32,7 +32,7 @@ Card
             td {{ '#' + index }}
             td {{ item.status }}
             td {{ item.time + ' ms' }}
-            td {{ item.space + ' KiB' }}
+            td {{ (item.space / 1024) + ' KiB' }}
 </template>
 
 <script>
@@ -51,22 +51,27 @@ export default {
     },
     data: function () {
         return {
-            data: {},
+            data: { user: {}, problem: {} },
             test_case: [],
             moment: moment
         };
     },
     mounted: function() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('get', `${config.apiServer}/submission/detail?sid=${this.$route.params.sid}`, true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const res = JSON.parse(xhr.responseText);
-                this.data = res.data;
-                this.test_case = res.data.detail.test_case;
-            }
-        };
-        xhr.send();
+        this.getSubmissionData();
+    },
+    methods: {
+        getSubmissionData: function () {
+            let xhr = new XMLHttpRequest();
+            xhr.open('get', `${config.apiServer}/submission/detail?sid=${this.$route.params.sid}`, false);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    const res = JSON.parse(xhr.responseText);
+                    this.data = res.data;
+                    this.test_case = res.data.detail.test_case;
+                }
+            };
+            xhr.send();
+        }
     }
 };
 </script>

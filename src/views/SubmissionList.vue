@@ -20,9 +20,9 @@ Card
             td {{ item.status }}
             td {{ item.status }}
             td {{ item.total_time + ' ms' }}
-            td {{ item.total_space + ' KiB' }}
+            td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
-            td {{ moment(item.submit_time).format('MM/DD HH:mm:ss') }}
+            td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
 </template>
 
 <script>
