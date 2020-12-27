@@ -6,10 +6,12 @@ Card.title
         router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}`")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
 Card.detail
-    p.section-title.inline 题目名称
-    TextField(v-model:value="title", ref="title").textfield.inline
-    p.section-title 难度标签
-    Selector()
+    .block
+        p.section-title.inline 题目名称
+        TextField.inline-item.inline(v-model:value="title", ref="title")
+    .block
+        p.section-title.inline 难度标签
+        Selector.inline-item(:option="difficultyText", :cur="data.difficulty", style="width: 10em;", ref="difficulty")
     p.section-title 题目描述
     MarkdownEditor(v-model:content="content.description", ref="description")
     p.section-title 输入格式
@@ -44,17 +46,18 @@ export default {
         return {
             title: '',
             content: {},
-            data: []
+            data: {}
         };
     },
     created: function () {
         this.difficultyText = difficultyText;
-        
+
         let xhr = new XMLHttpRequest();
         xhr.open('get', `${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`, false);
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 const res = JSON.parse(xhr.responseText);
+                this.data = res.data;
                 this.content = res.data.content;
                 this.title = res.data.title;
             }
@@ -75,7 +78,8 @@ export default {
             console.log(this.content);
             xhr.send(JSON.stringify({
                 pid: this.$route.params.pid,
-                difficulty: 0,
+                title: this.title,
+                difficulty: this.$refs['difficulty'].getIndex(),
                 content: this.content
             }));
         },
@@ -98,10 +102,13 @@ export default {
     margin-bottom: 0;
 }
 
-.textfield {
+.block {
+    display: block;
+}
+
+.inline-item {
     position: relative;
     margin-bottom: -1em;
-    top: -0.2em;
 }
 
 .problem-title {

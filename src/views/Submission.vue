@@ -57,7 +57,7 @@ export default {
             moment: moment
         };
     },
-    mounted: function() {
+    mounted: function () {
         this.getSubmissionData();
     },
     methods: {

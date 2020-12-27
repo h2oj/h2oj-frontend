@@ -49,10 +49,10 @@ export default {
             data: []
         };
     },
-    created: function() {
+    created: function () {
         this.difficultyText = difficultyText;
     },
-    beforeMount: function() {
+    beforeMount: function () {
         this.getPageData(1);
     },
     methods: {

@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
+    faAngleDown,
     faWrench, faCheck, faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -40,6 +41,7 @@ const router = createRouter({
 library.add(
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
+    faAngleDown,
     faWrench, faCheck, faArrowLeft
 );
 
