@@ -34,7 +34,7 @@ export default {
         };
     },
     mounted: function () {
-        if(this.$cookie.getCookie('hoj_username')!=undefined){
+        if(this.$cookie.getCookie('hoj_username') != undefined){
             document.getElementById("topbarUsername").innerHTML=this.$cookie.getCookie('hoj_username');
         }
 
@@ -43,9 +43,6 @@ export default {
         select: function (id, navigate) {
             this.selected = id;
             navigate();
-        },
-        backToIndex: function(){
-            window.location.href="/";
         },
         isLogin: function () {
             return this.$cookie.getCookie('hoj_token');
