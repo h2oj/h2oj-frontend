@@ -4,7 +4,7 @@ Card
     TextField#username.center(placeholder="用户名 / 邮箱", ref="username")
     TextField#password.center(placeholder="密码", ref="password", type="password")
     Button.login-button(@click="login()", text="登录")
-    p 没有帐号？#[a(href="/register") 注册]
+    p 没有帐号？#[router-link(to="/register") 注册]
 </template>
 
 <script>
@@ -23,8 +23,8 @@ export default {
     },
     methods: {
         login: function () {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            const username = this.$refs['username'].value;
+            const password = this.$refs['password'].value;
             const xhr = new XMLHttpRequest();
             xhr.open('post', `${config.apiServer}/auth/signin`, false);
             xhr.setRequestHeader('Content-Type', 'application/json');
@@ -37,7 +37,6 @@ export default {
                     }
                     this.$cookie.setCookie('hoj_token', res.data.token);
                     this.$cookie.setCookie('hoj_username', username);
-                    window.location="/";
                 }
             };
             xhr.send(JSON.stringify({

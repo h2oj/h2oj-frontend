@@ -6,7 +6,7 @@ Card
     TextField#regpassword.center(placeholder="密码", ref="regpassword", type="password")
     TextField#regpasswordagain.center(placeholder="请再次输入密码", ref="regpasswordagain", type="password")
     Button.login-button(@click="login()", text="登录")
-    p 已经有账户了？去#[a(href="/login") 登录]
+    p 已经有账户了？去 #[router-link(to="/login") 登录]
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
             const password = document.getElementById("regpassword").value;
             const passwordagain = document.getElementById("regpasswordagain").value;
             const email = document.getElementById("regemail").value;
-            if(password!=passwordagain){
+            if(password != passwordagain){
                 Swal.fire("密码错误" ,  "您两次输入的密码不一致！" ,  "error");
                 return;
             }
@@ -52,7 +52,7 @@ export default {
                         return;
                     }
                     if(res.status === 200){
-                        window.location="/login";
+                        this.$router.push({path: '/login' });
                     }
                 }
                 if(xhr.status === 422){
