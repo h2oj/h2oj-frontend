@@ -1,6 +1,6 @@
 <template lang="pug">
 Card
-    p(style="font-size: 20px; margin: 0px") Hydrogen OJ Problem Set
+    p(style="font-size: 20px; margin: 0px") Hydrogen OJ 题库
     TextField(placeholder="ID / 题目").search-input#search-input
     Button(value="查找", @click="search()").search-button
 Card

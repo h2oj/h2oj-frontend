@@ -17,6 +17,7 @@ import ProblemEditor from './views/ProblemEditor.vue';
 import ProblemList from './views/ProblemList.vue';
 import Submission from './views/Submission.vue';
 import SubmissionList from './views/SubmissionList.vue';
+import ContestList from './views/ContestList.vue';
 import Login from './views/Login.vue';
 import config from './config';
 
@@ -27,7 +28,8 @@ const routes = [
     { path: '/problem/:pid/edit', component: ProblemEditor },
     { path: '/problem/:pid', component: Problem },
     { path: '/submission', component: SubmissionList },
-    { path: '/submission/:sid', component: Submission }
+    { path: '/submission/:sid', component: Submission },
+    { path: '/contest', component: ContestList }
 ];
 
 const router = createRouter({

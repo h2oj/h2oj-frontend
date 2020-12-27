@@ -1,7 +1,5 @@
 <template lang="pug">
 Card
-    p(style='font-size: 20px; margin: 0px') Hydrogen OJ Problem Set
-Card
     DataGrid(:data="data", :load="getPageData", :pageCount="pageCount")
         template(v-slot:head)
             th 序号
@@ -17,8 +15,8 @@ Card
             td.table-link: router-link(:to="`/submission/${item.sid}`") {{ item.sid }}
             td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
             td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
-            td {{ item.status }}
-            td {{ item.status }}
+            td(:class="`status-${item.status}`") {{ statusToText(item.status) }}
+            td(:class="`status-${item.status == 1 ? 1 : 3}`") {{ item.status == 1 ? 100 : 0 }}
             td {{ item.total_time + ' ms' }}
             td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
@@ -32,6 +30,8 @@ import Tag from '../components/Tag.vue';
 import config from '../config';
 import moment from 'moment';
 
+const statusText = ['Waiting', 'Accepted', 'Compile Error', 'Unaccepted'];
+
 export default {
     name: 'SubmissionList',
     components: {
@@ -43,14 +43,14 @@ export default {
         return {
             itemCount: 15,
             pageCount: 5,
-            data: [],
-            moment: moment
+            data: []
         };
     },
     mounted: function() {
         this.getPageData(1);
     },
     methods: {
+        moment: moment,
         getPageData: function (page) {
             let xhr = new XMLHttpRequest();
             xhr.open('get', `${config.apiServer}/submission/list?page=${page}`, true);
@@ -62,6 +62,9 @@ export default {
                 }
             };
             xhr.send();
+        },
+        statusToText: function (status) {
+            return statusText[status];
         }
     }
 };
@@ -75,5 +78,21 @@ export default {
 
 .table-link > a:hover {
     color: #1b4f72;
+}
+
+.status-0 {
+    color: #3498db !important;
+}
+
+.status-1 {
+    color: #52c41a !important;
+}
+
+.status-2 {
+    color: #ffc116 !important;
+}
+
+.status-3 {
+    color: #fe4c61 !important;
 }
 </style>
