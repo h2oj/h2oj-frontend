@@ -17,7 +17,7 @@ Card
             td.table-pid {{ item.pid }}
             td.table-title: router-link(:to="`/problem/${item.pid}`") {{ item.title }}
             td.table-tag: Tag(v-if="item.tag", :text="item.tag")
-            td.table-difficulty: Tag(:text="difficulty[item.difficulty]", :class="`tag-difficulty-${item.difficulty}`")
+            td.table-difficulty: Tag(:text="difficultyText[item.difficulty]", :class="`tag-difficulty-${item.difficulty}`")
             td.table-pass: Meter(:max="item.submit_count", :val="item.ac_count")
 </template>
 
@@ -29,6 +29,7 @@ import Meter from '../components/Meter.vue';
 import TextField from '../components/TextField.vue';
 import Button from '../components/Button.vue';
 import config from '../config';
+import { difficultyText } from '../const';
 
 export default {
     name: 'ProblemList',
@@ -45,9 +46,11 @@ export default {
             itemCount: 15,
             pageCount: 1,
             curPage: 1,
-            data: [],
-            difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC']
+            data: []
         };
+    },
+    created: function() {
+        this.difficultyText = difficultyText;
     },
     beforeMount: function() {
         this.getPageData(1);

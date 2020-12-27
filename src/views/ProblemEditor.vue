@@ -28,6 +28,7 @@ import MarkdownEditor from '../components/MarkdownEditor.vue';
 import TextField from '../components/TextField.vue';
 import Selector from '../components/Selector.vue';
 import config from '../config';
+import { difficultyText } from '../const';
 
 export default {
     name: 'ProblemEditor',
@@ -43,11 +44,12 @@ export default {
         return {
             title: '',
             content: {},
-            data: [],
-            difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC']
+            data: []
         };
     },
     created: function () {
+        this.difficultyText = difficultyText;
+        
         let xhr = new XMLHttpRequest();
         xhr.open('get', `${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`, false);
         xhr.onreadystatechange = () => {

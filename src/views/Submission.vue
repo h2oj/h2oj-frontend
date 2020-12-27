@@ -40,15 +40,8 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
+import { statusText, statusDetailText } from '../const';
 import moment from 'moment';
-
-const statusText = ['Waiting', 'Accepted', 'Compile Error', 'Unaccepted'];
-const statusDetailText = [
-    'Waiting', 'Accepted', 'Compile Error', 'File Error', 'Judgement Error',
-    'Memory Limit Exceeded', 'Output Limit Exceeded', 'Partially Correct',
-    'Runtime Error', 'System Error', 'Test Data Error', 'Time Limit Exceeded',
-    'Unknown Error', 'Wrong Answer'
-];
 
 export default {
     name: 'SubmissionList',

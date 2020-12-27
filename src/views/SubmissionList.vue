@@ -28,9 +28,8 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
+import { statusText } from '../const';
 import moment from 'moment';
-
-const statusText = ['Waiting', 'Accepted', 'Compile Error', 'Unaccepted'];
 
 export default {
     name: 'SubmissionList',
