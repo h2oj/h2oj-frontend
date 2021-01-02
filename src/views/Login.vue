@@ -42,7 +42,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .index-main { 
     display: flex;
     justify-content: space-around;
