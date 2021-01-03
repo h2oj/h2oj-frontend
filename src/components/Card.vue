@@ -16,6 +16,8 @@ export default {
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card:not(:last-child) {

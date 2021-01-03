@@ -44,7 +44,7 @@ body {
     margin-bottom: auto;
     display: flex;
     flex-direction: column;
-    padding: 50px;
+    padding: 50px 10%;
     justify-content: center;
 }
 
