@@ -27,10 +27,28 @@ export default {
             xhr.open('post', `${config.apiServer}/auth/signin`, false);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.readyState === 4) {
                     const res = JSON.parse(xhr.responseText);
-                    this.$cookie.setCookie('hoj_token', res.data.token);
-                    window.location.reload();
+                    if (xhr.status === 200) {
+                        if (res.status == 200) {
+                            this.$cookie.setCookie('hoj_token', res.data.token);
+                            this.$router.push('/');
+                        }
+                        else {
+                            this.$swal.fire({
+                                icon: 'error',
+                                title: `Error: ${res.status}`,
+                                text: res.info
+                            });
+                        }
+                    }
+                    else {
+                        this.$swal.fire({
+                            icon: 'error',
+                            title: `Server Error: ${res.status}`,
+                            text: res.info
+                        });
+                    }
                 }
             };
             xhr.send(JSON.stringify({

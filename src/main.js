@@ -10,6 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vue3Progress from 'vue3-progress';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 import App from './App.vue';
 import Index from './views/Index.vue';
@@ -54,6 +56,7 @@ app.use(Vue3Progress, {
     height: '3px',
     color: '#66ccff'
 });
+app.use(VueSweetalert2);
 app.component('FontAwesomeIcon', FontAwesomeIcon);
 app.mount('#app');
 
