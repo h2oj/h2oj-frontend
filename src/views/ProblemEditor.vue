@@ -11,7 +11,7 @@ Card.detail
         TextField.inline-item.inline(v-model:value="title", ref="title")
     .block
         p.section-title.inline 难度标签
-        Selector.inline-item(:option="difficultyText", :cur="data.difficulty", style="width: 10em;", ref="difficulty")
+        Selector.inline-item(:option="difficultyText", :current="data.difficulty", style="width: 10em;", ref="difficulty")
     p.section-title 题目描述
     MarkdownEditor(v-model:content="content.description", ref="description")
     p.section-title 输入格式
@@ -20,6 +20,11 @@ Card.detail
     MarkdownEditor(v-model:content="content.output", ref="output")
     p.section-title 数据范围与提示
     MarkdownEditor(v-model:content="content.constraint", ref="constraint")
+    p.section-title 样例数据
+    p.section-title 题目数据
+    Button(value="上传", @click="uploadData()")
+    Button(value="下载", @click="downloadData()")
+    p.detail 题目数据应以zip格式上传，具体要求请见 数据上传要求
 </template>
 
 <script>
@@ -31,6 +36,7 @@ import TextField from '../components/TextField.vue';
 import Selector from '../components/Selector.vue';
 import config from '../config';
 import { difficultyText } from '../const';
+import axios from 'axios';
 
 export default {
     name: 'ProblemEditor',
@@ -49,43 +55,61 @@ export default {
             data: {}
         };
     },
-    created: function () {
+    created: async function () {
         this.difficultyText = difficultyText;
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('get', `${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`, false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const res = JSON.parse(xhr.responseText);
-                this.data = res.data;
-                this.content = res.data.content;
-                this.title = res.data.title;
+        
+        await axios.get(`${config.apiServer}/problem/detail`, {
+            params: {
+                pid: this.$route.params.pid
             }
-        };
-        xhr.send();
+        }).then(res => {
+            this.data = res.data.data;
+            this.content = res.data.data.content;
+            this.title = res.data.data.title;
+        });
     },
     methods: {
         update: function () {
-            const xhr = new XMLHttpRequest();
-            xhr.open('post', `${config.apiServer}/problem/update`, false);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Authorization', this.$cookie.getCookie('hoj_token'));
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    //const res = JSON.parse(xhr.responseText);
-                }
-            };
-            console.log(this.content);
-            xhr.send(JSON.stringify({
+            axios.post(`${config.apiServer}/problem/update`, {
                 pid: this.$route.params.pid,
                 title: this.title,
                 difficulty: this.$refs['difficulty'].getIndex(),
                 content: this.content
-            }));
+            }, {
+                headers: {
+                    'Authorization': this.$cookie.getCookie('hoj_token')
+                }
+            }).then(res => {
+                this.data = res.data.data;
+                this.content = res.data.data.content;
+                this.title = res.data.data.title;
+            });
         },
         back: function (navigate) {
             this.update();
             navigate();
+        },
+        uploadData: function () {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', '.zip');
+            input.onchange = event => {
+                let formData = new FormData();
+                formData.append('pid', this.$route.params.pid);
+                formData.append('data', event.target.files[0]);
+                axios.post(`${config.apiServer}/problem/upload_data`, formData, {
+                    headers: {
+                        'Authorization': this.$cookie.getCookie('hoj_token'),
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(res => {
+                    console.log(res);
+                });
+            };
+            input.click();
+        },
+        downloadData: function () {
+            
         }
     }
 };

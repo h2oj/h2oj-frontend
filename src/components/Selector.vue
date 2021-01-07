@@ -26,6 +26,11 @@ export default {
             drop: false
         };
     },
+    watch: {
+        current: function (val) {
+            this.cur = val;
+        }
+    },
     methods: {
         handleDrop: function () {
             this.drop = !this.drop;
