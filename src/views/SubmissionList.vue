@@ -1,7 +1,5 @@
 <template lang="pug">
-Card
-    p(style='font-size: 20px; margin: 0px') Hydrogen OJ Problem Set
-Card
+Card(style="text-align: center;")
     DataGrid(:data="data", :load="getPageData", :pageCount="pageCount")
         template(v-slot:head)
             th 状态
@@ -11,12 +9,24 @@ Card
             th 难度
             th 通过率
         template(v-slot:body="{ item }")
+<<<<<<< HEAD
             td -
             td {{ item.pid }}
             td {{ item.title }}
             td: Tag(:text="item.tag")
             td: Tag(:text="item.difficulty")
             td {{ item.ac_count / item.submit_count }}
+=======
+            td.table-link: router-link(:to="`/submission/${item.sid}`") {{ item.sid }}
+            td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
+            td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
+            td(:class="`status-${item.status}`") {{ statusToText(item.status) }}
+            td(:class="`status-${item.status == 1 ? 1 : 3}`") {{ item.status == 1 ? 100 : 0 }}
+            td {{ item.total_time + ' ms' }}
+            td {{ (item.total_space / 1024) + ' KiB' }}
+            td {{ item.language }}
+            td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
+>>>>>>> upstream/main
 </template>
 
 <script>
@@ -24,6 +34,11 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
+<<<<<<< HEAD
+=======
+import { statusText } from '../const';
+import moment from 'moment';
+>>>>>>> upstream/main
 
 export default {
     name: 'ProblemList',
@@ -43,6 +58,7 @@ export default {
         this.getPageData(1);
     },
     methods: {
+        moment: moment,
         getPageData: function (page) {
             let xhr = new XMLHttpRequest();
             xhr.open('get', `${config.apiServer}/problem/list?page=${page}`, true);
@@ -54,6 +70,9 @@ export default {
                 }
             };
             xhr.send();
+        },
+        statusToText: function (status) {
+            return statusText[status];
         }
     }
 };
@@ -61,4 +80,26 @@ export default {
 
 <style scoped>
 
+<<<<<<< HEAD
+=======
+.table-link > a:hover {
+    color: #1b4f72;
+}
+
+.status-0 {
+    color: #3498db !important;
+}
+
+.status-1 {
+    color: #52c41a !important;
+}
+
+.status-2 {
+    color: #ffc116 !important;
+}
+
+.status-3 {
+    color: #fe4c61 !important;
+}
+>>>>>>> upstream/main
 </style>

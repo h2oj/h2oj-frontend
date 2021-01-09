@@ -13,11 +13,6 @@ export default {
             default: ''
         }
     },
-    data: function () {
-        return {
-            editor: null
-        };
-    },
     mounted: function () {
         this.editor = monaco.editor.create(this.$refs['monaco-editor'], {
             value: [
@@ -27,6 +22,11 @@ export default {
             ].join('\n'),
             language: 'cpp'
         });
+    },
+    methods: {
+        getInstance() {
+            return this.editor;
+        }
     }
 };
 </script>

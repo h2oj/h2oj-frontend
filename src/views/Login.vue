@@ -29,14 +29,39 @@ export default {
             xhr.open('post', `${config.apiServer}/auth/signin`, false);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.readyState === 4) {
                     const res = JSON.parse(xhr.responseText);
+<<<<<<< HEAD
                     if(res.status === 1003 || res.status === 422){
                         Swal.fire("错误" ,  "用户名或密码错误" ,  "error");
                         return;
                     }
                     this.$cookie.setCookie('hoj_token', res.data.token);
                     this.$cookie.setCookie('hoj_username', username);
+=======
+                    if (xhr.status === 200) {
+                        if (res.status == 200) {
+                            this.$cookie.setCookie('hoj_token', res.data.token);
+                            this.$cookie.setCookie('hoj_uid', res.data.uid);
+                            this.$router.push('/');
+                            this.$emit('login', res.data);
+                        }
+                        else {
+                            this.$swal.fire({
+                                icon: 'error',
+                                title: `Error: ${res.status}`,
+                                text: res.info
+                            });
+                        }
+                    }
+                    else {
+                        this.$swal.fire({
+                            icon: 'error',
+                            title: `Server Error: ${res.status}`,
+                            text: res.info
+                        });
+                    }
+>>>>>>> upstream/main
                 }
             };
             xhr.send(JSON.stringify({
@@ -48,7 +73,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .index-main { 
     display: flex;
     justify-content: space-around;
