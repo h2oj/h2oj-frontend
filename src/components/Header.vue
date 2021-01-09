@@ -13,15 +13,9 @@
                 li(role="link", @click="onItemSelect(4, navigate)") 记录
     .topbar-right
         ul.topbar-menubar
-<<<<<<< HEAD
-            template(v-if="isLogin()")
-                router-link(custom, v-slot="{ navigate }", to="/user", :class="{'selected': selected === -1}")
-                    li#topbarUsername.topbar-username(role="link", @click="select(-1, navigate)") 
-=======
             template(v-if="loginState")
                 router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`", :class="{'selected': selected === -1}")
                     li(role="link", @click="onItemSelect(-1, navigate)") {{ nickname }}
->>>>>>> upstream/main
                 router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === -2}")
                     li(role="link", @click="handleLogout(); onItemSelect(1, navigate)") 登出
             template(v-else)
@@ -63,11 +57,6 @@ export default {
             this.username = data.username;
             this.nickname = data.nickname;
         },
-<<<<<<< HEAD
-        logout: function () {
-            this.$cookie.removeCookie('hoj_token');
-            this.$cookie.removeCookie('hoj_username');
-=======
         handleLogout: function () {
             this.loginState = false;
             axios.post(`${config.apiServer}/problem/update`, {
@@ -92,7 +81,6 @@ export default {
                     });
                 }
             });
->>>>>>> upstream/main
         }
     }
 };

@@ -1,12 +1,4 @@
 <template lang="pug">
-<<<<<<< HEAD
-.index-main
-    .index-card
-        .index-head.card.index-left 
-            p.index-title Welcome to #[strong Hydrogen] OJ.
-    .index-card 
-        .index-head.card.index-right.index-hitokoto
-=======
 .container
     .container-left
         Card
@@ -27,7 +19,6 @@
                 p.calendar-date(ref="calendar-date") 2021 年 1 月
                 p.calendar-luner(ref="calendar-lunar") 庚子年 十一月小 十九
         Card
->>>>>>> upstream/main
             p.index-title 一言
             div.hitokoto
                 p.hitokoto-detail(ref="hitokoto-detail") 今天也是元气满满的一天呢！
@@ -48,19 +39,10 @@ export default {
         Card
     },
     mounted: function () {
-<<<<<<< HEAD
-        let xhr = new XMLHttpRequest();
-        xhr.open('get', 'https://v1.hitokoto.cn/?c=k&c=d&encode=json', true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const res = JSON.parse(xhr.responseText);
-                document.getElementById('hitokoto').innerHTML = `「${res.hitokoto}」 <br/>———${res.from}`;
-=======
         axios.get('https://v1.hitokoto.cn/', {
             params: {
                 c: 'k',
                 encode: 'json'
->>>>>>> upstream/main
             }
         }).then(res => {
             this.$refs['hitokoto-detail'].innerHTML = res.data.hitokoto;
@@ -90,19 +72,6 @@ p {
     margin-right: 20px;
 }
 
-<<<<<<< HEAD
-.index-hitokoto {
-    min-width: 30% !important;
-    max-width: 50% !important;
-    text-align:right;
-}
-
-.index-title {
-    font-size: 25px;
-    font-weight: 200;
-    margin-top: 5px !important;
-    margin-bottom: 5px !important;
-=======
 .container-right {
     flex: 1;
 }
@@ -128,7 +97,6 @@ p {
 
 .calendar > p {
     text-align: center;
->>>>>>> upstream/main
 }
 
 .calendar-day {

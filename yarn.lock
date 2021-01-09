@@ -8095,15 +8095,9 @@ svgo@^1.0.0:
     util.promisify "~1.0.0"
 
 sweetalert2@10.x:
-<<<<<<< HEAD
-  version "10.10.1"
-  resolved "https://registry.npm.taobao.org/sweetalert2/download/sweetalert2-10.10.1.tgz#47c46929eff4837c8296836aa169073bae418031"
-  integrity sha1-R8RpKe/0g3yCloNqoWkHO65BgDE=
-=======
   version "10.13.0"
   resolved "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.13.0.tgz#fd3c25ae511c36608d205aa020214508641ebd45"
   integrity sha512-kF6Pnr7s7GDqVYRqqgyfxvG5vlUqfP+j+JF7oZ7DOs0/35jg6sTu8hyi6oD6Rb3fIKWIf1S9mCU7wR8iKa7dAA==
->>>>>>> upstream/main
 
 table@^5.2.3:
   version "5.4.6"
@@ -8652,13 +8646,8 @@ vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
 
 vue-sweetalert2@^4.1.1:
   version "4.1.1"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/vue-sweetalert2/download/vue-sweetalert2-4.1.1.tgz#77963821d798bbf95fd4567ccd55e8cc51c78463"
-  integrity sha1-d5Y4IdeYu/lf1FZ8zVXozFHHhGM=
-=======
   resolved "https://registry.npmjs.org/vue-sweetalert2/-/vue-sweetalert2-4.1.1.tgz#77963821d798bbf95fd4567ccd55e8cc51c78463"
   integrity sha512-9ytddeXkjixIGzUxgmVAVdIOrbPiWcjEPQuO3mEPq4zc8clbQbhOn192zvYUdcM0SbRPzbafyXTFx9mNMNJzQA==
->>>>>>> upstream/main
   dependencies:
     sweetalert2 "10.x"
 

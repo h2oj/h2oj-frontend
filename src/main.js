@@ -36,14 +36,10 @@ const routes = [
     { path: '/register', component : Register},
     { path: '/problem', component: ProblemList },
     { path: '/problem/:pid/edit', component: ProblemEditor },
-<<<<<<< HEAD
-    { path: '/problem/:pid', component: Problem }
-=======
     { path: '/problem/:pid', component: Problem },
     { path: '/submission', component: SubmissionList },
     { path: '/submission/:sid', component: Submission },
     { path: '/user/:uid', component: User }
->>>>>>> upstream/main
 ];
 
 const router = createRouter({

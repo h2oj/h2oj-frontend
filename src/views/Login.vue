@@ -31,14 +31,6 @@ export default {
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {
                     const res = JSON.parse(xhr.responseText);
-<<<<<<< HEAD
-                    if(res.status === 1003 || res.status === 422){
-                        Swal.fire("错误" ,  "用户名或密码错误" ,  "error");
-                        return;
-                    }
-                    this.$cookie.setCookie('hoj_token', res.data.token);
-                    this.$cookie.setCookie('hoj_username', username);
-=======
                     if (xhr.status === 200) {
                         if (res.status == 200) {
                             this.$cookie.setCookie('hoj_token', res.data.token);
@@ -61,7 +53,6 @@ export default {
                             text: res.info
                         });
                     }
->>>>>>> upstream/main
                 }
             };
             xhr.send(JSON.stringify({

@@ -9,14 +9,6 @@ Card(style="text-align: center;")
             th 难度
             th 通过率
         template(v-slot:body="{ item }")
-<<<<<<< HEAD
-            td -
-            td {{ item.pid }}
-            td {{ item.title }}
-            td: Tag(:text="item.tag")
-            td: Tag(:text="item.difficulty")
-            td {{ item.ac_count / item.submit_count }}
-=======
             td.table-link: router-link(:to="`/submission/${item.sid}`") {{ item.sid }}
             td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
             td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
@@ -26,7 +18,6 @@ Card(style="text-align: center;")
             td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
             td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
->>>>>>> upstream/main
 </template>
 
 <script>
@@ -34,11 +25,8 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
-<<<<<<< HEAD
-=======
 import { statusText } from '../const';
 import moment from 'moment';
->>>>>>> upstream/main
 
 export default {
     name: 'ProblemList',
@@ -80,8 +68,6 @@ export default {
 
 <style scoped>
 
-<<<<<<< HEAD
-=======
 .table-link > a:hover {
     color: #1b4f72;
 }
@@ -101,5 +87,4 @@ export default {
 .status-3 {
     color: #fe4c61 !important;
 }
->>>>>>> upstream/main
 </style>

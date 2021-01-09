@@ -17,13 +17,8 @@ Card.detail
         p.section-title 数据范围与提示
         MarkdownView(:content="content.constraint")
 Card
-<<<<<<< HEAD
-    p 提交答案
-    MonacoEditor.editor
-=======
     MonacoEditor.editor(ref="monaco")
     Button(text="提交", @click="sumbitCode()")
->>>>>>> upstream/main
 </template>
 
 <script>
