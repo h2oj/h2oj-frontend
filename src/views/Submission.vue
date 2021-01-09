@@ -1,5 +1,5 @@
 <template lang="pug">
-Card
+Card(style="text-align: center;")
     DataGrid(:data="[data]", :pageSelector="false")
         template(v-slot:head)
             th 序号
@@ -21,7 +21,7 @@ Card
             td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
             td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
-Card
+Card(style="text-align: center;")
     DataGrid(:data="test_case", :pageSelector="false")
         template(v-slot:head)
             th 测试点

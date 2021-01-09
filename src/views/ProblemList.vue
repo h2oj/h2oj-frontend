@@ -1,5 +1,5 @@
 <template lang="pug">
-Card
+Card.center
     p(style="font-size: 20px; margin: 0px") Hydrogen OJ 题库
     TextField(placeholder="ID / 题目").search-input#search-input
     Button(value="查找", @click="search()").search-button
@@ -88,6 +88,10 @@ export default {
 </script>
 
 <style scoped>
+.center {
+    text-align: center;
+}
+
 .table-status {
     text-align: center;
     width: 40px;

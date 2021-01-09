@@ -1,5 +1,5 @@
 <template lang="pug">
-Card
+Card(style="text-align: center;")
     DataGrid(:data="data", :load="getPageData", :pageCount="pageCount")
         template(v-slot:head)
             th 序号

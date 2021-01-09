@@ -3,8 +3,8 @@ Card.info
     .info-left
         img.avatar(:src="avatar")
     .info-right
-        p {{ nickname }}
-        p {{ description }}
+        p.nickname {{ nickname }}
+        p.description {{ description }}
 Card
     MarkdownView(:content="information")
 </template>
@@ -16,7 +16,7 @@ import config from '../config';
 import axios from 'axios';
 
 export default {
-    name: 'Index',
+    name: 'User',
     components: {
         Card,
         MarkdownView
@@ -24,7 +24,9 @@ export default {
     data: function () {
         return {
             avatar: '',
-            nickname: ''
+            nickname: '',
+            description: '',
+            information: ''
         };
     },
     created: async function () {
@@ -54,11 +56,22 @@ p {
 }
 
 .info-left {
-    width: 5em;
+    width: 6em;
+    height: 6em;
 }
 
 .avatar {
-    width: 5em;
-    height: 5em;
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+}
+
+.info-right {
+    height: fit-content;
+    margin: auto 0em 1em 1em;
+}
+
+.nickname {
+    font-size: 180%;
 }
 </style>
