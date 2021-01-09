@@ -32,7 +32,9 @@ export default {
                     if (xhr.status === 200) {
                         if (res.status == 200) {
                             this.$cookie.setCookie('hoj_token', res.data.token);
+                            this.$cookie.setCookie('hoj_uid', res.data.uid);
                             this.$router.push('/');
+                            this.$emit('login', res.data);
                         }
                         else {
                             this.$swal.fire({

@@ -1,8 +1,8 @@
 <template lang="pug">
 vue3-progress
-Header
+Header(ref="header")
 .container-main
-    router-view
+    router-view(@login="handleLogin")
 Footer
 </template>
 
@@ -30,6 +30,11 @@ export default {
         this.$router.afterEach((to, from) => {
             this.$progress.finish();
         });
+    },
+    methods: {
+        handleLogin: function (data) {
+            this.$refs['header'].handleLogin(data);
+        }
     }
 };
 </script>
