@@ -75,6 +75,7 @@ export default {
 }
 
 .selector-list > ul {
+    z-index: 1;
     position: absolute;
     box-sizing: border-box;
     width: 100%;

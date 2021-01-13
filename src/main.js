@@ -23,6 +23,7 @@ import ProblemList from './views/ProblemList.vue';
 import Submission from './views/Submission.vue';
 import SubmissionList from './views/SubmissionList.vue';
 import User from './views/User.vue';
+import UserSettings from './views/UserSettings.vue';
 
 import config from './config';
 
@@ -35,6 +36,7 @@ const routes = [
     { path: '/submission', component: SubmissionList },
     { path: '/submission/:sid', component: Submission },
     { path: '/user/:uid', component: User },
+    { path: '/user/settings', component: UserSettings },
     { path: '/:catchAll(.*)', component: Page404 }
 ];
 

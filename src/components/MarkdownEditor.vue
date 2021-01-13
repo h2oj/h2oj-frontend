@@ -43,6 +43,7 @@ export default {
 }
 
 .markdown-editor-textarea {
+    flex: 1;
     height: 100%;
 }
 
@@ -53,5 +54,6 @@ export default {
     border: 1px solid #aaaaaa;
     border-left: none;
     box-sizing: border-box;
+    overflow-y: scroll;
 }
 </style>
