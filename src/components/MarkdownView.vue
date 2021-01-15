@@ -36,5 +36,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.markdown-view * {
+    max-width: 100%;
+    position: relative;
+}
 </style>

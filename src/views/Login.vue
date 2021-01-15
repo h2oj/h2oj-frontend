@@ -35,6 +35,7 @@ export default {
                         if (res.status == 200) {
                             this.$cookie.setCookie('hoj_token', res.data.token);
                             this.$cookie.setCookie('hoj_uid', res.data.uid);
+                            this.$cookie.setCookie('hoj_nickname', res.data.nickname);
                             this.$router.push('/');
                             this.$emit('login', res.data);
                         }

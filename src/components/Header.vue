@@ -36,15 +36,15 @@ export default {
             selected: 0,
             loginState: false,
             uid: 0,
-            username: '',
             nickname: ''
         };
     },
-    mounted: function () {
-        if(this.$cookie.getCookie('hoj_username') != undefined){
-            document.getElementById("topbarUsername").innerHTML=this.$cookie.getCookie('hoj_username');
+    created: function () {
+        if (this.$cookie.getCookie('hoj_token')) {
+            this.loginState = true;
+            this.uid = this.$cookie.getCookie('hoj_uid');
+            this.nickname = this.$cookie.getCookie('hoj_nickname');
         }
-
     },
     methods: {
         onItemSelect: function (id, navigate) {
@@ -54,17 +54,11 @@ export default {
         handleLogin: function (data) {
             this.loginState = true;
             this.uid = data.uid;
-            this.username = data.username;
             this.nickname = data.nickname;
         },
         handleLogout: function () {
             this.loginState = false;
-            axios.post(`${config.apiServer}/problem/update`, {
-                pid: this.$route.params.pid,
-                title: this.title,
-                difficulty: this.$refs['difficulty'].getIndex(),
-                content: this.content
-            }, {
+            axios.get(`${config.apiServer}/auth/signout`, {
                 headers: {
                     'Authorization': this.$cookie.getCookie('hoj_token')
                 }
@@ -72,6 +66,7 @@ export default {
                 if (res.data.status == 200) {
                     this.$cookie.removeCookie('hoj_token');
                     this.$cookie.removeCookie('hoj_uid');
+                    this.$cookie.removeCookie('hoj_nickname');
                 }
                 else {
                     this.$swal.fire({

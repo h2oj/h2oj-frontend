@@ -17,8 +17,8 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 import App from './App.vue';
 import Index from './views/Index.vue';
-import ContestList from './views/ContestList.vue';
 import Login from './views/Login.vue';
+import Page404 from './views/404.vue';
 import Problem from './views/Problem.vue';
 import ProblemEditor from './views/ProblemEditor.vue';
 import ProblemList from './views/ProblemList.vue';
@@ -26,12 +26,12 @@ import Register from './views/Register.vue';
 import Submission from './views/Submission.vue';
 import SubmissionList from './views/SubmissionList.vue';
 import User from './views/User.vue';
+import UserSettings from './views/UserSettings.vue';
 
 import config from './config';
 
 const routes = [
     { path: '/', component: Index },
-    { path: '/contest', component: ContestList },
     { path: '/login', component: Login },
     { path: '/register', component : Register},
     { path: '/problem', component: ProblemList },
@@ -39,7 +39,9 @@ const routes = [
     { path: '/problem/:pid', component: Problem },
     { path: '/submission', component: SubmissionList },
     { path: '/submission/:sid', component: Submission },
-    { path: '/user/:uid', component: User }
+    { path: '/user/:uid', component: User },
+    { path: '/user/settings', component: UserSettings },
+    { path: '/:catchAll(.*)', component: Page404 }
 ];
 
 const router = createRouter({
