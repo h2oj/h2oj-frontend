@@ -94,12 +94,12 @@ export default {
 
 .table-status {
     text-align: center;
-    width: 40px;
+    width: 80px;
 }
 
 .table-pid {
     text-align: left;
-    width: 70px;
+    width: 80px;
 }
 
 .table-title {
@@ -133,6 +133,7 @@ export default {
 .table-title > a {
     text-decoration: none;
     color: #2f8bc9;
+    transition: color 0.25s;
 }
 
 .table-title > a:hover {

@@ -19,7 +19,6 @@
     "github-markdown-css": "^4.0.0",
     "markdown-it": "^12.0.2",
     "markdown-it-katex": "^2.0.3",
-    "moment": "^2.29.1",
     "monaco-editor": "^0.21.2",
     "pug": "^3.0.0",
     "solarlunar": "^2.0.7",
