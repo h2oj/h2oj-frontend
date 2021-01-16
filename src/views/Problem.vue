@@ -86,16 +86,9 @@ export default {
 }
 
 .problem-title {
-    font-weight: 400;
+    font-weight: bold;
     margin: 0;
     font-size: 150%;
-}
-
-.problem-id {
-    font-size:25%;
-    font-weight: 100;
-    color:gray;
-    margin: 0;
 }
 
 .detail {
@@ -103,8 +96,8 @@ export default {
 }
 
 .section-title {
-    font-weight: 550;
-    font-size: 125%;
+    font-weight: bold;
+    font-size: 120%;
 }
 
 .editor {

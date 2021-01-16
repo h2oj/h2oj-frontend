@@ -103,9 +103,4 @@ p {
     font-size: 500%;
     margin-top: -0.2em !important;
 }
-
-.center {
-    text-align:center;
-    margin:auto;
-}
 </style>
