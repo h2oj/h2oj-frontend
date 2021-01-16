@@ -34,6 +34,7 @@ export default {
                             this.$cookie.setCookie('hoj_token', res.data.token);
                             this.$cookie.setCookie('hoj_uid', res.data.uid);
                             this.$cookie.setCookie('hoj_nickname', res.data.nickname);
+                            this.$cookie.setCookie('hoj_avatar', res.data.avatar);
                             this.$router.push('/');
                             this.$emit('login', res.data);
                         }

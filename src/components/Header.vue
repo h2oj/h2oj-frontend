@@ -1,7 +1,8 @@
 <template lang="pug">
 .topbar
-    .topbar-left: p.topbar-title H<sub>2</sub> OJ
-    .topbar-left
+    div
+        p.topbar-title H<sub>2</sub> OJ
+    div(style="flex: 1; height: 100%;")
         ul.topbar-menubar
             router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === 1}")
                 li(role="link", @click="onItemSelect(1, navigate)") 首页
@@ -11,18 +12,22 @@
                 li(role="link", @click="onItemSelect(3, navigate)") 比赛
             router-link(custom, v-slot="{ navigate }", to="/submission", :class="{'selected': selected === 4}")
                 li(role="link", @click="onItemSelect(4, navigate)") 记录
-    .topbar-right
-        ul.topbar-menubar
-            template(v-if="loginState")
-                router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`", :class="{'selected': selected === -1}")
-                    li(role="link", @click="onItemSelect(-1, navigate)") {{ nickname }}
-                router-link(custom, v-slot="{ navigate }", to="/", :class="{'selected': selected === -2}")
-                    li(role="link", @click="handleLogout(); onItemSelect(1, navigate)") 登出
-            template(v-else)
-                router-link(custom, v-slot="{ navigate }", to="/login", :class="{'selected': selected === -1}")
-                    li(role="link", @click="onItemSelect(-1, navigate)") 登录
-    .topbar-user
-        .topbar-avatar
+    div
+        template(v-if="loginState")
+            .avatar-div(@mouseenter="handleChangeShow()", @mouseleave="handleChangeShow()")
+                router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`")
+                    img.avatar(role="link", :src="avatar", @click="onItemSelect(-1, navigate)")
+                .user-panel(:class="{'hidden': !show}")
+                    ul.user-list
+                        router-link(custom, v-slot="{ navigate }", to="/user/settings")
+                            li(role="link", @click="onItemSelect(-1, navigate)") 账号设置
+                        router-link(custom, v-slot="{ navigate }", to="/")
+                            li(role="link", @click="handleLogout(); onItemSelect(-1, navigate)") 退出
+        template(v-else)
+            router-link(custom, v-slot="{ navigate }", to="/login", :class="{'selected': selected === 101}")
+                li(role="link", @click="onItemSelect(101, navigate)") 登录
+            router-link(custom, v-slot="{ navigate }", to="/register", :class="{'selected': selected === 102}")
+                li(role="link", @click="onItemSelect(102, navigate)") 注册
 </template>
 
 <script>
@@ -36,7 +41,9 @@ export default {
             selected: 0,
             loginState: false,
             uid: 0,
-            nickname: ''
+            nickname: '',
+            avatar: '',
+            show: false
         };
     },
     created: function () {
@@ -44,6 +51,7 @@ export default {
             this.loginState = true;
             this.uid = this.$cookie.getCookie('hoj_uid');
             this.nickname = this.$cookie.getCookie('hoj_nickname');
+            this.avatar = this.$cookie.getCookie('hoj_avatar');
         }
     },
     methods: {
@@ -67,6 +75,7 @@ export default {
                     this.$cookie.removeCookie('hoj_token');
                     this.$cookie.removeCookie('hoj_uid');
                     this.$cookie.removeCookie('hoj_nickname');
+                    this.$cookie.removeCookie('hoj_avatar');
                 }
                 else {
                     this.$swal.fire({
@@ -76,6 +85,9 @@ export default {
                     });
                 }
             });
+        },
+        handleChangeShow: function () {
+            this.show = !this.show;
         }
     }
 };
@@ -83,33 +95,24 @@ export default {
 
 <style scoped>
 .topbar {
+    display: flex;
     position: sticky;
     z-index: 1;
     top: 0px;
     height: 50px;
-    line-height: 50px;
     background-color: #293333;
     color: #f0f0f0;
     /* box-shadow: 0 0 5px 0px black; */
     font-size: 150%;
     font-weight: 100;
     font-family: 'microsoft yahei';
-}
-
-.topbar-left {
-    float: left;
-    height: 100%;
-}
-
-.topbar-right {
-    float: right;
-    height: 100%;
+    align-items: center;
 }
 
 .topbar-title {
     display: inline-block;
     margin: 0em 1.5em;
-    height: 100%;
+    height: 1em;
 }
 
 .topbar-menubar {
@@ -142,5 +145,44 @@ export default {
 .selected {
     border-top: #7c8cfc solid 3px !important;
     background-color: #111414 !important;
+}
+
+.avatar-div {
+    margin-right: 1em;
+    height: 1.5em;
+}
+
+.avatar {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+}
+
+.user-panel {
+    opacity: 1;
+    position: fixed;
+    width: 5em;
+    right: 0.5em;
+    padding: 0.5em;
+    background-color: #ffffff;
+    color: #2c3e50;
+    transition: 0.3s ease all;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.user-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 65%;
+    line-height: 1.5em;
+}
+
+.user-list > li:hover {
+    color: #000000;
 }
 </style>
