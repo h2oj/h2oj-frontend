@@ -122,7 +122,6 @@ export default {
 
 .inline {
     display: inline-block !important;
-    margin-right: 1em;
     margin-bottom: 0;
 }
 
@@ -148,6 +147,7 @@ export default {
 .section-title {
     font-weight: bold;
     font-size: 120%;
+    min-width: 5em;
 }
 
 .editor {

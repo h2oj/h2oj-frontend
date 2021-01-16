@@ -12,6 +12,6 @@ const statusDetailText = [
     'Unknown Error', 'Wrong Answer'
 ];
 
-const sexText = ['男', '女', '其它'];
+const sexText = ['其他', '男', '女'];
 
 export { difficultyText, statusText, statusDetailText, sexText };
