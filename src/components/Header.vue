@@ -18,6 +18,7 @@
                 router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`")
                     img.avatar(role="link", :src="avatar", @click="onItemSelect(-1, navigate)")
                 .user-panel(:class="{'hidden': !show}")
+                    p.user-name {{ nickname }}
                     ul.user-list
                         router-link(custom, v-slot="{ navigate }", to="/user/settings")
                             li(role="link", @click="onItemSelect(-1, navigate)") 账号设置
@@ -167,6 +168,7 @@ export default {
     background-color: #ffffff;
     color: #2c3e50;
     transition: 0.3s ease all;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
 }
 
 .hidden {
@@ -184,5 +186,14 @@ export default {
 
 .user-list > li:hover {
     color: #000000;
+}
+
+.user-name {
+    font-size: 65%;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.2em;
 }
 </style>
