@@ -53,6 +53,7 @@ export default {
             avatar: '',
             username: '',
             nickname: '',
+            sex: 0,
             description: '',
             information: ''
         };
@@ -68,6 +69,7 @@ export default {
             this.uid = res.data.data.uid;
             this.nickname = res.data.data.nickname;
             this.username = res.data.data.username;
+            this.sex = res.data.data.sex;
             this.avatar = res.data.data.avatar;
             this.description = res.data.data.description;
             this.information = res.data.data.information;
@@ -78,6 +80,7 @@ export default {
         update: function () {
             axios.post(`${config.apiServer}/user/update`, {
                 nickname: this.nickname,
+                sex: this.$refs['sex'].getIndex(),
                 avatar: this.avatar,
                 description: this.description,
                 information: this.information,
@@ -87,6 +90,7 @@ export default {
                 }
             }).then(res => {
                 this.nickname = res.data.data.nickname;
+                this.sex = res.data.data.sex;
                 this.avatar = res.data.data.avatar;
                 this.description = res.data.data.description;
                 this.information = res.data.data.information;
