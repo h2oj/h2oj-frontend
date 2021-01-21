@@ -12,8 +12,8 @@
                 li(role="link", @click="onItemSelect(3, navigate)") 比赛
             router-link(custom, v-slot="{ navigate }", to="/submission", :class="{'selected': selected === 4}")
                 li(role="link", @click="onItemSelect(4, navigate)") 记录
-    div
-        template(v-if="loginState")
+    template(v-if="loginState")
+        div
             .avatar-div(@mouseenter="handleChangeShow()", @mouseleave="handleChangeShow()")
                 router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`")
                     img.avatar(role="link", :src="avatar", @click="onItemSelect(-1, navigate)")
@@ -24,11 +24,12 @@
                             li(role="link", @click="onItemSelect(-1, navigate)") 账号设置
                         router-link(custom, v-slot="{ navigate }", to="/")
                             li(role="link", @click="handleLogout(); onItemSelect(-1, navigate)") 退出
-        template(v-else)
-            router-link(custom, v-slot="{ navigate }", to="/login", :class="{'selected': selected === 101}")
-                li(role="link", @click="onItemSelect(101, navigate)") 登录
-            router-link(custom, v-slot="{ navigate }", to="/register", :class="{'selected': selected === 102}")
-                li(role="link", @click="onItemSelect(102, navigate)") 注册
+    template(v-else)
+        .login
+            router-link(custom, v-slot="{ navigate }", to="/login")
+                li(role="link", @click="onItemSelect(-1, navigate)") 登录
+            router-link(custom, v-slot="{ navigate }", to="/register")
+                li(role="link", @click="onItemSelect(-1, navigate)") 注册
 </template>
 
 <script>
@@ -195,5 +196,18 @@ export default {
     width: 100%;
     text-align: center;
     margin-bottom: 0.2em;
+}
+
+.login {
+    font-size: 65%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-right: 1em;
+}
+
+.login > li {
+    margin: 0 0.5em;
 }
 </style>

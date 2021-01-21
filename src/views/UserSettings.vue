@@ -94,6 +94,8 @@ export default {
                 this.avatar = res.data.data.avatar;
                 this.description = res.data.data.description;
                 this.information = res.data.data.information;
+                this.$cookie.setCookie('hoj_nickname', this.nickname);
+                this.$cookie.setCookie('hoj_avatar', this.avatar);
             });
         },
         back: function (navigate) {
