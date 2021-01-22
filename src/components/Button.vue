@@ -21,11 +21,11 @@ export default {
     padding: 5px 8px;
     border: none;
     color: #f0f0f0;
-    background-color: #7c8cfc;
+    background-color: #293333;
+    transition-duration: 0.3s;
 }
 
 .button:hover {
-    transition-duration: 0.3s;
-    background-color: #616cbe;
+    background-color: #111414;
 }
 </style>

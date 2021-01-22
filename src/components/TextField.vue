@@ -1,5 +1,5 @@
 <template lang="pug">
-input(type="text", :placeholder="placeholder", v-model="value").textfield
+input(:type="password ? 'password': 'text'", :placeholder="placeholder", v-model="value").textfield
 </template>
 
 <script>
@@ -13,6 +13,10 @@ export default {
         value: {
             type: String,
             default: ''
+        },
+        password: {
+            type: Boolean,
+            default: false
         }
     },
     watch: {

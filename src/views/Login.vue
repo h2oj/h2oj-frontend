@@ -1,8 +1,14 @@
 <template lang="pug">
-Card
-    TextField(placeholder="用户名 / 邮箱", ref="username")
-    TextField(placeholder="密码", ref="password")
-    Button(@click="login()", text="登录")
+Card.card
+    TextField.center(placeholder="用户名", ref="username")
+    TextField.center(v-if="!isSignIn", placeholder="邮箱", ref="email")
+    TextField.center(placeholder="密码", ref="password", password)
+    TextField.center(v-if="!isSignIn", placeholder="重复密码", ref="repassword", password)
+    TextField.center(v-if="!isSignIn", placeholder="请输入下方的分子式", title="例：C6H12O6", ref="captcha")
+    img.captcha.center(v-if="!isSignIn", :src="captcha")
+    .center
+        Button.space-after.button(@click="handleSubmit()", :text="isSignIn ? '登录' : '注册'", ref="signin")
+        a.text(@click="handleChangeState()", :text="isSignIn ? '没有账号?' : '已有账号?'", ref="signup")
 </template>
 
 <script>
@@ -10,6 +16,8 @@ import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
 import TextField from '../components/TextField';
 import config from '../config';
+import axios from 'axios';
+import { Base64 } from 'js-base64';
 
 export default {
     name: 'Login',
@@ -18,53 +26,96 @@ export default {
         TextField,
         Button
     },
-    methods: {
-        login: function () {
-            const username = this.$refs['username'].value;
-            const password = this.$refs['password'].value;
+    data: function () {
+        return {
+            isSignIn: 0,
+            captcha: '',
+            captchaToken: ''
+        };
+    },
+    created: function () {
+        this.isSignIn = true;
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('post', `${config.apiServer}/auth/signin`, false);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4) {
-                    const res = JSON.parse(xhr.responseText);
-                    if (xhr.status === 200) {
-                        if (res.status == 200) {
-                            this.$cookie.setCookie('hoj_token', res.data.token);
-                            this.$cookie.setCookie('hoj_uid', res.data.uid);
-                            this.$cookie.setCookie('hoj_nickname', res.data.nickname);
-                            this.$cookie.setCookie('hoj_avatar', res.data.avatar);
-                            this.$router.push('/');
-                            this.$emit('login', res.data);
-                        }
-                        else {
-                            this.$swal.fire({
-                                icon: 'error',
-                                title: `Error: ${res.status}`,
-                                text: res.info
-                            });
-                        }
+        axios.get(`${config.apiServer}/captcha/get`).then(res => {
+            if (res.data.status === 200) {
+                this.captcha = 'data:image/svg+xml;base64,' + Base64.encode(res.data.data.data);
+                this.captchaToken = res.data.data.token;
+            }
+        });
+    },
+    methods: {
+        handleSignIn: function () {
+            axios.post(`${config.apiServer}/auth/signin`, {
+                username: this.$refs['username'].value,
+                password: this.$refs['password'].value
+            }).then(res => {
+                if (res.data.status === 200) {
+                    this.$cookie.setCookie('hoj_token', res.data.data.token);
+                    this.$cookie.setCookie('hoj_uid', res.data.data.uid);
+                    this.$cookie.setCookie('hoj_nickname', res.data.data.nickname);
+                    this.$cookie.setCookie('hoj_avatar', res.data.data.avatar);
+                    this.$router.push('/');
+                    this.$emit('login', res.data.data);
+                }
+                else {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: `Error: ${res.data.status}`,
+                        text: res.data.info
+                    });
+                }
+            });
+        },
+        handleSubmit: function () {
+            if (this.isSignIn) {
+                this.handleSignIn();
+            }
+            else {
+                axios.post(`${config.apiServer}/captcha/verify`, {
+                    code: this.$refs['captcha'].value
+                }, {
+                    headers: {
+                        'Authorization': this.captchaToken
                     }
-                    else {
-                        this.$swal.fire({
-                            icon: 'error',
-                            title: `Server Error: ${res.status}`,
-                            text: res.info
+                }).then(res => {
+                    if (res.data.status == 200) {
+                        axios.post(`${config.apiServer}/auth/signup`, {
+                            username: this.$refs['username'].value,
+                            nickname: this.$refs['username'].value,
+                            email: this.$refs['email'].value,
+                            password: this.$refs['password'].value
+                        }, {
+                            headers: {
+                                'Authorization': res.data.data.token
+                            }
+                        }).then(res => {
+                            if (res.data.status == 200) {
+                                this.handleSignIn();
+                            }
+                            else {
+                                this.$swal.fire({
+                                    icon: 'error',
+                                    title: `Error: ${res.data.status}`,
+                                    text: res.data.info
+                                });
+                            }
                         });
                     }
-                }
-            };
-            xhr.send(JSON.stringify({
-                username: username,
-                password: password
-            }));
+                });
+            }
+        },
+        handleChangeState: function () {
+            this.isSignIn = !this.isSignIn;
         }
     }
 };
 </script>
 
 <style scoped>
+.card {
+    width: fit-content;
+}
+
 .index-main { 
     display: flex;
     justify-content: space-around;
@@ -101,5 +152,48 @@ export default {
 .index-info { 
     font-size: 15px;
     margin-bottom: 5px !important;
+}
+
+.button {
+    margin-top: 1em;
+    width: 5em;
+}
+
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.space-after {
+    margin-right: 1em;
+}
+
+.text {
+    font-size: 80%;
+}
+
+.captcha {
+    width: 10em;
+    margin: 1em auto;
+}
+
+a {
+    text-decoration: none;
+    color: #2f8bc9;
+    transition: color 0.25s;
+}
+
+a:hover {
+    color: #1b4f72;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a:visited{
+    text-decoration: none;
 }
 </style>
