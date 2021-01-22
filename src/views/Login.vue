@@ -5,7 +5,7 @@ Card.card
     TextField.center(placeholder="密码", ref="password", password)
     TextField.center(v-if="!isSignIn", placeholder="重复密码", ref="repassword", password)
     TextField.center(v-if="!isSignIn", placeholder="请输入下方的分子式", title="例：C6H12O6", ref="captcha")
-    img.captcha.center(v-if="!isSignIn", :src="captcha")
+    img.captcha.center(v-if="!isSignIn", :src="captcha", @click="requestNewCaptcha()")
     .center
         Button.space-after.button(@click="handleSubmit()", :text="isSignIn ? '登录' : '注册'", ref="signin")
         a.text(@click="handleChangeState()", :text="isSignIn ? '没有账号?' : '已有账号?'", ref="signup")
@@ -35,15 +35,17 @@ export default {
     },
     created: function () {
         this.isSignIn = true;
-
-        axios.get(`${config.apiServer}/captcha/get`).then(res => {
-            if (res.data.status === 200) {
-                this.captcha = 'data:image/svg+xml;base64,' + Base64.encode(res.data.data.data);
-                this.captchaToken = res.data.data.token;
-            }
-        });
+        this.requestNewCaptcha();
     },
     methods: {
+        requestNewCaptcha: function () {
+            axios.get(`${config.apiServer}/captcha/get`).then(res => {
+                if (res.data.status === 200) {
+                    this.captcha = 'data:image/svg+xml;base64,' + Base64.encode(res.data.data.data);
+                    this.captchaToken = res.data.data.token;
+                }
+            });
+        },
         handleSignIn: function () {
             axios.post(`${config.apiServer}/auth/signin`, {
                 username: this.$refs['username'].value,
