@@ -28,14 +28,21 @@ export default {
     },
     data: function () {
         return {
-            isSignIn: 0,
+            isSignIn: true,
             captcha: '',
             captchaToken: ''
         };
     },
     created: function () {
-        this.isSignIn = true;
         this.requestNewCaptcha();
+    },
+    updated: function () {
+        if (this.$route.query.signup) {
+            this.isSignIn = false;
+        }
+        else {
+            this.isSignIn = true;
+        }
     },
     methods: {
         requestNewCaptcha: function () {

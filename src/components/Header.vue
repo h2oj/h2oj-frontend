@@ -28,7 +28,7 @@
         .login
             router-link(custom, v-slot="{ navigate }", to="/login")
                 li(role="link", @click="onItemSelect(-1, navigate)") 登录
-            router-link(custom, v-slot="{ navigate }", to="/register")
+            router-link(custom, v-slot="{ navigate }", to="/login?signup=1")
                 li(role="link", @click="onItemSelect(-1, navigate)") 注册
 </template>
 
