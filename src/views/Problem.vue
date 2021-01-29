@@ -71,7 +71,13 @@ export default {
                 if (res.data.status === 200) {
                     this.$swal.fire({
                         icon: 'success',
-                        title: `Success: ${res.data.status}`,
+                        title: `提交成功`,
+                        text: res.data.info
+                    });
+                } else {
+                    this.$swal.fire({
+                        icon: 'error',
+                        title: `提交失败`,
                         text: res.data.info
                     });
                 }
