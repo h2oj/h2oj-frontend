@@ -1,6 +1,6 @@
 <template lang="pug">
 .footer
-    p © 2019-2021 Hydrogen OJ Team
+    p © 2019-2021 Hydrogen OJ Team 
 </template>
 
 <script>
