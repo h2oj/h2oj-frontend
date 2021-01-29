@@ -28,6 +28,7 @@ import Button from '../components/Button.vue';
 import MarkdownView from '../components/MarkdownView.vue';
 import MonacoEditor from '../components/MonacoEditor.vue';
 import config from '../config';
+import axios from 'axios';
 
 export default {
     name: 'Problem',
@@ -47,34 +48,34 @@ export default {
         };
     },
     created: function() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('get', `${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`, false);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const res = JSON.parse(xhr.responseText);
-                this.content = res.data.content;
-                this.title = res.data.title;
+        axios.get(`${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`).then(res => {
+            if (res.status === 200) {
+                const { data } = res
+                this.content = data.data.content;
+                this.title = data.data.title;
             }
-        };
-        xhr.send();
+        });
     },
     methods: {
         sumbitCode() {
             //console.log(this.$refs['monaco']);
-            let xhr = new XMLHttpRequest();
-            xhr.open('post', `${config.apiServer}/submission/submit`, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const res = JSON.parse(xhr.responseText);
-                    console.log(res);
-                }
-            };
-            xhr.send(JSON.stringify({
+            axios.post(`${config.apiServer}/submission/submit`, {
                 pid: this.$route.params.pid,
                 language: 'cpp98',
                 code: this.$refs['monaco'].getInstance().getValue()
-            }));
+            }, {
+                headers: {
+                    'Authorization': this.$cookie.getCookie('hoj_token')
+                }
+            }).then(res => {
+                if (res.data.status === 200) {
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: `Success: ${res.data.status}`,
+                        text: res.data.info
+                    });
+                }
+        });
         }
     }
 };
