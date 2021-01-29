@@ -65,6 +65,7 @@ export default {
             this.loginState = true;
             this.uid = data.uid;
             this.nickname = data.nickname;
+            this.avatar = data.avatar;
         },
         handleLogout: function () {
             this.loginState = false;
