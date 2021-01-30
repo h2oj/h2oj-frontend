@@ -51,10 +51,9 @@ export default {
             ]
         }
     },
-    created() {
+    created: function () {
         axios.get(`${config.apiServer}/user/list`, {
-            headers:
-            {
+            headers: {
                 'Authorization': this.$cookie.getCookie('hoj_token')
             }
         }).then(res => {
