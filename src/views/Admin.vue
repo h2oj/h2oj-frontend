@@ -17,13 +17,14 @@
                 td.table-username: router-link(:to="`/user/${item.uid}`" :class="`name-${item.level}`") {{ item.nickname }}
                 td.table-tag: Tag(:text="item.tag" :class="`tag-${item.level}`")
                 td.table-registertime Nil
-                td.table-action Nil
+                td.table-action: Button(text="修改")
 </template>
 
 <script>
 import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
+import Button from '../components/Button.vue';
 import axios from 'axios';
 import config from '../config';
 
@@ -32,7 +33,8 @@ export default {
     components: {
         Card,
         DataGrid,
-        Tag
+        Tag,
+        Button
     },
     data: function() {
         return {
@@ -40,14 +42,14 @@ export default {
             pageCount: 1,
             curPage: 1,
             user: [
-                {
-                    uid: 1,
-                    username: 'AlexCui',
-                    nickname: 'AlexCui_nickname',
-                    tag: '摸鱼者',
-                    level: 6,
-                    //棕 灰 蓝 绿 橙 红 紫 
-                }
+                // {
+                //     uid: 1,
+                //     username: 'AlexCui',
+                //     nickname: 'AlexCui_nickname',
+                //     tag: '摸鱼者',
+                //     level: 6,
+                //     //棕 灰 蓝 绿 橙 红 紫 
+                // }
             ]
         }
     },

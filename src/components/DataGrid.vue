@@ -7,11 +7,11 @@ table.datagrid
         tr(v-for="(item, index) in data")
             slot(name="body", :item="item", :index="index")
 div.page-selector(v-if="pageSelector")
-    li.page-top(@click="load(1)"): FontAwesomeIcon(icon="angle-double-left")
-    li.page-last(@click="load(curPage - 1)"): FontAwesomeIcon(icon="angle-left")
+    li.page-top(@click="load(1)", v-if="curPage > 1"): FontAwesomeIcon(icon="angle-double-left")
+    li.page-last(@click="load(curPage - 1)", v-if="curPage > 1"): FontAwesomeIcon(icon="angle-left")
     li(v-for="i in cntPage" @click="load(begPage + i - 1)", :class="{'selected': i + begPage - 1 === curPage}").page {{ i + begPage - 1 }}
-    li.page-next(@click="load(curPage + 1)"): FontAwesomeIcon(icon="angle-right")
-    li.page-end(@click="load(cntPage)"): FontAwesomeIcon(icon="angle-double-right")
+    li.page-next(@click="load(curPage + 1)", v-if="pageCount > curPage"): FontAwesomeIcon(icon="angle-right")
+    li.page-end(@click="load(cntPage)" v-if="pageCount > curPage"): FontAwesomeIcon(icon="angle-double-right")
 </template>
 
 <script>
