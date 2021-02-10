@@ -15,8 +15,8 @@ Card(style="text-align: center;")
             td {{ item.sid }}
             td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
             td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
-            td(:class="`status-${item.status}`") {{ statusToText(item.status) }}
-            td(:class="`status-${item.status == 1 ? 1 : 3}`") {{ item.status == 1 ? 100 : 0 }}
+            td(:class="`status-${item.status}`") {{ judgeStatusText[item.status] }}
+            td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}
             td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
@@ -26,11 +26,13 @@ Card(style="text-align: center;")
         template(v-slot:head)
             th 测试点
             th 状态
+            th 分数
             th 时间
             th 内存
         template(v-slot:body="{ item, index }")
-            td {{ '#' + index }}
-            td(:class="`detail-${item.status}`") {{ statusDetailToText(item.status) }}
+            td {{ '#' + (index + 1) }}
+            td(:class="`detail-${item.status}`") {{ testCaseStatusText[item.status] }}
+            td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.time + ' ms' }}
             td {{ (item.space / 1024) + ' KiB' }}
 </template>
@@ -40,7 +42,7 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
-import { statusText, statusDetailText } from '../const';
+import { judgeStatusText, testCaseStatusText } from '../const';
 import moment from 'moment';
 
 export default {
@@ -57,6 +59,10 @@ export default {
             moment: moment
         };
     },
+    created: function () {
+        this.judgeStatusText = judgeStatusText;
+        this.testCaseStatusText = testCaseStatusText;
+    },
     mounted: function () {
         this.getSubmissionData();
     },
@@ -72,12 +78,6 @@ export default {
                 }
             };
             xhr.send();
-        },
-        statusToText: function (status) {
-            return statusText[status];
-        },
-        statusDetailToText: function (status) {
-            return statusDetailText[status];
         }
     }
 };
@@ -106,7 +106,15 @@ export default {
 }
 
 .status-3 {
+    color: #0e1d69 !important;
+}
+
+.status-4 {
     color: #fe4c61 !important;
+}
+
+.status-5 {
+    color: #0e1d69 !important;
 }
 
 .detail-0 {
@@ -122,11 +130,11 @@ export default {
 }
 
 .detail-3 {
-    color: #0e1d69 !important;
+    color: #ffc116 !important;
 }
 
 .detail-4 {
-    color: #0e1d69 !important;
+    color: #ffc116 !important;
 }
 
 .detail-5 {
@@ -158,10 +166,6 @@ export default {
 }
 
 .detail-12 {
-    color: #0e1d69 !important;
-}
-
-.detail-13 {
     color: #fe4c61 !important;
 }
 </style>

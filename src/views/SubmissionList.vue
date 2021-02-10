@@ -15,8 +15,8 @@ Card(style="text-align: center;")
             td.table-link: router-link(:to="`/submission/${item.sid}`") {{ item.sid }}
             td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
             td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
-            td(:class="`status-${item.status}`") {{ statusToText(item.status) }}
-            td(:class="`status-${item.status == 1 ? 1 : 3}`") {{ item.status == 1 ? 100 : 0 }}
+            td(:class="`status-${item.status}`") {{ judgeStatusText[item.status] }}
+            td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}
             td {{ (item.total_space / 1024) + ' KiB' }}
             td {{ item.language }}
@@ -28,7 +28,7 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
-import { statusText } from '../const';
+import { judgeStatusText } from '../const';
 import moment from 'moment';
 
 export default {
@@ -44,6 +44,9 @@ export default {
             pageCount: 5,
             data: []
         };
+    },
+    created: function() {
+        this.judgeStatusText = judgeStatusText;  
     },
     mounted: function() {
         this.getPageData(1);
@@ -61,9 +64,6 @@ export default {
                 }
             };
             xhr.send();
-        },
-        statusToText: function (status) {
-            return statusText[status];
         }
     }
 };
@@ -92,6 +92,14 @@ export default {
 }
 
 .status-3 {
+    color: #0e1d69 !important;
+}
+
+.status-4 {
     color: #fe4c61 !important;
+}
+
+.status-5 {
+    color: #0e1d69 !important;
 }
 </style>
