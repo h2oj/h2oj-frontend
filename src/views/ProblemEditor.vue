@@ -109,7 +109,20 @@ export default {
             input.click();
         },
         downloadData: function () {
-            
+            axios.post(`${config.apiServer}/problem/download_data`, {
+                pid: this.$route.params.pid
+            }, {
+                headers: {
+                    'Authorization': this.$cookie.getCookie('hoj_token')
+                },
+                responseType: 'blob'
+            }).then(res => {
+                const blob = new Blob([res.data], { type: 'application/octet-stream' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob)
+                link.setAttribute('download', 'data.zip');
+                link.click();
+            });
         }
     }
 };

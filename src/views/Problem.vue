@@ -47,8 +47,8 @@ export default {
             difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC']
         };
     },
-    created: function () {
-        axios.get(`${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`).then(res => {
+    created: async function () {
+        await axios.get(`${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`).then(res => {
             if (res.status === 200) {
                 const { data } = res
                 this.content = data.data.content;
