@@ -1,6 +1,6 @@
 <template lang="pug">
 Card(style="text-align: center;")
-    DataGrid(:data="data", :load="getPageData", :pageCount="pageCount")
+    DataGrid(:data="data", :load="getPageData", :pageCount="pageCount", :curPage="curPage")
         template(v-slot:head)
             th 序号
             th 用户名
@@ -18,8 +18,8 @@ Card(style="text-align: center;")
             td(:class="`status-${item.status}`") {{ judgeStatusText[item.status] }}
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}
-            td {{ (item.total_space / 1024) + ' KiB' }}
-            td {{ item.language }}
+            td {{ item.total_space + ' KiB' }}
+            td {{ languageText[item.language] }}
             td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
 </template>
 
@@ -28,7 +28,7 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
-import { judgeStatusText } from '../const';
+import { judgeStatusText, languageText } from '../const';
 import moment from 'moment';
 
 export default {
@@ -42,11 +42,13 @@ export default {
         return {
             itemCount: 15,
             pageCount: 5,
+            curPage: 1,
             data: []
         };
     },
     created: function() {
-        this.judgeStatusText = judgeStatusText;  
+        this.judgeStatusText = judgeStatusText;
+        this.languageText = languageText;
     },
     mounted: function() {
         this.getPageData(1);
@@ -59,6 +61,7 @@ export default {
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const res = JSON.parse(xhr.responseText);
+                    this.curPage = page;
                     this.data = res.data.submissions;
                     this.pageCount = res.data.page_count;
                 }

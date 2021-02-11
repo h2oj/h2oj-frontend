@@ -19,7 +19,7 @@ Card(style="text-align: center;")
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}
             td {{ (item.total_space / 1024) + ' KiB' }}
-            td {{ item.language }}
+            td {{ languageText[item.language] }}
             td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
 Card(style="text-align: center;")
     DataGrid(:data="test_case", :pageSelector="false")
@@ -42,7 +42,7 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import config from '../config';
-import { judgeStatusText, testCaseStatusText } from '../const';
+import { judgeStatusText, testCaseStatusText, languageText } from '../const';
 import moment from 'moment';
 
 export default {
@@ -62,6 +62,7 @@ export default {
     created: function () {
         this.judgeStatusText = judgeStatusText;
         this.testCaseStatusText = testCaseStatusText;
+        this.languageText = languageText;
     },
     mounted: function () {
         this.getSubmissionData();
