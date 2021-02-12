@@ -1,6 +1,8 @@
 <template lang="pug">
 .container
     .container-left
+        Card(style="padding: 0;")
+            img.bannr(src="/static/banner.svg")
         Card
             p.index-title 欢迎来到H#[sub 2] OJ
             p 模拟只会猜题意，贪心只能过样例。
@@ -102,5 +104,10 @@ p {
 .calendar-day {
     font-size: 500%;
     margin-top: -0.2em !important;
+}
+
+.bannr {
+    width: 100%;
+    vertical-align: bottom;
 }
 </style>
