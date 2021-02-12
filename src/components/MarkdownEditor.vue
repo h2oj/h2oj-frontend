@@ -45,6 +45,7 @@ export default {
 .markdown-editor-textarea {
     flex: 1;
     height: 100%;
+    overflow-y: auto;
 }
 
 .markdown-editor-view {
@@ -54,6 +55,6 @@ export default {
     border: 1px solid #aaaaaa;
     border-left: none;
     box-sizing: border-box;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 </style>

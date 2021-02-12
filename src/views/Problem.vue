@@ -5,7 +5,7 @@ Card.title
         FontAwesomeIcon(icon="wrench", @click="navigate").edit
 Card.detail
     template(v-if="content.description")
-        p.section-title 题目描述
+        p.section-title(style="margin-top: 0;") 题目描述
         MarkdownView(:content="content.description")
     template(v-if="content.input")
         p.section-title 输入格式
@@ -13,6 +13,13 @@ Card.detail
     template(v-if="content.output")
         p.section-title 输出格式
         MarkdownView(:content="content.output")
+    template(v-if="sample.length > 0")
+        p.section-title 输入输出样例
+        template(v-for="(item, index) in sample")
+            p.section-subtitle 样例 \#{{ index + 1}}
+            .sample-text
+                pre(style="margin-right: 1em;") {{ item.input }}
+                pre {{ item.output }}
     template(v-if="content.constraint")
         p.section-title 数据范围与提示
         MarkdownView(:content="content.constraint")
@@ -42,9 +49,10 @@ export default {
     data: function () {
         return {
             title: '',
-            content: '',
+            content: {},
             data: [],
-            difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC']
+            difficulty: ['尚未评定', '入门', '普及-', '普及/提高-', '普及+/提高', '提高+/省选-', '省选/NOI-', 'NOI/NOI+/CTSC'],
+            sample: []
         };
     },
     created: async function () {
@@ -53,6 +61,7 @@ export default {
                 const { data } = res
                 this.content = data.data.content;
                 this.title = data.data.title;
+                this.sample = data.data.sample;
             }
         });
     },
@@ -105,6 +114,25 @@ export default {
 .section-title {
     font-weight: bold;
     font-size: 120%;
+}
+
+.section-subtitle {
+    font-weight: bold;
+    font-size: 100%;
+    margin-bottom: 0.5em;
+}
+
+.sample-text {
+    display: flex;
+}
+
+.sample-text > pre {
+    flex: 1;
+    font-size: 120%;
+    border: solid 1px;
+    border-radius: 0.3em;
+    padding: 0.5em;
+    margin: 0em;
 }
 
 .editor {

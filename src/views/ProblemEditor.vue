@@ -7,10 +7,10 @@ Card.title
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
 Card.detail
     .block
-        p.section-title.inline 题目名称
+        p.section-title.inline.same-width 题目名称
         TextField.inline-item.inline(v-model:value="title", ref="title")
     .block
-        p.section-title.inline 难度标签
+        p.section-title.inline.same-width 难度标签
         Selector.inline-item(:option="difficultyText", :current="data.difficulty", style="width: 10em;", ref="difficulty")
     p.section-title 题目描述
     MarkdownEditor(v-model:content="content.description", ref="description")
@@ -20,7 +20,16 @@ Card.detail
     MarkdownEditor(v-model:content="content.output", ref="output")
     p.section-title 数据范围与提示
     MarkdownEditor(v-model:content="content.constraint", ref="constraint")
-    p.section-title 样例数据
+    .block
+        p.section-title.inline(style="padding-right: 0.5em;") 样例数据
+        FontAwesomeIcon(icon="plus", @click="addSample()")
+    template(v-for="(item, index) in sample")
+        .block
+            p.section-subtitle.inline(style="padding-right: 0.5em;") 样例 \#{{ index + 1 }}
+            FontAwesomeIcon(icon="times", @click="deleteSample($event, index)")
+        .sample
+            TextArea.sample-textarea.scrollbar(v-model="sample[index].input", style="margin-right: 0.5em;")
+            TextArea.sample-textarea.scrollbar(v-model="sample[index].output")
     p.section-title 题目数据
     Button(value="上传", @click="uploadData()")
     Button(value="下载", @click="downloadData()")
@@ -34,9 +43,11 @@ import Button from '../components/Button.vue';
 import MarkdownEditor from '../components/MarkdownEditor.vue';
 import TextField from '../components/TextField.vue';
 import Selector from '../components/Selector.vue';
+import TextArea from '../components/TextArea.vue';
 import config from '../config';
 import { difficultyText } from '../const';
 import axios from 'axios';
+import '../static/scrollbar.css';
 
 export default {
     name: 'ProblemEditor',
@@ -46,13 +57,15 @@ export default {
         Button,
         MarkdownEditor,
         TextField,
-        Selector
+        Selector,
+        TextArea
     },
     data: function () {
         return {
             title: '',
             content: {},
-            data: {}
+            data: {},
+            sample: []
         };
     },
     created: async function () {
@@ -66,6 +79,7 @@ export default {
             this.data = res.data.data;
             this.content = res.data.data.content;
             this.title = res.data.data.title;
+            this.sample = res.data.data.sample;
         });
     },
     methods: {
@@ -74,7 +88,8 @@ export default {
                 pid: this.$route.params.pid,
                 title: this.title,
                 difficulty: this.$refs['difficulty'].getIndex(),
-                content: this.content
+                content: this.content,
+                sample: this.sample
             }, {
                 headers: {
                     'Authorization': this.$cookie.getCookie('hoj_token')
@@ -83,6 +98,7 @@ export default {
                 this.data = res.data.data;
                 this.content = res.data.data.content;
                 this.title = res.data.data.title;
+                this.sample = res.data.data.sample;
             });
         },
         back: function (navigate) {
@@ -123,6 +139,13 @@ export default {
                 link.setAttribute('download', 'data.zip');
                 link.click();
             });
+        },
+        addSample: function () {
+            this.sample.push({ input: '', output: '' });
+        },
+        deleteSample: function (e, index) {
+            e.stopImmediatePropagation();
+            this.sample.splice(index, 1);
         }
     }
 };
@@ -160,6 +183,15 @@ export default {
 .section-title {
     font-weight: bold;
     font-size: 120%;
+}
+
+.section-subtitle {
+    font-weight: bold;
+    font-size: 100%;
+    margin-bottom: 0.5em;
+}
+
+.same-width {
     min-width: 5em;
 }
 
@@ -182,6 +214,15 @@ export default {
 
 .edit > *:hover {
     color: #686868;
+}
+
+.sample {
+    display: flex;
+}
+
+.sample-textarea {
+    flex: 1;
+    height: 100%;
 }
 
 .tag-difficulty-0 {

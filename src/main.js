@@ -6,7 +6,7 @@ import {
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
     faAngleDown,
-    faWrench, faCheck, faArrowLeft
+    faWrench, faCheck, faTimes, faPlus, faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vue3Progress from 'vue3-progress';
@@ -51,7 +51,7 @@ library.add(
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
     faAngleDown,
-    faWrench, faCheck, faArrowLeft
+    faWrench, faCheck, faTimes, faPlus, faArrowLeft
 );
 
 const app = createApp(App);
