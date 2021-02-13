@@ -63,7 +63,7 @@ export default {
 
         await axios.get(`${config.apiServer}/user/detail`, {
             params: {
-                uid: this.$cookie.getCookie('hoj_uid')
+                uid: localStorage.getItem('user_id')
             }
         }).then(res => {
             this.uid = res.data.data.uid;
@@ -86,7 +86,7 @@ export default {
                 information: this.information,
             }, {
                 headers: {
-                    'Authorization': this.$cookie.getCookie('hoj_token')
+                    'Authorization': this.$cookie.getCookie('token')
                 }
             }).then(res => {
                 this.nickname = res.data.data.nickname;
@@ -94,8 +94,8 @@ export default {
                 this.avatar = res.data.data.avatar;
                 this.description = res.data.data.description;
                 this.information = res.data.data.information;
-                this.$cookie.setCookie('hoj_nickname', this.nickname);
-                this.$cookie.setCookie('hoj_avatar', this.avatar);
+                localStorage.setItem('nickname', this.nickname);
+                localStorage.setItem('avatar', this.avatar);
             });
         },
         back: function (navigate) {
@@ -112,7 +112,7 @@ export default {
                 formData.append('data', event.target.files[0]);
                 axios.post(`${config.apiServer}/problem/upload_data`, formData, {
                     headers: {
-                        'Authorization': this.$cookie.getCookie('hoj_token'),
+                        'Authorization': this.$cookie.getCookie('token'),
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(res => {

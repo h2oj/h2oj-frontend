@@ -56,7 +56,7 @@ export default {
     created: function () {
         axios.get(`${config.apiServer}/user/list`, {
             headers: {
-                'Authorization': this.$cookie.getCookie('hoj_token')
+                'Authorization': this.$cookie.getCookie('token')
             }
         }).then(res => {
             const { data } = res;

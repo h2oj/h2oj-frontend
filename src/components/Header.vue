@@ -49,11 +49,11 @@ export default {
         };
     },
     created: function () {
-        if (this.$cookie.getCookie('hoj_token')) {
+        if (this.$cookie.getCookie('token')) {
             this.loginState = true;
-            this.uid = this.$cookie.getCookie('hoj_uid');
-            this.nickname = this.$cookie.getCookie('hoj_nickname');
-            this.avatar = this.$cookie.getCookie('hoj_avatar');
+            this.uid = localStorage.getItem('user_id');
+            this.nickname = localStorage.getItem('nickname');
+            this.avatar = localStorage.getItem('avatar');
         }
     },
     methods: {
@@ -71,14 +71,12 @@ export default {
             this.loginState = false;
             axios.get(`${config.apiServer}/auth/signout`, {
                 headers: {
-                    'Authorization': this.$cookie.getCookie('hoj_token')
+                    'Authorization': this.$cookie.getCookie('token')
                 }
             }).then(res => {
                 if (res.data.status == 200) {
-                    this.$cookie.removeCookie('hoj_token');
-                    this.$cookie.removeCookie('hoj_uid');
-                    this.$cookie.removeCookie('hoj_nickname');
-                    this.$cookie.removeCookie('hoj_avatar');
+                    this.$cookie.removeCookie('token');
+                    this.$cookie.removeCookie('role');
                 }
                 else {
                     this.$swal.fire({

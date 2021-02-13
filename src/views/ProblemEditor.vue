@@ -92,7 +92,7 @@ export default {
                 sample: this.sample
             }, {
                 headers: {
-                    'Authorization': this.$cookie.getCookie('hoj_token')
+                    'Authorization': this.$cookie.getCookie('token')
                 }
             }).then(res => {
                 this.data = res.data.data;
@@ -115,7 +115,7 @@ export default {
                 formData.append('data', event.target.files[0]);
                 axios.post(`${config.apiServer}/problem/upload_data`, formData, {
                     headers: {
-                        'Authorization': this.$cookie.getCookie('hoj_token'),
+                        'Authorization': this.$cookie.getCookie('token'),
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(res => {
@@ -129,7 +129,7 @@ export default {
                 pid: this.$route.params.pid
             }, {
                 headers: {
-                    'Authorization': this.$cookie.getCookie('hoj_token')
+                    'Authorization': this.$cookie.getCookie('token')
                 },
                 responseType: 'blob'
             }).then(res => {

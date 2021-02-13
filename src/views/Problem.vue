@@ -74,7 +74,7 @@ export default {
                 code: this.$refs['monaco'].getInstance().getValue()
             }, {
                 headers: {
-                    'Authorization': this.$cookie.getCookie('hoj_token')
+                    'Authorization': this.$cookie.getCookie('token')
                 }
             }).then(res => {
                 if (res.data.status === 200) {
