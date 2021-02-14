@@ -30,6 +30,7 @@ import Tag from '../components/Tag.vue';
 import config from '../config';
 import { judgeStatusText, languageText } from '../const';
 import moment from 'moment';
+import axios from 'axios';
 
 export default {
     name: 'SubmissionList',
@@ -46,27 +47,34 @@ export default {
             data: []
         };
     },
-    created: function() {
+    created: function () {
         this.judgeStatusText = judgeStatusText;
         this.languageText = languageText;
-    },
-    mounted: function() {
-        this.getPageData(1);
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open('get', `${config.apiServer}/submission/list?page=${1}`, false);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const res = JSON.parse(xhr.responseText);
+                this.curPage = 1;
+                this.data = res.data.submissions;
+                this.pageCount = res.data.page_count;
+            }
+        };
+        xhr.send();
     },
     methods: {
         moment: moment,
         getPageData: function (page) {
-            let xhr = new XMLHttpRequest();
-            xhr.open('get', `${config.apiServer}/submission/list?page=${page}`, true);
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const res = JSON.parse(xhr.responseText);
-                    this.curPage = page;
-                    this.data = res.data.submissions;
-                    this.pageCount = res.data.page_count;
+            axios.get(`${config.apiServer}/submission/list`, {
+                params: {
+                    page: page
                 }
-            };
-            xhr.send();
+            }).then(res => {
+                this.curPage = page;
+                this.data = res.data.data.submissions;
+                this.pageCount = res.data.data.page_count;
+            });
         }
     }
 };

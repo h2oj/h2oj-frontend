@@ -39,19 +39,29 @@ export default {
         };
     },
     created: async function () {
-        await this.getPageData(1);
+        let xhr = new XMLHttpRequest();
+        xhr.open('get', `${config.apiServer}/contest/list?page=${1}`, false);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const res = JSON.parse(xhr.responseText);
+                this.curPage = 1;
+                this.data = res.data.contests;
+                this.pageCount = res.data.page_count;
+            }
+        };
+        xhr.send();
     },
     methods: {
         moment: moment,
         getPageData: function (page) {
-            return axios.get(`${config.apiServer}/contest/list`, {
+            axios.get(`${config.apiServer}/contest/list`, {
                 params: {
                     page: page
                 }
             }).then(res => {
                 this.curPage = page;
                 this.data = res.data.data.contests;
-                this.pageCount = res.data.page_count;
+                this.pageCount = res.data.data.page_count;
             });
         }
     }
