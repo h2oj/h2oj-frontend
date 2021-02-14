@@ -41,7 +41,7 @@ export default {
     data: function () {
         return {
             itemCount: 15,
-            pageCount: 5,
+            pageCount: 1,
             curPage: 1,
             data: []
         };

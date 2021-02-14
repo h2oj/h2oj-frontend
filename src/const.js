@@ -42,6 +42,8 @@ const JudgeStatus = {
 
 const sexText = ['其他', '男', '女'];
 
+const contestModeText = ['IOI', 'NOI', 'ACM'];
+
 const languageText = {
     'cpp98': 'C++ 98', 'cpp03': 'C++ 03', 'cpp11': 'C++ 11', 'cpp14': 'C++ 14',
     'cpp17': 'C++ 17', 'cpp20': 'C++ 20',
@@ -52,5 +54,5 @@ const languageText = {
 
 export {
     difficultyText, judgeStatusText, testCaseStatusText, sexText,
-    TestCaseStatus, JudgeStatus, languageText
+    TestCaseStatus, JudgeStatus, languageText, contestModeText
 };

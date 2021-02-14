@@ -14,6 +14,10 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 import App from './App.vue';
+import Admin from './views/Admin.vue';
+import Contest from './views/Contest.vue';
+import ContestEditor from './views/ContestEditor.vue';
+import ContestList from './views/ContestList.vue';
 import Index from './views/Index.vue';
 import Login from './views/Login.vue';
 import Page404 from './views/404.vue';
@@ -24,12 +28,15 @@ import Submission from './views/Submission.vue';
 import SubmissionList from './views/SubmissionList.vue';
 import User from './views/User.vue';
 import UserSettings from './views/UserSettings.vue';
-import Admin from './views/Admin.vue';
 
 import config from './config';
 
 const routes = [
     { path: '/', component: Index },
+    { path: '/admin', component: Admin },
+    { path: '/contest', component: ContestList },
+    { path: '/contest/:contest_id', component: Contest },
+    { path: '/contest/:contest_id/edit', component: ContestEditor },
     { path: '/login', component: Login },
     { path: '/problem', component: ProblemList },
     { path: '/problem/:pid/edit', component: ProblemEditor },
@@ -38,7 +45,6 @@ const routes = [
     { path: '/submission/:sid', component: Submission },
     { path: '/user/:uid', component: User },
     { path: '/user/settings', component: UserSettings },
-    { path: '/admin', component: Admin },
     { path: '/:catchAll(.*)', component: Page404 }
 ];
 
