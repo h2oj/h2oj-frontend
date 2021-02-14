@@ -41,7 +41,7 @@ import { contestModeText } from '../const';
 import axios from 'axios';
 
 export default {
-    name: 'ProblemEditor',
+    name: 'ContestEditor',
     components: {
         Card,
         MarkdownEditor,

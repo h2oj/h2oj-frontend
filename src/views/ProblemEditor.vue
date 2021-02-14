@@ -7,31 +7,34 @@ Card(style="position: relative;")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
 Card.detail
     .block
-        p.section-title.inline.same-width 题目名称
+        p.section-subtitle.inline-block.same-width 题目ID
+        p.inline-block {{ $route.params.pid }}
+    .block
+        p.section-subtitle.inline-block.same-width 题目名称
         el-input(v-model="title", style="width: 32em;")
     .block
-        p.section-title.inline.same-width 难度标签
+        p.section-subtitle.inline-block.same-width 难度标签
         el-select(v-model="data.difficulty")
             el-option(v-for="(item, index) in difficultyText", :value="index", :label="item")
-    p.section-title 题目描述
+    p.section-subtitle 题目描述
     MarkdownEditor(v-model:content="content.description", ref="description")
-    p.section-title 输入格式
+    p.section-subtitle 输入格式
     MarkdownEditor(v-model:content="content.input", ref="input")
-    p.section-title 输出格式
+    p.section-subtitle 输出格式
     MarkdownEditor(v-model:content="content.output", ref="output")
-    p.section-title 数据范围与提示
+    p.section-subtitle 数据范围与提示
     MarkdownEditor(v-model:content="content.constraint", ref="constraint")
     .block
-        p.section-title.inline(style="padding-right: 0.5em;") 样例数据
+        p.section-subtitle.inline-block(style="padding-right: 0.5em; margin-bottom: 0;") 样例数据
         FontAwesomeIcon(icon="plus", @click="addSample()")
     template(v-for="(item, index) in sample")
         .block
-            p.section-subtitle.inline(style="padding-right: 0.5em;") 样例 \#{{ index + 1 }}
+            p.section-subtitle.inline-block(style="padding-right: 0.5em;") 样例 \#{{ index + 1 }}
             FontAwesomeIcon(icon="times", @click="deleteSample($event, index)")
         .sample
             TextArea.sample-textarea.scrollbar(v-model="sample[index].input", style="margin-right: 0.5em;")
             TextArea.sample-textarea.scrollbar(v-model="sample[index].output")
-    p.section-title 题目数据
+    p.section-subtitle 测试数据
     Button(value="上传", @click="uploadData()")
     Button(value="下载", @click="downloadData()")
     p.detail 题目数据应以zip格式上传，具体要求请见 数据上传要求
