@@ -9,9 +9,11 @@ import {
     faWrench, faCheck, faTimes, faPlus, faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import ElementPlus from 'element-plus';
 import Vue3Progress from 'vue3-progress';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'element-plus/lib/theme-chalk/index.css';
 
 import App from './App.vue';
 import Admin from './views/Admin.vue';
@@ -63,6 +65,7 @@ library.add(
 const app = createApp(App);
 app.config.globalProperties.config = config;
 app.use(router);
+app.use(ElementPlus);
 app.use(VueCookieNext);
 app.use(Vue3Progress, {
     position: 'fixed',

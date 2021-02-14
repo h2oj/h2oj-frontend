@@ -1,0 +1,22 @@
+.title {
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.section-title {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.section-subtitle {
+    font-weight: bold;
+    font-size: 100%;
+}
+
+.inline-block {
+    display: inline-block !important;
+}
+
+.no-margin {
+    margin: 0;
+}

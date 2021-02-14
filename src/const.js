@@ -52,7 +52,12 @@ const languageText = {
     'nodejs14': 'Node.js 14'
 };
 
+const difficultyColor = [
+    '#bfbfbf', '#fe4c61', '#f39c11', '#ffc116', '#52c41a',
+    '#3498db', '#9d3dcf', '#0e1d69'
+];
+
 export {
     difficultyText, judgeStatusText, testCaseStatusText, sexText,
-    TestCaseStatus, JudgeStatus, languageText, contestModeText
+    TestCaseStatus, JudgeStatus, languageText, contestModeText, difficultyColor
 };

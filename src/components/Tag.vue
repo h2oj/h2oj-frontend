@@ -17,7 +17,7 @@ export default {
 <style scoped>
 .tag {
     display: inline-block;
-    padding: 4px 8px;
+    padding: 5px 8px;
     border-radius: 2px;
     color: #ffffff;
     font-size: 13px;

@@ -1,25 +1,23 @@
 <template lang="pug">
-Card.card
+Card(style="position: relative;")
     .edit
         FontAwesomeIcon(icon="check", @click="update()")
         router-link(custom, v-slot="{ navigate }", :to="`/contest/${$route.params.contest_id}`")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
     .block
-        p.section-title.inline.same-width 比赛ID
-        p.inline-item.inline {{ $route.params.contest_id }}
+        p.section-subtitle.inline-block.same-width 比赛ID
+        p.inline-block {{ $route.params.contest_id }}
     .block
-        p.section-title.inline.same-width 比赛名称
-        TextField.inline-item.inline(v-model:value="title", ref="title", style="width: 30em;")
+        p.section-subtitle.inline-block.same-width 比赛名称
+        el-input(v-model="title", style="width: 32em;")
     .block
-        p.section-title.inline.same-width 赛制
-        Selector.inline-item(:option="contestModeText", :current="mode", style="width: 10em;", ref="mode")
+        p.section-subtitle.inline-block.same-width 赛制
+        el-select(v-model="mode")
+            el-option(v-for="(item, index) in contestModeText", :value="index", :label="item")
     .block
-        p.section-title.inline.same-width 开始时间
-        p.inline-item.inline {{ start_time }}
-    .block
-        p.section-title.inline.same-width 结束时间
-        p.inline-item.inline {{ end_time }}
-    p.section-title 比赛简介
+        p.section-subtitle.inline-block.same-width 比赛时间
+        el-date-picker(v-model="time_range", type="datetimerange")
+    p.section-subtitle 比赛简介
     MarkdownEditor(v-model:content="content", ref="content")
     //- .block
         p.section-title.inline(style="padding-right: 0.5em;") 样例数据
@@ -55,8 +53,7 @@ export default {
             title: '',
             content: '',
             mode: 0,
-            start_time: 0,
-            end_time: 0,
+            time_range: [0, 0],
             problem: []
         };
     },
@@ -70,8 +67,8 @@ export default {
         }).then(res => {
             if (res.status === 200) {
                 this.title = res.data.data.title;
-                this.start_time = res.data.data.start_time;
-                this.end_time = res.data.data.end_time;
+                this.time_range[0] = res.data.data.start_time * 1000;
+                this.time_range[1] = res.data.data.end_time * 1000;
                 this.content = res.data.data.content;
                 this.problem = res.data.data.problem;
             }
@@ -82,9 +79,9 @@ export default {
             axios.post(`${config.apiServer}/contest/update`, {
                 contest_id: this.$route.params.contest_id,
                 title: this.title,
-                start_time: this.start_time,
-                end_time: this.end_time,
-                mode: this.$refs['mode'].getIndex(),
+                start_time: this.time_range[0]  / 1000,
+                end_time: this.time_range[1] / 1000,
+                mode: this.mode,
                 content: this.content,
                 problem: this.problem
             }, {
@@ -95,8 +92,7 @@ export default {
                 if (res.status === 200 && res.data.status === 200) {
                     this.$swal.fire({
                         icon: 'success',
-                        title: `提交成功`,
-                        text: res.data.info
+                        title: '提交成功'
                     });
                 }
             });
@@ -117,39 +113,10 @@ export default {
 </script>
 
 <style scoped>
+@import '~@/static/article.css';
+
 .card {
     position: relative;
-}
-
-.inline {
-    display: inline-block !important;
-    margin-bottom: 0;
-}
-
-.block {
-    display: block;
-}
-
-.inline-item {
-    position: relative;
-    margin-bottom: -1em;
-}
-
-.title {
-    font-weight: bold;
-    margin: 0;
-    font-size: 150%;
-}
-
-.section-title {
-    font-weight: bold;
-    font-size: 120%;
-}
-
-.section-subtitle {
-    font-weight: bold;
-    font-size: 100%;
-    margin-bottom: 0.5em;
 }
 
 .same-width {
@@ -175,46 +142,5 @@ export default {
 
 .edit > *:hover {
     color: #686868;
-}
-
-.sample {
-    display: flex;
-}
-
-.sample-textarea {
-    flex: 1;
-    height: 100%;
-}
-
-.tag-difficulty-0 {
-    background-color: #bfbfbf !important;
-}
-
-.tag-difficulty-1 {
-    background-color: #fe4c61 !important;
-}
-
-.tag-difficulty-2 {
-    background-color: #f39c11 !important;
-}
-
-.tag-difficulty-3 {
-    background-color: #ffc116 !important;
-}
-
-.tag-difficulty-4 {
-    background-color: #52c41a !important;
-}
-
-.tag-difficulty-5 {
-    background-color: #3498db !important;
-}
-
-.tag-difficulty-6 {
-    background-color: #9d3dcf !important;
-}
-
-.tag-difficulty-7 {
-    background-color: #0e1d69 !important;
 }
 </style>

@@ -1,6 +1,6 @@
 <template lang="pug">
-Card.title
-    p.problem-title {{ $route.params.pid + '. ' + title }}
+Card(style="position: relative;")
+    p.no-margin.title {{ $route.params.pid + '. ' + title }}
     .edit
         FontAwesomeIcon(icon="check", @click="update()")
         router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}`")
@@ -8,10 +8,11 @@ Card.title
 Card.detail
     .block
         p.section-title.inline.same-width 题目名称
-        TextField.inline-item.inline(v-model:value="title", ref="title")
+        el-input(v-model="title", style="width: 32em;")
     .block
         p.section-title.inline.same-width 难度标签
-        Selector.inline-item(:option="difficultyText", :current="data.difficulty", style="width: 10em;", ref="difficulty")
+        el-select(v-model="data.difficulty")
+            el-option(v-for="(item, index) in difficultyText", :value="index", :label="item")
     p.section-title 题目描述
     MarkdownEditor(v-model:content="content.description", ref="description")
     p.section-title 输入格式
@@ -87,7 +88,7 @@ export default {
             axios.post(`${config.apiServer}/problem/update`, {
                 pid: this.$route.params.pid,
                 title: this.title,
-                difficulty: this.$refs['difficulty'].getIndex(),
+                difficulty: this.data.difficulty,
                 content: this.content,
                 sample: this.sample
             }, {
@@ -152,44 +153,7 @@ export default {
 </script>
 
 <style scoped>
-.title {
-    position: relative;
-}
-
-.inline {
-    display: inline-block !important;
-    margin-bottom: 0;
-}
-
-.block {
-    display: block;
-}
-
-.inline-item {
-    position: relative;
-    margin-bottom: -1em;
-}
-
-.problem-title {
-    font-weight: bold;
-    margin: 0;
-    font-size: 150%;
-}
-
-.detail {
-    text-align: left;
-}
-
-.section-title {
-    font-weight: bold;
-    font-size: 120%;
-}
-
-.section-subtitle {
-    font-weight: bold;
-    font-size: 100%;
-    margin-bottom: 0.5em;
-}
+@import '~@/static/article.css';
 
 .same-width {
     min-width: 5em;

@@ -1,6 +1,6 @@
 <template lang="pug">
-Card.title
-    p.problem-title {{ $route.params.pid + '. ' + title }}
+Card(style="position: relative;")
+    p.title.no-margin {{ $route.params.pid + '. ' + title }}
     router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}/edit`")
         FontAwesomeIcon(icon="wrench", @click="navigate").edit
 Card.detail
@@ -97,6 +97,8 @@ export default {
 </script>
 
 <style scoped>
+@import '~@/static/article.css';
+
 .title {
     position: relative;
 }
