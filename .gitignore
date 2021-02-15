@@ -105,3 +105,6 @@ dist
 
 # VSCode Config
 .vscode
+
+# Dump file
+dump.rdb

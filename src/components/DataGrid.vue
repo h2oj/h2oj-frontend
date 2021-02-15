@@ -83,13 +83,12 @@ export default {
 }
 
 .datagrid > thead > tr > th {
-    font-size: 15px;
+    font-size: 90%;
     font-weight: 500;
     border-bottom: 2px solid #e8e8e8;
 }
 
 .datagrid > tbody > tr > td {
-    font-size: 17px;
     line-height: 35px;
     border-bottom: 1px solid #e8e8e8;
 }

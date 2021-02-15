@@ -176,7 +176,7 @@ export default {
 
 .edit > * {
     padding-left: 0.5em;
-    transition-delay: 0.3s;
+    transition-duration: 0.3s;
 }
 
 .edit > *:hover {

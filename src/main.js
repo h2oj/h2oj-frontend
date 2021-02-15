@@ -6,6 +6,7 @@ import {
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
     faAngleDown,
+    faArrowUp, faArrowDown,
     faWrench, faCheck, faTimes, faPlus, faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -59,6 +60,7 @@ library.add(
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
     faAngleDown,
+    faArrowUp, faArrowDown,
     faWrench, faCheck, faTimes, faPlus, faArrowLeft
 );
 

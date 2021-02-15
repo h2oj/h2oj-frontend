@@ -1,10 +1,24 @@
 <template lang="pug">
-Card.card-title
-    p.title {{ title }}
+Card(style="display: flex;")
+    p.title.inline-block.no-margin(style="margin-right: 0.5em;") {{ title }}
+    el-button(v-if="!has_attended", size="small", @click="handleAttendContest") 参加
+    el-button(v-else, disabled, size="small") 已参加
     router-link(custom, v-slot="{ navigate }", :to="`/contest/${$route.params.contest_id}/edit`")
         FontAwesomeIcon(icon="wrench", @click="navigate").edit
 Card.detail
     MarkdownView(:content="content")
+Card
+    DataGrid(:data="problem_detail", :pageSelector="false")
+        template(v-slot:head)
+            th(style="width: 3em;") 状态
+            th(style="width: 5em; text-align: left;") 题号
+            th(style="text-align: left;") 题目名称
+            th(style="width: 5em;") 得分
+        template(v-slot:body="{ item, index }")
+            td(style="text-align: center;") -
+            td {{ item.problem_id }}
+            td: router-link(:to="`/problem/${item.problem_id}`") {{ item.title }}
+            td(style="text-align: center;") 0
 </template>
 
 <script>
@@ -13,6 +27,7 @@ import Tag from '../components/Tag.vue';
 import Button from '../components/Button.vue';
 import MarkdownView from '../components/MarkdownView.vue';
 import MonacoEditor from '../components/MonacoEditor.vue';
+import DataGrid from '../components/DataGrid.vue';
 import config from '../config';
 import axios from 'axios';
 
@@ -23,7 +38,8 @@ export default {
         Tag,
         Button,
         MarkdownView,
-        MonacoEditor
+        MonacoEditor,
+        DataGrid
     },
     data: function () {
         return {
@@ -32,7 +48,9 @@ export default {
             mode: 0,
             start_time: 0,
             end_time: 0,
-            problem: []
+            problem: [],
+            problem_detail: [],
+            has_attended: false
         };
     },
     created: async function () {
@@ -47,37 +65,20 @@ export default {
                 this.end_time = res.data.data.end_time;
                 this.content = res.data.data.content;
                 this.problem = res.data.data.problem;
+                this.problem_detail = res.data.data.problem_detail;
             }
         });
+    },
+    methods: {
+        handleAttendContest: function () {
+            this.has_attended = true;
+        }
     }
 };
 </script>
 
 <style scoped>
-.card-title {
-    position: relative;
-}
-
-.title {
-    font-weight: bold;
-    margin: 0;
-    font-size: 150%;
-}
-
-.detail {
-    text-align: left;
-}
-
-.section-title {
-    font-weight: bold;
-    font-size: 120%;
-}
-
-.section-subtitle {
-    font-weight: bold;
-    font-size: 100%;
-    margin-bottom: 0.5em;
-}
+@import '~@/static/article.css';
 
 .sample-text {
     display: flex;
@@ -102,7 +103,7 @@ export default {
     position: absolute;
     right: 0.7em;
     top: 0.7em;
-    transition-delay: 0.3s;
+    transition-duration: 0.3s;
 }
 
 .edit:hover {

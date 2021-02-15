@@ -147,7 +147,7 @@ export default {
     position: absolute;
     right: 0.7em;
     top: 0.7em;
-    transition-delay: 0.3s;
+    transition-duration: 0.3s;
 }
 
 .edit:hover {

@@ -11,6 +11,7 @@ export default {
 
 <style scoped>
 .card {
+    position: relative;
     background-color: white;
     box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
     margin-left: auto;
