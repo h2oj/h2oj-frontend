@@ -6,19 +6,22 @@ Card(style="display: flex;")
     router-link(custom, v-slot="{ navigate }", :to="`/contest/${$route.params.contest_id}/edit`")
         FontAwesomeIcon(icon="wrench", @click="navigate").edit
 Card.detail
-    MarkdownView(:content="content")
-Card
-    DataGrid(:data="problem_detail", :pageSelector="false")
-        template(v-slot:head)
-            th(style="width: 3em;") 状态
-            th(style="width: 5em; text-align: left;") 题号
-            th(style="text-align: left;") 题目名称
-            th(style="width: 5em;") 得分
-        template(v-slot:body="{ item, index }")
-            td(style="text-align: center;") -
-            td {{ item.problem_id }}
-            td: router-link(:to="`/problem/${item.problem_id}`") {{ item.title }}
-            td(style="text-align: center;") 0
+    el-tabs
+        el-tab-pane(label="比赛简介")
+            MarkdownView(:content="content")
+        el-tab-pane(label="试题列表")
+            DataGrid(:data="problem_detail", :pageSelector="false")
+                template(v-slot:head)
+                    th(style="width: 3em;") 状态
+                    th(style="width: 5em; text-align: left;") 题号
+                    th(style="text-align: left;") 题目名称
+                    th(style="width: 5em;") 得分
+                template(v-slot:body="{ item, index }")
+                    td(style="text-align: center;") -
+                    td {{ item.problem_id }}
+                    td: router-link(:to="`/problem/${item.problem_id}`") {{ item.title }}
+                    td(style="text-align: center;") 0
+        el-tab-pane(label="比赛排名")
 </template>
 
 <script>
