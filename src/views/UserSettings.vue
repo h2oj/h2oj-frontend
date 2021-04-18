@@ -2,11 +2,11 @@
 Card.card
     .edit
         FontAwesomeIcon(icon="check", @click="update()")
-        router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`")
+        router-link(custom, v-slot="{ navigate }", :to="`/user/${user_id}`")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
     .block
         p.section-title.inline 用户ID
-        p.inline-item.inline {{ uid }}
+        p.inline-item.inline {{ user_id }}
     .block
         p.section-title.inline 用户名
         p.inline-item.inline {{ username }}
@@ -49,7 +49,7 @@ export default {
     },
     data: function () {
         return {
-            uid: 0,
+            user_id: 0,
             avatar: '',
             username: '',
             nickname: '',
@@ -63,10 +63,10 @@ export default {
 
         await axios.get(`${config.apiServer}/user/detail`, {
             params: {
-                uid: localStorage.getItem('user_id')
+                user_id: localStorage.getItem('user_id')
             }
         }).then(res => {
-            this.uid = res.data.data.uid;
+            this.user_id = res.data.data.user_id;
             this.nickname = res.data.data.nickname;
             this.username = res.data.data.username;
             this.sex = res.data.data.sex;
@@ -101,28 +101,6 @@ export default {
         back: function (navigate) {
             this.update();
             navigate();
-        },
-        uploadData: function () {
-            const input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', '.zip');
-            input.onchange = event => {
-                let formData = new FormData();
-                formData.append('pid', this.$route.params.pid);
-                formData.append('data', event.target.files[0]);
-                axios.post(`${config.apiServer}/problem/upload_data`, formData, {
-                    headers: {
-                        'Authorization': this.$cookie.getCookie('token'),
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(res => {
-                    console.log(res);
-                });
-            };
-            input.click();
-        },
-        downloadData: function () {
-            
         }
     }
 };

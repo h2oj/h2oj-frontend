@@ -40,13 +40,14 @@ const routes = [
     { path: '/contest', component: ContestList },
     { path: '/contest/:contest_id', component: Contest },
     { path: '/contest/:contest_id/edit', component: ContestEditor },
+    { path: '/contest/new', component: ContestEditor, props: { isNew: true } },
     { path: '/login', component: Login },
     { path: '/problem', component: ProblemList },
-    { path: '/problem/:pid/edit', component: ProblemEditor },
-    { path: '/problem/:pid', component: Problem },
+    { path: '/problem/:problem_id/edit', component: ProblemEditor },
+    { path: '/problem/:problem_id', component: Problem },
     { path: '/submission', component: SubmissionList },
-    { path: '/submission/:sid', component: Submission },
-    { path: '/user/:uid', component: User },
+    { path: '/submission/:submission_id', component: Submission },
+    { path: '/user/:user_id', component: User },
     { path: '/user/settings', component: UserSettings },
     { path: '/:catchAll(.*)', component: Page404 }
 ];

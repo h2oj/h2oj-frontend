@@ -12,9 +12,9 @@ Card(style="text-align: center;")
             th 语言
             th 上传时间
         template(v-slot:body="{ item }")
-            td.table-link: router-link(:to="`/submission/${item.sid}`") {{ item.sid }}
-            td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
-            td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
+            td.table-link: router-link(:to="`/submission/${item.submission_id}`") {{ item.submission_id }}
+            td.table-link: router-link(:to="`/user/${item.user.user_id}`") {{ item.user.nickname }}
+            td.table-link: router-link(:to="`/problem/${item.problem.problem_id}`") {{ item.problem.problem_id + '. ' + item.problem.title }}
             td(:class="`status-${item.status}`") {{ judgeStatusText[item.status] }}
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}

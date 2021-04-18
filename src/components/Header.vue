@@ -15,7 +15,7 @@
     template(v-if="loginState")
         div
             .avatar-div(@mouseenter="handleChangeShow()", @mouseleave="handleChangeShow()")
-                router-link(custom, v-slot="{ navigate }", :to="`/user/${uid}`")
+                router-link(custom, v-slot="{ navigate }", :to="`/user/${user_id}`")
                     img.avatar(role="link", :src="avatar", @click="onItemSelect(-1, navigate)")
                 .user-panel(:class="{'hidden': !show}")
                     p.user-name {{ nickname }}
@@ -42,7 +42,7 @@ export default {
         return {
             selected: 0,
             loginState: false,
-            uid: 0,
+            user_id: 0,
             nickname: '',
             avatar: '',
             show: false
@@ -51,7 +51,7 @@ export default {
     created: function () {
         if (this.$cookie.getCookie('token')) {
             this.loginState = true;
-            this.uid = localStorage.getItem('user_id');
+            this.user_id = localStorage.getItem('user_id');
             this.nickname = localStorage.getItem('nickname');
             this.avatar = localStorage.getItem('avatar');
         }
@@ -63,7 +63,7 @@ export default {
         },
         handleLogin: function (data) {
             this.loginState = true;
-            this.uid = data.uid;
+            this.user_id = data.user_id;
             this.nickname = data.nickname;
             this.avatar = data.avatar;
         },

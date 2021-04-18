@@ -12,9 +12,9 @@ Card(style="text-align: center;")
             th 语言
             th 上传时间
         template(v-slot:body="{ item }")
-            td {{ item.sid }}
-            td.table-link: router-link(:to="`/user/${item.user.uid}`") {{ item.user.nickname }}
-            td.table-link: router-link(:to="`/problem/${item.problem.pid}`") {{ item.problem.pid + '. ' + item.problem.title }}
+            td {{ item.submission_id }}
+            td.table-link: router-link(:to="`/user/${item.user.user_id}`") {{ item.user.nickname }}
+            td.table-link: router-link(:to="`/problem/${item.problem.problem_id}`") {{ item.problem.problem_id + '. ' + item.problem.title }}
             td(:class="`status-${item.status}`") {{ judgeStatusText[item.status] }}
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}
@@ -70,7 +70,7 @@ export default {
     methods: {
         getSubmissionData: function () {
             let xhr = new XMLHttpRequest();
-            xhr.open('get', `${config.apiServer}/submission/detail?sid=${this.$route.params.sid}`, false);
+            xhr.open('get', `${config.apiServer}/submission/detail?submission_id=${this.$route.params.submission_id}`, false);
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const res = JSON.parse(xhr.responseText);

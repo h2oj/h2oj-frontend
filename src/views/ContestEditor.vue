@@ -6,7 +6,8 @@ Card(style="position: relative;")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
     .block
         p.section-subtitle.inline-block.same-width 比赛ID
-        p.inline-block {{ $route.params.contest_id }}
+        p.inline-block(v-if="isNew") 新建比赛
+        p.inline-block(v-else) {{ $route.params.contest_id }}
     .block
         p.section-subtitle.inline-block.same-width 比赛名称
         el-input(v-model="title", size="medium", style="width: 32em;")
@@ -56,19 +57,24 @@ export default {
         TextField,
         DataGrid
     },
+    props: {
+        isNew: Boolean
+    },
     data: function () {
         return {
             title: '',
             content: '',
             mode: 0,
             time_range: [0, 0],
-            problem: [],
+            problem: {},
             problem_detail: [],
             inputAddProblem: ''
         };
     },
     created: async function () {
         this.contestModeText = contestModeText;
+
+        if (this.isNew) return;
 
         await axios.get(`${config.apiServer}/contest/detail`, {
             params: {
@@ -88,26 +94,49 @@ export default {
     },
     methods: {
         update: function () {
-            axios.post(`${config.apiServer}/contest/update`, {
-                contest_id: this.$route.params.contest_id,
-                title: this.title,
-                start_time: this.time_range[0]  / 1000,
-                end_time: this.time_range[1] / 1000,
-                mode: this.mode,
-                content: this.content,
-                problem: this.problem
-            }, {
-                headers: {
-                    'Authorization': this.$cookie.getCookie('token')
-                }
-            }).then(res => {
-                if (res.status === 200 && res.data.status === 200) {
-                    this.$swal.fire({
-                        icon: 'success',
-                        title: '提交成功'
-                    });
-                }
-            });
+            if (this.isNew) {
+                axios.post(`${config.apiServer}/contest/new`, {
+                    title: this.title,
+                    start_time: this.time_range[0]  / 1000,
+                    end_time: this.time_range[1] / 1000,
+                    mode: this.mode,
+                    content: this.content,
+                    problem: this.problem
+                }, {
+                    headers: {
+                        'Authorization': this.$cookie.getCookie('token')
+                    }
+                }).then(res => {
+                    if (res.status === 200 && res.data.status === 200) {
+                        this.$swal.fire({
+                            icon: 'success',
+                            title: '创建成功'
+                        });
+                    }
+                });
+            }
+            else {
+                axios.post(`${config.apiServer}/contest/update`, {
+                    contest_id: this.$route.params.contest_id,
+                    title: this.title,
+                    start_time: this.time_range[0]  / 1000,
+                    end_time: this.time_range[1] / 1000,
+                    mode: this.mode,
+                    content: this.content,
+                    problem: this.problem
+                }, {
+                    headers: {
+                        'Authorization': this.$cookie.getCookie('token')
+                    }
+                }).then(res => {
+                    if (res.status === 200 && res.data.status === 200) {
+                        this.$swal.fire({
+                            icon: 'success',
+                            title: '提交成功'
+                        });
+                    }
+                });
+            }
         },
         back: function (navigate) {
             this.update();
@@ -115,10 +144,10 @@ export default {
         },
         handleAddProblem: function (e, problem_id) {
             axios.get(`${config.apiServer}/problem/detail`, {
-                params: { pid: problem_id, brief: true }
+                params: { problem_id: problem_id, brief: true }
             }).then(res => {
                 if (res.status === 200 && res.data.status === 200) {
-                    this.problem.push(problem_id);
+                    this.problem.push(Number(problem_id));
                     this.problem_detail.push({ problem_id: problem_id, title: res.data.data.title });
                 }
             });

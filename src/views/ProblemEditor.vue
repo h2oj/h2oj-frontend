@@ -1,14 +1,14 @@
 <template lang="pug">
 Card(style="position: relative;")
-    p.no-margin.title {{ $route.params.pid + '. ' + title }}
+    p.no-margin.title {{ $route.params.problem_id + '. ' + title }}
     .edit
         FontAwesomeIcon(icon="check", @click="update()")
-        router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}`")
+        router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.problem_id}`")
             FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
 Card.detail
     .block
         p.section-subtitle.inline-block.same-width 题目ID
-        p.inline-block {{ $route.params.pid }}
+        p.inline-block {{ $route.params.problem_id }}
     .block
         p.section-subtitle.inline-block.same-width 题目名称
         el-input(v-model="title", style="width: 32em;")
@@ -77,7 +77,7 @@ export default {
         
         await axios.get(`${config.apiServer}/problem/detail`, {
             params: {
-                pid: this.$route.params.pid
+                problem_id: this.$route.params.problem_id
             }
         }).then(res => {
             this.data = res.data.data;
@@ -89,7 +89,7 @@ export default {
     methods: {
         update: function () {
             axios.post(`${config.apiServer}/problem/update`, {
-                pid: this.$route.params.pid,
+                problem_id: this.$route.params.problem_id,
                 title: this.title,
                 difficulty: this.data.difficulty,
                 content: this.content,
@@ -115,7 +115,7 @@ export default {
             input.setAttribute('accept', '.zip');
             input.onchange = event => {
                 let formData = new FormData();
-                formData.append('pid', this.$route.params.pid);
+                formData.append('problem_id', this.$route.params.problem_id);
                 formData.append('data', event.target.files[0]);
                 axios.post(`${config.apiServer}/problem/upload_data`, formData, {
                     headers: {
@@ -130,7 +130,7 @@ export default {
         },
         downloadData: function () {
             axios.post(`${config.apiServer}/problem/download_data`, {
-                pid: this.$route.params.pid
+                problem_id: this.$route.params.problem_id
             }, {
                 headers: {
                     'Authorization': this.$cookie.getCookie('token')

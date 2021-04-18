@@ -14,8 +14,8 @@ Card
             th.table-pass 通过率
         template(v-slot:body="{ item }")
             td.table-status -
-            td.table-pid {{ item.pid }}
-            td.table-title: router-link(:to="`/problem/${item.pid}`") {{ item.title }}
+            td.table-pid {{ item.problem_id }}
+            td.table-title: router-link(:to="`/problem/${item.problem_id}`") {{ item.title }}
             td.table-tag: Tag(v-if="item.tag", :text="item.tag")
             td.table-difficulty: Tag(:text="difficultyText[item.difficulty]", :class="`tag-difficulty-${item.difficulty}`")
             td.table-pass: Meter(:max="item.submit_count", :val="item.ac_count")

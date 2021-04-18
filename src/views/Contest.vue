@@ -1,7 +1,7 @@
 <template lang="pug">
 Card(style="display: flex;")
     p.title.inline-block.no-margin(style="margin-right: 0.5em;") {{ title }}
-    el-button(v-if="!has_attended", size="small", @click="handleAttendContest") 参加
+    el-button(v-if="!hasAttended", size="small", @click="handleAttendContest") 参加
     el-button(v-else, disabled, size="small") 已参加
     router-link(custom, v-slot="{ navigate }", :to="`/contest/${$route.params.contest_id}/edit`")
         FontAwesomeIcon(icon="wrench", @click="navigate").edit
@@ -19,9 +19,22 @@ Card.detail
                 template(v-slot:body="{ item, index }")
                     td(style="text-align: center;") -
                     td {{ item.problem_id }}
-                    td: router-link(:to="`/problem/${item.problem_id}`") {{ item.title }}
+                    td: router-link(:to="`/problem/${item.problem_id}?contest_id=${$route.params.contest_id}`") {{ item.title }}
                     td(style="text-align: center;") 0
         el-tab-pane(label="比赛排名")
+            DataGrid(:data="ranklist", :pageSelector="false")
+                template(v-slot:head)
+                    th(style="width: 10em;") 用户
+                    th(style="width: 5em;") 总分
+                    th(v-for="(item, index) in problem_detail", style="min-width: 5em;") {{ index }}
+                template(v-slot:body="{ item, index }")
+                    td: router-link(:to="`/user/${item.user_id}`") {{ item.nickname }}
+                    td {{ item.score }}
+                    td(v-for="(problem, index) in problem_detail")
+                        div(v-if="rankScore[item.user_id][problem.problem_id]")
+                            router-link(:to="`/submission/${rankScore[item.user_id][problem.problem_id].submission_id}`")
+                            | {{ rankScore[item.user_id][problem.problem_id].score }}
+                        span(v-else)
 </template>
 
 <script>
@@ -49,11 +62,13 @@ export default {
             title: '',
             content: '',
             mode: 0,
-            start_time: 0,
-            end_time: 0,
+            startTime: 0,
+            endTime: 0,
             problem: [],
             problem_detail: [],
-            has_attended: false
+            hasAttended: false,
+            ranklist: [],
+            rankScore: {}
         };
     },
     created: async function () {
@@ -64,17 +79,64 @@ export default {
         }).then(res => {
             if (res.status === 200) {
                 this.title = res.data.data.title;
-                this.start_time = res.data.data.start_time;
-                this.end_time = res.data.data.end_time;
+                this.startTime = res.data.data.start_time;
+                this.endTime = res.data.data.end_time;
                 this.content = res.data.data.content;
                 this.problem = res.data.data.problem;
                 this.problem_detail = res.data.data.problem_detail;
             }
         });
+
+        await axios.get(`${config.apiServer}/contest/ranklist`, {
+            params: {
+                contest_id: this.$route.params.contest_id
+            }
+        }).then(res => {
+            if (res.status === 200 && res.data.status === 200) {
+                this.ranklist = res.data.data.ranklist;
+                for (const player of this.ranklist) {
+                    this.rankScore[player.user_id] = {};
+                    for (const problem of player.detail) {
+                        this.rankScore[player.user_id][problem.problem_id] = {
+                            score: problem.score,
+                            time: problem.time,
+                            space: problem.space,
+                            submission_id: problem.submission_id
+                        };
+                    }
+                }
+            }
+        });
+
+        await axios.post(`${config.apiServer}/contest/has_joined`, {
+            contest_id: this.$route.params.contest_id
+        }, {
+            headers: {
+                'Authorization': this.$cookie.getCookie('token')
+            }
+        }).then(res => {
+            if (res.status === 200 && res.data.status === 200) {
+                this.hasAttended = res.data.data.has_joined;
+            }
+        });
     },
     methods: {
-        handleAttendContest: function () {
-            this.has_attended = true;
+        handleAttendContest: async function () {
+            await axios.post(`${config.apiServer}/contest/join`, {
+                contest_id: this.$route.params.contest_id
+            }, {
+                headers: {
+                    'Authorization': this.$cookie.getCookie('token')
+                }
+            }).then(res => {
+                if (res.status === 200 && res.data.status === 200) {
+                    this.hasAttended = true;
+                    this.$swal.fire({
+                        icon: 'success',
+                        title: '已参加'
+                    });
+                }
+            });
         }
     }
 };

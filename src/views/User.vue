@@ -32,7 +32,7 @@ export default {
     created: async function () {
         await axios.get(`${config.apiServer}/user/detail`, {
             params: {
-                uid: this.$route.params.uid
+                user_id: this.$route.params.user_id
             }
         }).then(res => {
             this.nickname = res.data.data.nickname;

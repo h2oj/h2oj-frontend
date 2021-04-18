@@ -1,7 +1,7 @@
 <template lang="pug">
 Card(style="position: relative;")
-    p.title.no-margin {{ $route.params.pid + '. ' + title }}
-    router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.pid}/edit`")
+    p.title.no-margin {{ $route.params.problem_id + '. ' + title }}
+    router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.problem_id}/edit`")
         FontAwesomeIcon(icon="wrench", @click="navigate").edit
 Card.detail
     template(v-if="content.description")
@@ -56,7 +56,7 @@ export default {
         };
     },
     created: async function () {
-        await axios.get(`${config.apiServer}/problem/detail?pid=${this.$route.params.pid}`).then(res => {
+        await axios.get(`${config.apiServer}/problem/detail?problem_id=${this.$route.params.problem_id}`).then(res => {
             if (res.status === 200) {
                 const { data } = res
                 this.content = data.data.content;
@@ -69,9 +69,10 @@ export default {
         sumbitCode() {
             //console.log(this.$refs['monaco']);
             axios.post(`${config.apiServer}/submission/submit`, {
-                pid: this.$route.params.pid,
+                problem_id: this.$route.params.problem_id,
                 language: 'cpp98',
-                code: this.$refs['monaco'].getInstance().getValue()
+                code: this.$refs['monaco'].getInstance().getValue(),
+                contest_id: this.$route.query.contest_id ? this.$route.query.contest_id : undefined
             }, {
                 headers: {
                     'Authorization': this.$cookie.getCookie('token')
@@ -83,6 +84,7 @@ export default {
                         title: `提交成功`,
                         text: res.data.info
                     });
+                    this.$router.push(`/submission/${res.data.data.submission_id}`);
                 } else {
                     this.$swal.fire({
                         icon: 'error',

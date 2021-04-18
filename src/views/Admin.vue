@@ -4,7 +4,7 @@
         DataGrid(:data="user", :load="getPageData", :curPage="curPage", :pageCount="pageCount")
             template(v-slot:head)
                 th.table-status 
-                th.table-uid UID
+                th.table-uid 用户 ID
                 th.table-username 用户名
                 th.table-username 昵称
                 th.table-tag 前缀
@@ -12,9 +12,9 @@
                 th.table-action 操作
             template(v-slot:body="{ item }")
                 td.table-status -
-                td.table-uid {{ item.uid }}
-                td.table-username: router-link(:to="`/user/${item.uid}`" :class="`name-${item.level}`") {{ item.username }}
-                td.table-username: router-link(:to="`/user/${item.uid}`" :class="`name-${item.level}`") {{ item.nickname }}
+                td.table-uid {{ item.user_id }}
+                td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.username }}
+                td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.nickname }}
                 td.table-tag: Tag(:text="item.tag" :class="`tag-${item.level}`")
                 td.table-registertime Nil
                 td.table-action: Button(text="修改")
@@ -43,7 +43,7 @@ export default {
             curPage: 1,
             user: [
                 // {
-                //     uid: 1,
+                //     user_id: 1,
                 //     username: 'AlexCui',
                 //     nickname: 'AlexCui_nickname',
                 //     tag: '摸鱼者',
