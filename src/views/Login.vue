@@ -60,10 +60,10 @@ export default {
             }).then(res => {
                 if (res.data.status === 200) {
                     this.$cookie.setCookie('token', res.data.data.token);
-                    this.$cookie.setCookie('role', res.data.data.role_id);
                     localStorage.setItem('user_id', res.data.data.user_id);
                     localStorage.setItem('nickname', res.data.data.nickname);
                     localStorage.setItem('avatar', res.data.data.avatar);
+                    localStorage.setItem('role_id', res.data.data.role_id);
                     this.$router.push('/');
                     this.$emit('login', res.data.data);
                 }

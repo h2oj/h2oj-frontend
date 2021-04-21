@@ -36,19 +36,35 @@ import config from './config';
 
 const routes = [
     { path: '/', component: Index },
-    { path: '/admin', component: Admin },
+    { path: '/admin', component: Admin, beforeEnter: (to, from, next) => {
+        if (localStorage.getItem('role_id') <= 2) next();
+        else next('/404');
+    }},
     { path: '/contest', component: ContestList },
     { path: '/contest/:contest_id', component: Contest },
-    { path: '/contest/:contest_id/edit', component: ContestEditor },
+    { path: '/contest/:contest_id/edit', component: ContestEditor, beforeEnter: (to, from, next) => {
+        const roleId = localStorage.getItem('role_id');
+        if (roleId && roleId <= 2) next();
+        else next('/404');
+    }},
     { path: '/contest/new', component: ContestEditor, props: { isNew: true } },
     { path: '/login', component: Login },
     { path: '/problem', component: ProblemList },
-    { path: '/problem/:problem_id/edit', component: ProblemEditor },
+    { path: '/problem/:problem_id/edit', component: ProblemEditor, beforeEnter: (to, from, next) => {
+        const roleId = localStorage.getItem('role_id');
+        if (roleId && roleId <= 2) next();
+        else next('/404');
+    }},
     { path: '/problem/:problem_id', component: Problem },
     { path: '/submission', component: SubmissionList },
     { path: '/submission/:submission_id', component: Submission },
     { path: '/user/:user_id', component: User },
     { path: '/user/settings', component: UserSettings },
+    { path: '/user/:user_id/settings', component: UserSettings, beforeEnter: (to, from, next) => {
+        const roleId = localStorage.getItem('role_id');
+        if (roleId && roleId <= 2) next();
+        else next('/404');
+    }},
     { path: '/:catchAll(.*)', component: Page404 }
 ];
 

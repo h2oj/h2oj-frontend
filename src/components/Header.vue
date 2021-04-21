@@ -76,7 +76,10 @@ export default {
             }).then(res => {
                 if (res.data.status == 200) {
                     this.$cookie.removeCookie('token');
-                    this.$cookie.removeCookie('role');
+                    localStorage.removeItem('role_id');
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('nickname');
+                    localStorage.removeItem('avatar');
                 }
                 else {
                     this.$swal.fire({
