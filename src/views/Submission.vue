@@ -18,7 +18,7 @@ Card(style="text-align: center;")
             td(:class="`status-${item.status}`") {{ judgeStatusText[item.status] }}
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.total_time + ' ms' }}
-            td {{ (item.total_space / 1024) + ' KiB' }}
+            td {{ Math.round(item.total_space / 1024) + ' KiB' }}
             td {{ languageText[item.language] }}
             td {{ moment(item.submit_time * 1000).format('MM/DD HH:mm:ss') }}
 Card(style="text-align: center;")
@@ -34,7 +34,7 @@ Card(style="text-align: center;")
             td(:class="`detail-${item.status}`") {{ testCaseStatusText[item.status] }}
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.time + ' ms' }}
-            td {{ (item.space / 1024) + ' KiB' }}
+            td {{ Math.round(item.space / 1024) + ' KiB' }}
 </template>
 
 <script>
