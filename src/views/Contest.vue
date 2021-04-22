@@ -21,14 +21,17 @@ Card.detail
                     td {{ item.problem_id }}
                     td: router-link(:to="`/problem/${item.problem_id}?contest_id=${$route.params.contest_id}`") {{ item.title }}
                     td(style="text-align: center;") 0
-        el-tab-pane(label="比赛排名")
+        el-tab-pane(label="比赛排名", style="text-align: center;")
             DataGrid(:data="ranklist", :pageSelector="false")
                 template(v-slot:head)
+                    th(style="width: 3em;") 排名
                     th(style="width: 10em;") 用户
                     th(style="width: 5em;") 总分
-                    th(v-for="(item, index) in problem_detail", style="min-width: 5em;") {{ index }}
+                    th(v-for="(item, index) in problem_detail", style="min-width: 5em;") {{ convertProblemName(index + 1) }}
                 template(v-slot:body="{ item, index }")
-                    td: router-link(:to="`/user/${item.user_id}`") {{ item.nickname }}
+                    td {{ index + 1 }}
+                    td(style="text-align: left;")
+                        router-link(:to="`/user/${item.user_id}`") {{ item.nickname }}
                     td {{ item.score }}
                     td(v-for="(problem, index) in problem_detail")
                         div(v-if="rankScore[item.user_id][problem.problem_id]")
@@ -137,6 +140,14 @@ export default {
                     });
                 }
             });
+        },
+        convertProblemName(index) {
+            let res = '';
+            while (index) {
+                res = String.fromCharCode(index % 26 + 64) + res;
+                index = Math.floor(index / 26);
+            }
+            return res;
         }
     }
 };
