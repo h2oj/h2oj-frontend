@@ -23,7 +23,7 @@ import ContestEditor from './views/ContestEditor.vue';
 import ContestList from './views/ContestList.vue';
 import Index from './views/Index.vue';
 import Login from './views/Login.vue';
-import Page404 from './views/404.vue';
+import Error from './views/Error.vue';
 import Problem from './views/Problem.vue';
 import ProblemEditor from './views/ProblemEditor.vue';
 import ProblemList from './views/ProblemList.vue';
@@ -60,12 +60,13 @@ const routes = [
     { path: '/submission/:submission_id', component: Submission },
     { path: '/user/:user_id', component: User },
     { path: '/user/settings', component: UserSettings },
-    { path: '/user/:user_id/settings', component: UserSettings, beforeEnter: (to, from, next) => {
+    /*{ path: '/user/:user_id/edit', component: UserSettings, beforeEnter: (to, from, next) => {
         const roleId = localStorage.getItem('role_id');
         if (roleId && roleId <= 2) next();
         else next('/404');
-    }},
-    { path: '/:catchAll(.*)', component: Page404 }
+    }},*/
+    { path: '/error/:error_code', component: Error },
+    { path: '/:catchAll(.*)', redirect: '/error/404' }
 ];
 
 const router = createRouter({
