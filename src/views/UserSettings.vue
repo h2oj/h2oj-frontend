@@ -60,10 +60,11 @@ export default {
     },
     created: async function () {
         this.sexText = sexText;
+        this.user_id = localStorage.getItem('user_id');
 
         await axios.get(`${config.apiServer}/user/detail`, {
             params: {
-                user_id: localStorage.getItem('user_id')
+                user_id: this.user_id
             }
         }).then(res => {
             this.user_id = res.data.data.user_id;

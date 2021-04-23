@@ -19,7 +19,7 @@
                 td {{ role[item.role_id] }}
                 td.table-action
                     router-link(custom, v-slot="{ navigate }", :to="`/user/${item.user_id}/edit`")
-                        FontAwesomeIcon(icon="wrench", @click="back(navigate)")
+                        FontAwesomeIcon(icon="wrench", @click="navigate")
 </template>
 
 <script>
@@ -60,15 +60,23 @@ export default {
                 this.role[role.role_id] = role.name;
             }
         });
-        await axios.get(`${config.apiServer}/user/list`, {
-            headers: {
-                'Authorization': this.$cookie.getCookie('token')
-            }
-        }).then(res => {
-            const { data } = res;
-            this.user = data.data.users;
-        });
+        await this.getPageData(1);
     },
+    methods: {
+        getPageData: async function (page) {
+            await axios.get(`${config.apiServer}/user/list`, {
+                params: {
+                    page: page
+                },
+                headers: {
+                    'Authorization': this.$cookie.getCookie('token')
+                }
+            }).then(res => {
+                const { data } = res;
+                this.user = data.data.users;
+            });
+        }
+    }
 }
 </script>
 
