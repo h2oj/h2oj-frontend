@@ -3,21 +3,23 @@
     Card
         DataGrid(:data="user", :load="getPageData", :curPage="curPage", :pageCount="pageCount")
             template(v-slot:head)
-                th.table-status 
                 th.table-uid 用户 ID
                 th.table-username 用户名
                 th.table-username 昵称
                 th.table-tag 前缀
-                th.table-registertime 注册时间
+                th.table-regtime 注册时间
+                th 用户组
                 th.table-action 操作
             template(v-slot:body="{ item }")
-                td.table-status -
                 td.table-uid {{ item.user_id }}
                 td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.username }}
                 td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.nickname }}
                 td.table-tag: Tag(:text="item.tag" :class="`tag-${item.level}`")
-                td.table-registertime Nil
-                td.table-action: Button(text="修改")
+                td.table-registertime {{ moment(item.reg_time * 1000).format('MM/DD HH:mm:ss') }}
+                td {{ role[item.role_id] }}
+                td.table-action
+                    router-link(custom, v-slot="{ navigate }", :to="`/user/${item.user_id}/edit`")
+                        FontAwesomeIcon(icon="wrench", @click="back(navigate)")
 </template>
 
 <script>
@@ -25,8 +27,9 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import Button from '../components/Button.vue';
-import axios from 'axios';
 import config from '../config';
+import axios from 'axios';
+import moment from 'moment';
 
 export default {
     name: 'Admin',
@@ -41,27 +44,30 @@ export default {
             itemCount: 15,
             pageCount: 1,
             curPage: 1,
-            user: [
-                // {
-                //     user_id: 1,
-                //     username: 'AlexCui',
-                //     nickname: 'AlexCui_nickname',
-                //     tag: '摸鱼者',
-                //     level: 6,
-                //     //棕 灰 蓝 绿 橙 红 紫 
-                // }
-            ]
+            user: [],
+            role: {}
         }
     },
-    created: function () {
-        axios.get(`${config.apiServer}/user/list`, {
+    created: async function () {
+        this.moment = moment;
+        await axios.get(`${config.apiServer}/user/list_role`, {
+            headers: {
+                'Authorization': this.$cookie.getCookie('token')
+            }
+        }).then(res => {
+            const { data } = res;
+            for (const role of data.data.roles) {
+                this.role[role.role_id] = role.name;
+            }
+        });
+        await axios.get(`${config.apiServer}/user/list`, {
             headers: {
                 'Authorization': this.$cookie.getCookie('token')
             }
         }).then(res => {
             const { data } = res;
             this.user = data.data.users;
-        })
+        });
     },
 }
 </script>

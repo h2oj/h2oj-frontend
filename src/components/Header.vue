@@ -12,6 +12,8 @@
                 li(role="link", @click="onItemSelect(3, navigate)") 比赛
             router-link(custom, v-slot="{ navigate }", to="/submission", :class="{'selected': selected === 4}")
                 li(role="link", @click="onItemSelect(4, navigate)") 记录
+            router-link(v-if="admin", custom, v-slot="{ navigate }", to="/admin", :class="{'selected': selected === 5}")
+                li(role="link", @click="onItemSelect(5, navigate)") 管理
     template(v-if="loginState")
         div
             .avatar-div(@mouseenter="handleChangeShow()", @mouseleave="handleChangeShow()")
@@ -45,7 +47,8 @@ export default {
             user_id: 0,
             nickname: '',
             avatar: '',
-            show: false
+            show: false,
+            admin: false
         };
     },
     created: function () {
@@ -54,6 +57,10 @@ export default {
             this.user_id = localStorage.getItem('user_id');
             this.nickname = localStorage.getItem('nickname');
             this.avatar = localStorage.getItem('avatar');
+            const roleId = localStorage.getItem('role_id');
+            if (roleId && roleId <= 2) {
+                this.admin = true;
+            }
         }
     },
     methods: {
@@ -66,6 +73,10 @@ export default {
             this.user_id = data.user_id;
             this.nickname = data.nickname;
             this.avatar = data.avatar;
+            const roleId = localStorage.getItem('role_id');
+            if (roleId && roleId <= 2) {
+                this.admin = true;
+            }
         },
         handleLogout: function () {
             this.loginState = false;
@@ -80,6 +91,7 @@ export default {
                     localStorage.removeItem('user_id');
                     localStorage.removeItem('nickname');
                     localStorage.removeItem('avatar');
+                    this.admin = false;
                 }
                 else {
                     this.$swal.fire({
