@@ -16,7 +16,7 @@
                 li(role="link", @click="onItemSelect(5, navigate)") 管理
     template(v-if="loginState")
         div
-            .avatar-div(@mouseenter="handleChangeShow()", @mouseleave="handleChangeShow()")
+            .avatar-div(@mouseenter="handleChangeShow(true)", @mouseleave="handleChangeShow(false)")
                 router-link(custom, v-slot="{ navigate }", :to="`/user/${user_id}`")
                     img.avatar(role="link", :src="avatar", @click="onItemSelect(-1, navigate)")
                 .user-panel(:class="{'hidden': !show}")
@@ -102,8 +102,8 @@ export default {
                 }
             });
         },
-        handleChangeShow: function () {
-            this.show = !this.show;
+        handleChangeShow: function (show) {
+            this.show = show;
         }
     }
 };
