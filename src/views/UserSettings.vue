@@ -17,14 +17,14 @@
                         p.inline-item.inline-block {{ username }}
                     div
                         p.section-subtitle.inline-block.same-width 昵称
-                        el-input.inline-item.inline-block(v-model:value="nickname", size="medium", style="width: 16em;", ref="nickname")
+                        el-input.inline-item.inline-block(v-model="nickname", size="medium", style="width: 16em;", ref="nickname")
                     div
                         p.section-subtitle.inline-block.same-width 性别
                         el-select(v-model="sex", size="medium")
                             el-option(v-for="(item, index) in sexText", :value="index", :label="item")
                     div
                         p.section-subtitle.inline-block.same-width 个性签名
-                        el-input(v-model:value="description", size="medium", style="width: 32em;", ref="description")
+                        el-input(v-model="description", size="medium", style="width: 32em;", ref="description")
                 div
                     AvatarSelector.avatar(v-model:src="avatar")
             p.section-subtitle 个人主页
@@ -33,13 +33,13 @@
             p.section-subtitle 重设密码
             div
                 p.inline-block.same-width 原密码
-                el-input.inline-item.inline-block(v-model:value="oldPassword", size="medium", style="width: 16em;", ref="ole-password", show-password)
+                el-input.inline-item.inline-block(v-model="oldPassword", size="medium", style="width: 16em;", ref="ole-password", show-password)
             div
                 p.inline-block.same-width 新密码
-                el-input.inline-item.inline-block(v-model:value="newPassword", size="medium", style="width: 16em;", ref="new-password", show-password)
+                el-input.inline-item.inline-block(v-model="newPassword", size="medium", style="width: 16em;", ref="new-password", show-password)
             div
                 p.inline-block.same-width 重复密码
-                el-input.inline-item.inline-block(v-model:value="repeatPassword", size="medium", style="width: 16em;", ref="repeat-password", show-password)
+                el-input.inline-item.inline-block(v-model="repeatPassword", size="medium", style="width: 16em;", ref="repeat-password", show-password)
 </template>
 
 <script>
