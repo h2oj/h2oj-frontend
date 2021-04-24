@@ -2,7 +2,7 @@
 Card(style="position: relative; text-align: center;")
     .edit
         router-link(custom, v-slot="{ navigate }", :to="`/contest/new`")
-            FontAwesomeIcon(icon="plus", @click="navigate")
+            font-awesome-icon(icon="plus", @click="navigate")
     p(style="font-size: 20px; margin: 0px") 比赛列表
 Card(style="text-align: center;")
     DataGrid(:data="data", :load="getPageData", :pageCount="pageCount", :curPage="curPage")

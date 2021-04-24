@@ -2,7 +2,7 @@
 .selector
     .selector-show(@click="handleDrop()")
         span {{ option[cur] }}
-        FontAwesomeIcon.selector-icon(icon="angle-down", :class="{ rotate: drop }")
+        font-awesome-icon.selector-icon(icon="angle-down", :class="{ rotate: drop }")
     .selector-list(v-if="drop")
         ul: li(v-for="(item, index) in option" @click="handleChoose(index)") {{ item }}
 </template>

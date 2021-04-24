@@ -2,13 +2,7 @@ import { createApp } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router';
 import { VueCookieNext } from 'vue-cookie-next';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-    faAngleLeft, faAngleDoubleLeft,
-    faAngleRight, faAngleDoubleRight,
-    faAngleDown,
-    faArrowUp, faArrowDown,
-    faWrench, faCheck, faTimes, faPlus, faArrowLeft
-} from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ElementPlus from 'element-plus';
 import Vue3Progress from 'vue3-progress';
@@ -74,13 +68,14 @@ const router = createRouter({
     routes
 });
 
-library.add(
+/*library.add(
     faAngleLeft, faAngleDoubleLeft,
     faAngleRight, faAngleDoubleRight,
     faAngleDown,
-    faArrowUp, faArrowDown,
-    faWrench, faCheck, faTimes, faPlus, faArrowLeft
-);
+    faArrowUp, faArrowDown, faArrowLeft,
+    faWrench, faCheck, faTimes, faPlus, faCamera
+);*/
+library.add(fas);
 
 const app = createApp(App);
 app.config.globalProperties.config = config;
@@ -93,7 +88,7 @@ app.use(Vue3Progress, {
     color: '#66ccff'
 });
 app.use(VueSweetalert2);
-app.component('FontAwesomeIcon', FontAwesomeIcon);
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.mount('#app');
 
 VueCookieNext.config({ expire: '7d' });

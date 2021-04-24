@@ -16,11 +16,11 @@ div.page-selector(v-if="pageSelector")
         layout="prev, pager, next"
     )
 
-    //- li.page-top(@click="load(1)", v-if="curPage > 1"): FontAwesomeIcon(icon="angle-double-left")
-    //- li.page-last(@click="load(curPage - 1)", v-if="curPage > 1"): FontAwesomeIcon(icon="angle-left")
+    //- li.page-top(@click="load(1)", v-if="curPage > 1"): font-awesome-icon(icon="angle-double-left")
+    //- li.page-last(@click="load(curPage - 1)", v-if="curPage > 1"): font-awesome-icon(icon="angle-left")
     //- li(v-for="i in cntPage" @click="load(begPage + i - 1)", :class="{'selected': i + begPage - 1 === curPage}").page {{ i + begPage - 1 }}
-    //- li.page-next(@click="load(curPage + 1)", v-if="pageCount > curPage"): FontAwesomeIcon(icon="angle-right")
-    //- li.page-end(@click="load(cntPage)" v-if="pageCount > curPage"): FontAwesomeIcon(icon="angle-double-right")
+    //- li.page-next(@click="load(curPage + 1)", v-if="pageCount > curPage"): font-awesome-icon(icon="angle-right")
+    //- li.page-end(@click="load(cntPage)" v-if="pageCount > curPage"): font-awesome-icon(icon="angle-double-right")
 </template>
 
 <script>

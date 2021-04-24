@@ -1,9 +1,9 @@
 <template lang="pug">
 Card(style="position: relative;")
     .edit
-        FontAwesomeIcon(icon="check", @click="update()")
+        font-awesome-icon(icon="check", @click="update()")
         router-link(custom, v-slot="{ navigate }", :to="`/contest/${$route.params.contest_id}`")
-            FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
+            font-awesome-icon(icon="arrow-left", @click="back(navigate)")
     .block
         p.section-subtitle.inline-block.same-width 比赛ID
         p.inline-block(v-if="isNew") 新建比赛
@@ -23,7 +23,7 @@ Card(style="position: relative;")
     .block
         p.section-subtitle.inline-block(style="padding-right: 0.5em;") 比赛试题
         el-input(v-model="inputAddProblem", size="mini", placeholder="题目ID", style="width: 10em; margin-right: 0.5em;")
-        FontAwesomeIcon(icon="plus", @click="handleAddProblem($event, inputAddProblem)")
+        font-awesome-icon(icon="plus", @click="handleAddProblem($event, inputAddProblem)")
     DataGrid(:data="problem_detail", :pageSelector="false")
         template(v-slot:head)
             th(style="width: 70px;") 题号
@@ -35,9 +35,9 @@ Card(style="position: relative;")
             td: router-link(:to="`/problem/${item.problem_id}`") {{ item.title }}
             //- td: el-input(v-model="problem[index].score", size="mini", style="display: flex;")
             td(style="text-align: center;")
-                FontAwesomeIcon.btn.control-delete(icon="times", @click="handleRemoveProblem($event, index)")
-                FontAwesomeIcon.btn.control-up(icon="arrow-up", @click="handleMoveProblem($event, index, -1)")
-                FontAwesomeIcon.btn.control-down(icon="arrow-down", @click="handleMoveProblem($event, index, 1)")
+                font-awesome-icon.btn.control-delete(icon="times", @click="handleRemoveProblem($event, index)")
+                font-awesome-icon.btn.control-up(icon="arrow-up", @click="handleMoveProblem($event, index, -1)")
+                font-awesome-icon.btn.control-down(icon="arrow-down", @click="handleMoveProblem($event, index, 1)")
 </template>
 
 <script>

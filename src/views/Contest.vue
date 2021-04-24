@@ -4,7 +4,7 @@ Card(style="display: flex;")
     el-button(v-if="!hasAttended", size="small", @click="handleAttendContest") 参加
     el-button(v-else, disabled, size="small") 已参加
     router-link(custom, v-slot="{ navigate }", :to="`/contest/${$route.params.contest_id}/edit`")
-        FontAwesomeIcon(icon="wrench", @click="navigate").edit
+        font-awesome-icon(icon="wrench", @click="navigate").edit
 Card.detail
     el-tabs
         el-tab-pane(label="比赛简介")

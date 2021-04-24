@@ -19,7 +19,7 @@
                 td {{ role[item.role_id] }}
                 td.table-action
                     router-link(custom, v-slot="{ navigate }", :to="`/user/${item.user_id}/edit`")
-                        FontAwesomeIcon(icon="wrench", @click="navigate")
+                        font-awesome-icon(icon="wrench", @click="navigate")
 </template>
 
 <script>

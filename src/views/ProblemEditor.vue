@@ -2,9 +2,9 @@
 Card(style="position: relative;")
     p.no-margin.title {{ $route.params.problem_id + '. ' + title }}
     .edit
-        FontAwesomeIcon(icon="check", @click="update()")
+        font-awesome-icon(icon="check", @click="update()")
         router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.problem_id}`")
-            FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
+            font-awesome-icon(icon="arrow-left", @click="back(navigate)")
 Card.detail
     .block
         p.section-subtitle.inline-block.same-width 题目ID
@@ -26,11 +26,11 @@ Card.detail
     MarkdownEditor(v-model:content="content.constraint", ref="constraint")
     .block
         p.section-subtitle.inline-block(style="padding-right: 0.5em; margin-bottom: 0;") 样例数据
-        FontAwesomeIcon(icon="plus", @click="addSample()")
+        font-awesome-icon(icon="plus", @click="addSample()")
     template(v-for="(item, index) in sample")
         .block
             p.section-subtitle.inline-block(style="padding-right: 0.5em;") 样例 \#{{ index + 1 }}
-            FontAwesomeIcon(icon="times", @click="deleteSample($event, index)")
+            font-awesome-icon(icon="times", @click="deleteSample($event, index)")
         .sample
             TextArea.sample-textarea.scrollbar(v-model="sample[index].input", style="margin-right: 0.5em;")
             TextArea.sample-textarea.scrollbar(v-model="sample[index].output")

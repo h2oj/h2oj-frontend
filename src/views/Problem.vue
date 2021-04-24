@@ -2,7 +2,7 @@
 Card(style="position: relative;")
     p.title.no-margin {{ $route.params.problem_id + '. ' + title }}
     router-link(custom, v-slot="{ navigate }", :to="`/problem/${$route.params.problem_id}/edit`")
-        FontAwesomeIcon(icon="wrench", @click="navigate").edit
+        font-awesome-icon(icon="wrench", @click="navigate").edit
 Card.detail
     template(v-if="content.description")
         p.section-title(style="margin-top: 0;") 题目描述

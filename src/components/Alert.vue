@@ -1,6 +1,6 @@
 <template lang="pug">
 .alert(v-if="show", @click="hide()")
-    FontAwesomeIcon(:icon="icon[type]").icon
+    font-awesome-icon(:icon="icon[type]").icon
     slot
 </template>
 

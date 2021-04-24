@@ -1,28 +1,30 @@
 <template lang="pug">
-Card.card
+Card
     .edit
-        FontAwesomeIcon(icon="check", @click="update()")
+        font-awesome-icon(icon="check", @click="update()")
         router-link(custom, v-slot="{ navigate }", :to="`/user/${user_id}`")
-            FontAwesomeIcon(icon="arrow-left", @click="back(navigate)")
-    .block
-        p.section-title.inline 用户ID
-        p.inline-item.inline {{ user_id }}
-    .block
-        p.section-title.inline 用户名
-        p.inline-item.inline {{ username }}
-    .block
-        p.section-title.inline 昵称
-        TextField.inline-item.inline(v-model:value="nickname", ref="nickname")
-    .block
-        p.section-title.inline 性别
-        Selector.inline-item(:option="sexText", :current="sex", style="width: 10em;", ref="sex")
-    .block
-        p.section-title.inline 个性签名
-        TextField.inline-item.inline(v-model:value="description", style="width: 32em;", ref="description")
-    p.section-title 头像
-    img.avatar(:src="avatar")
-    TextField(v-model:value="avatar", style="width: 32em;", ref="avatar")
-    p.section-title 个人主页
+            font-awesome-icon(icon="arrow-left", @click="back(navigate)")
+    div(style="display: flex;")
+        div(style="flex: 1;")
+            div
+                p.section-subtitle.inline-block.same-width 用户ID
+                p.inline-item.inline-block {{ user_id }}
+            div
+                p.section-subtitle.inline-block.same-width 用户名
+                p.inline-item.inline-block {{ username }}
+            div
+                p.section-subtitle.inline-block.same-width 昵称
+                el-input.inline-item.inline-block(v-model:value="nickname", size="medium", style="width: 16em;", ref="nickname")
+            div
+                p.section-subtitle.inline-block.same-width 性别
+                el-select(v-model="sex", size="medium")
+                    el-option(v-for="(item, index) in sexText", :value="index", :label="item")
+            div
+                p.section-subtitle.inline-block.same-width 个性签名
+                el-input(v-model:value="description", size="medium", style="width: 32em;", ref="description")
+        div
+            AvatarSelector.avatar(v-model:src="avatar")
+    p.section-subtitle 个人主页
     MarkdownEditor.editor(v-model:content="information", ref="information")
 </template>
 
@@ -33,6 +35,7 @@ import Button from '../components/Button.vue';
 import MarkdownEditor from '../components/MarkdownEditor.vue';
 import TextField from '../components/TextField.vue';
 import Selector from '../components/Selector.vue';
+import AvatarSelector from '../components/AvatarSelector.vue';
 import config from '../config';
 import { sexText } from '../const';
 import axios from 'axios';
@@ -45,7 +48,8 @@ export default {
         Button,
         MarkdownEditor,
         TextField,
-        Selector
+        Selector,
+        AvatarSelector
     },
     data: function () {
         return {
@@ -81,7 +85,7 @@ export default {
         update: function () {
             axios.post(`${config.apiServer}/user/update`, {
                 nickname: this.nickname,
-                sex: this.$refs['sex'].getIndex(),
+                sex: this.sex,
                 avatar: this.avatar,
                 description: this.description,
                 information: this.information,
@@ -108,28 +112,14 @@ export default {
 </script>
 
 <style scoped>
+@import '~@/static/article.css';
+
+.same-width {
+    min-width: 5em;
+}
+
 .card {
     position: relative;
-}
-
-.inline {
-    display: inline-block !important;
-    margin-bottom: 0;
-}
-
-.block {
-    display: block;
-}
-
-.inline-item {
-    position: relative;
-    margin-bottom: -1em;
-}
-
-.section-title {
-    font-weight: bold;
-    font-size: 120%;
-    min-width: 5em;
 }
 
 .editor {
@@ -154,8 +144,9 @@ export default {
 }
 
 .avatar {
-    width: 6em;
-    height: 6em;
+    margin: 2em;
+    width: 9em;
+    height: 9em;
     border-radius: 50%;
 }
 </style>
