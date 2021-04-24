@@ -23,7 +23,6 @@ export default {
     },
     watch: {
         content: function () {
-            console.log(this.content);
             this.$emit('update:content', this.content);
         }
     },

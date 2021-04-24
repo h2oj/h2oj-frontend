@@ -67,7 +67,6 @@ export default {
     },
     methods: {
         sumbitCode() {
-            //console.log(this.$refs['monaco']);
             axios.post(`${config.apiServer}/submission/submit`, {
                 problem_id: this.$route.params.problem_id,
                 language: 'cpp98',
