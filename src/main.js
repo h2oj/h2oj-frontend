@@ -15,9 +15,10 @@ import Admin from './views/Admin.vue';
 import Contest from './views/Contest.vue';
 import ContestEditor from './views/ContestEditor.vue';
 import ContestList from './views/ContestList.vue';
+import Error from './views/Error.vue';
 import Index from './views/Index.vue';
 import Login from './views/Login.vue';
-import Error from './views/Error.vue';
+import OAuth from './views/OAuth.vue';
 import Problem from './views/Problem.vue';
 import ProblemEditor from './views/ProblemEditor.vue';
 import ProblemList from './views/ProblemList.vue';
@@ -34,6 +35,7 @@ const routes = [
         if (localStorage.getItem('role_id') <= 2) next();
         else next('/404');
     }},
+    { path: '/oauth/:platform', component: OAuth },
     { path: '/contest', component: ContestList },
     { path: '/contest/:contest_id', component: Contest },
     { path: '/contest/:contest_id/edit', component: ContestEditor, beforeEnter: (to, from, next) => {

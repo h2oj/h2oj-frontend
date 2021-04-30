@@ -9,6 +9,7 @@ Card.card
     .center
         Button.space-after.button(@click="handleSubmit()", :text="isSignIn ? '登录' : '注册'", ref="signin")
         a.text(@click="handleChangeState()", :text="isSignIn ? '没有账号?' : '已有账号?'", ref="signup")
+    a.text(@click="handleOAuthGithub()", text="GitHub")
 </template>
 
 <script>
@@ -116,6 +117,9 @@ export default {
         },
         handleChangeState: function () {
             this.isSignIn = !this.isSignIn;
+        },
+        handleOAuthGithub: function () {
+            window.open(`https://github.com/login/oauth/authorize?client_id=${config.githubClientId}`);
         }
     }
 };
