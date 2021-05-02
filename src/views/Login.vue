@@ -9,13 +9,17 @@ Card.card
     .center
         Button.space-after.button(@click="handleSubmit()", :text="isSignIn ? '登录' : '注册'", ref="signin")
         a.text(@click="handleChangeState()", :text="isSignIn ? '没有账号?' : '已有账号?'", ref="signup")
-    a.text(@click="handleOAuthGithub()", text="GitHub")
+    .center(style="margin-top: 1em;")
+        LoginMethod(@click="handleOAuthGithub()", :icon="['fab', 'github']").login-github
+        //- LoginMethod(@click="handleOAuthGoogle()", :icon="['fab', 'google']").login-google
+        //- LoginMethod(@click="handleOAuthMicrosoft()", :icon="['fab', 'microsoft']").login-microsoft
 </template>
 
 <script>
 import Card from '../components/Card.vue';
 import Button from '../components/Button.vue';
-import TextField from '../components/TextField';
+import TextField from '../components/TextField.vue';
+import LoginMethod from '../components/LoginMethod.vue';
 import config from '../config';
 import axios from 'axios';
 import { Base64 } from 'js-base64';
@@ -25,7 +29,8 @@ export default {
     components: {
         Card,
         TextField,
-        Button
+        Button,
+        LoginMethod
     },
     data: function () {
         return {
@@ -207,7 +212,22 @@ a:active {
     text-decoration: none;
 }
 
-a:visited{
+a:visited {
     text-decoration: none;
+}
+
+.login-github {
+    background: #24292e;
+    color: white;
+}
+
+.login-google {
+    background: #f4433c;
+    color: white;
+}
+
+.login-microsoft {
+    background: #006dbf;
+    color: white;
 }
 </style>

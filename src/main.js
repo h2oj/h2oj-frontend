@@ -2,7 +2,13 @@ import { createApp } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router';
 import { VueCookieNext } from 'vue-cookie-next';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleLeft, faAngleDoubleLeft, faAngleRight, faAngleDoubleRight,
+    faAngleDown, faArrowUp, faArrowDown, faArrowLeft,
+    faWrench, faCheck, faTimes, faPlus, faCamera
+} from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faGoogle, faMicrosoft } from '@fortawesome/free-brands-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ElementPlus from 'element-plus';
 import Vue3Progress from 'vue3-progress';
@@ -28,6 +34,12 @@ import User from './views/User.vue';
 import UserSettings from './views/UserSettings.vue';
 
 import config from './config';
+
+library.add(
+    faAngleLeft, faAngleDoubleLeft, faAngleRight, faAngleDoubleRight,
+    faAngleDown, faArrowUp, faArrowDown, faArrowLeft,
+    faWrench, faCheck, faTimes, faPlus, faCamera, faGithub, faGoogle, faMicrosoft
+);
 
 const routes = [
     { path: '/', component: Index },
@@ -69,15 +81,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
-
-/*library.add(
-    faAngleLeft, faAngleDoubleLeft,
-    faAngleRight, faAngleDoubleRight,
-    faAngleDown,
-    faArrowUp, faArrowDown, faArrowLeft,
-    faWrench, faCheck, faTimes, faPlus, faCamera
-);*/
-library.add(fas);
 
 const app = createApp(App);
 app.config.globalProperties.config = config;
