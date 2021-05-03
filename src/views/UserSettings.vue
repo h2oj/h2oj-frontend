@@ -1,8 +1,8 @@
 <template lang="pug">
 .container
-    UserSettingsMenu(v-model:select="select")
+    Menu(v-model:select="select", :content="['个人信息', '安全设置', 'OAuth']")
     Card
-        div(v-show="select === 1")
+        div(v-show="select === 0")
             .edit
                 font-awesome-icon(icon="check", @click="update()")
                 router-link(custom, v-slot="{ navigate }", :to="`/user/${user_id}`")
@@ -29,7 +29,7 @@
                     AvatarSelector.avatar(v-model:src="avatar")
             p.section-subtitle 个人主页
             MarkdownEditor.editor(v-model:content="information", ref="information")
-        div(v-show="select === 2")
+        div(v-show="select === 1")
             p.section-subtitle 重设密码
             div
                 p.inline-block.same-width 原密码
@@ -40,6 +40,8 @@
             div
                 p.inline-block.same-width 重复密码
                 el-input.inline-item.inline-block(v-model="repeatPassword", size="medium", style="width: 16em;", ref="repeat-password", show-password)
+        div(v-show="select === 2")
+            p.section-subtitle GitHub
 </template>
 
 <script>
@@ -50,7 +52,7 @@ import MarkdownEditor from '../components/MarkdownEditor.vue';
 import TextField from '../components/TextField.vue';
 import Selector from '../components/Selector.vue';
 import AvatarSelector from '../components/AvatarSelector.vue';
-import UserSettingsMenu from '../components/UserSettingsMenu.vue';
+import Menu from '../components/Menu.vue';
 import config from '../config';
 import { sexText } from '../const';
 import axios from 'axios';
@@ -65,7 +67,7 @@ export default {
         TextField,
         Selector,
         AvatarSelector,
-        UserSettingsMenu
+        Menu
     },
     data: function () {
         return {
@@ -76,7 +78,7 @@ export default {
             sex: 0,
             description: '',
             information: '',
-            select: 1,
+            select: 0,
             oldPassword: '',
             newPassword: '',
             repeatPassword: ''

@@ -1,25 +1,27 @@
 <template lang="pug">
 .container
+    Menu(v-model:select="select", :content="['全站信息', '用户管理', '题库管理', '比赛管理', '评测机管理']")
     Card
-        DataGrid(:data="user", :load="getPageData", :curPage="curPage", :pageCount="pageCount")
-            template(v-slot:head)
-                th.table-uid 用户 ID
-                th.table-username 用户名
-                th.table-username 昵称
-                th.table-tag 前缀
-                th.table-regtime 注册时间
-                th 用户组
-                th.table-action 操作
-            template(v-slot:body="{ item }")
-                td.table-uid {{ item.user_id }}
-                td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.username }}
-                td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.nickname }}
-                td.table-tag: Tag(:text="item.tag" :class="`tag-${item.level}`")
-                td.table-registertime {{ moment(item.reg_time * 1000).format('MM/DD HH:mm:ss') }}
-                td {{ role[item.role_id] }}
-                td.table-action
-                    router-link(custom, v-slot="{ navigate }", :to="`/user/${item.user_id}/edit`")
-                        font-awesome-icon(icon="wrench", @click="navigate")
+        div(v-if="select === 1")
+            DataGrid(:data="user", :load="getPageData", :curPage="curPage", :pageCount="pageCount")
+                template(v-slot:head)
+                    th.table-uid 用户 ID
+                    th.table-username 用户名
+                    th.table-username 昵称
+                    th.table-tag 前缀
+                    th.table-regtime 注册时间
+                    th 用户组
+                    th.table-action 操作
+                template(v-slot:body="{ item }")
+                    td.table-uid {{ item.user_id }}
+                    td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.username }}
+                    td.table-username: router-link(:to="`/user/${item.user_id}`" :class="`name-${item.level}`") {{ item.nickname }}
+                    td.table-tag: Tag(:text="item.tag" :class="`tag-${item.level}`")
+                    td.table-registertime {{ moment(item.reg_time * 1000).format('MM/DD HH:mm:ss') }}
+                    td {{ role[item.role_id] }}
+                    td.table-action
+                        router-link(custom, v-slot="{ navigate }", :to="`/user/${item.user_id}/edit`")
+                            font-awesome-icon(icon="wrench", @click="navigate")
 </template>
 
 <script>
@@ -27,6 +29,7 @@ import Card from '../components/Card.vue';
 import DataGrid from '../components/DataGrid.vue';
 import Tag from '../components/Tag.vue';
 import Button from '../components/Button.vue';
+import Menu from '../components/Menu.vue';
 import config from '../config';
 import axios from 'axios';
 import moment from 'moment';
@@ -37,7 +40,8 @@ export default {
         Card,
         DataGrid,
         Tag,
-        Button
+        Button,
+        Menu
     },
     data: function() {
         return {
@@ -45,7 +49,8 @@ export default {
             pageCount: 1,
             curPage: 1,
             user: [],
-            role: {}
+            role: {},
+            select: 0
         }
     },
     created: async function () {
@@ -167,4 +172,12 @@ a:hover {
     color: #1b4f72;
 }
 
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.container > *:not(:last-child) {
+    margin-right: 20px;
+}
 </style>
