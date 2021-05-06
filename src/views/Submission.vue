@@ -35,6 +35,9 @@ Card(style="text-align: center;")
             td(:class="`status-${item.status == 1 ? 1 : 4}`") {{ item.score }}
             td {{ item.time + ' ms' }}
             td {{ Math.round(item.space / 1024) + ' KiB' }}
+Card
+    p.section-title(style="margin-top: 0;") 源代码
+    pre {{ data.file_content }}
 </template>
 
 <script>
@@ -85,14 +88,8 @@ export default {
 </script>
 
 <style scoped>
-.table-link > a {
-    text-decoration: none;
-    color: #2f8bc9;
-}
-
-.table-link > a:hover {
-    color: #1b4f72;
-}
+@import '~@/static/article.css';
+@import '~@/static/link.css';
 
 .status-0 {
     color: #3498db !important;
